@@ -75,7 +75,7 @@ export function ThemeCustomizer() {
     theme,
     setAccentColor, setHeaderBg, applyPreset,
     setFontFamily, setTemplateId, setDensity,
-    setPhotoShape, setHeadingStyle, setNameSize,
+    setPhotoShape, setHeadingStyle, setNameSize, setColumnRatio,
     resetTheme,
   } = useTheme()
 
@@ -251,6 +251,30 @@ export function ThemeCustomizer() {
                   ))}
                 </div>
               </div>
+
+              {/* Column width — two-column only */}
+              {theme.templateId === 'two-column' && (
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide">Column Width</p>
+                    <span className="text-xs font-mono text-gray-500 dark:text-slate-400">
+                      {theme.columnRatio}% · {100 - theme.columnRatio}%
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min={30}
+                    max={70}
+                    value={theme.columnRatio}
+                    onChange={(e) => setColumnRatio(Number(e.target.value))}
+                    className="w-full accent-blue-600 cursor-pointer"
+                  />
+                  <div className="flex justify-between text-[10px] text-gray-400 dark:text-slate-500 mt-0.5">
+                    <span>Wider right</span>
+                    <span>Wider left</span>
+                  </div>
+                </div>
+              )}
 
               {/* Spacing */}
               <div>

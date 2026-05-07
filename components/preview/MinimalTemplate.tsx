@@ -24,7 +24,7 @@ function SectionHead({ children, accent }: Readonly<{ children: React.ReactNode;
   )
 }
 
-export function MinimalTemplate() {
+export function MinimalTemplate({ noPdfId }: Readonly<{ noPdfId?: boolean }> = {}) {
   const data = useResumeData()
   const theme = useSelector((state: RootState) => state.theme)
 
@@ -49,7 +49,7 @@ export function MinimalTemplate() {
 
   if (isEmpty) {
     return (
-      <div id="resume-template" className="a4-page bg-white" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div id={noPdfId ? undefined : 'resume-template'} className="a4-page bg-white" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ textAlign: 'center', color: '#9ca3af' }}>
           <p style={{ fontSize: 16, fontWeight: 600, marginBottom: 8 }}>Your resume preview</p>
           <p style={{ fontSize: 13 }}>Fill in your details on the left to see the magic here</p>
@@ -61,7 +61,7 @@ export function MinimalTemplate() {
   const photoRadius = photoShape === 'circle' ? '50%' : photoShape === 'square' ? '8px' : '0'
 
   return (
-    <div id="resume-template" className="a4-page bg-white" style={{ fontFamily: fontCss }}>
+    <div id={noPdfId ? undefined : 'resume-template'} className="a4-page bg-white" style={{ fontFamily: fontCss }}>
       {/* Header */}
       <div style={{ backgroundColor: headerBg, padding: '28px 36px 22px', color: '#fff' }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 18 }}>

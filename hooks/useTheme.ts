@@ -4,7 +4,7 @@ import {
   FONT_OPTIONS,
   setAccentColor, setHeaderBg, setFontFamily,
   setTemplateId, setDensity, setPhotoShape,
-  setHeadingStyle, setNameSize,
+  setHeadingStyle, setNameSize, setColumnRatio,
   applyPreset, resetTheme,
 } from '@/store/themeSlice'
 import type { FontFamily, TemplateId, Density, PhotoShape, HeadingStyle, NameSize, ACCENT_PRESETS } from '@/store/themeSlice'
@@ -25,8 +25,9 @@ export function useTheme() {
     setTemplateId:   (id: TemplateId)       => dispatch(setTemplateId(id)),
     setDensity:      (d: Density)           => dispatch(setDensity(d)),
     setPhotoShape:   (s: PhotoShape)        => dispatch(setPhotoShape(s)),
-    setHeadingStyle: (s: HeadingStyle)      => dispatch(setHeadingStyle(s)),
-    setNameSize:     (s: NameSize)          => dispatch(setNameSize(s)),
+    setHeadingStyle:  (s: HeadingStyle)      => dispatch(setHeadingStyle(s)),
+    setNameSize:      (s: NameSize)          => dispatch(setNameSize(s)),
+    setColumnRatio:   (n: number)            => dispatch(setColumnRatio(n)),
     applyPreset:     (preset: (typeof ACCENT_PRESETS)[number]) => dispatch(applyPreset(preset)),
     resetTheme:      ()                     => dispatch(resetTheme()),
   }

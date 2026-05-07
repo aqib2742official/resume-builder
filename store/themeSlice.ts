@@ -16,6 +16,7 @@ export interface ResumeTheme {
   photoShape: PhotoShape
   headingStyle: HeadingStyle
   nameSize: NameSize
+  columnRatio: number   // left column %, range 30–70
 }
 
 const initialState: ResumeTheme = {
@@ -27,6 +28,7 @@ const initialState: ResumeTheme = {
   photoShape: 'circle',
   headingStyle: 'underline',
   nameSize: 'normal',
+  columnRatio: 60,
 }
 
 export const ACCENT_PRESETS = [
@@ -60,6 +62,9 @@ export const themeSlice = createSlice({
     setPhotoShape(state, action: PayloadAction<PhotoShape>) { state.photoShape = action.payload },
     setHeadingStyle(state, action: PayloadAction<HeadingStyle>) { state.headingStyle = action.payload },
     setNameSize(state, action: PayloadAction<NameSize>) { state.nameSize = action.payload },
+    setColumnRatio(state, action: PayloadAction<number>) {
+      state.columnRatio = Math.max(30, Math.min(70, action.payload))
+    },
     applyPreset(state, action: PayloadAction<(typeof ACCENT_PRESETS)[0]>) {
       state.accentColor = action.payload.accent
       state.headerBg = action.payload.header
@@ -71,7 +76,7 @@ export const themeSlice = createSlice({
 export const {
   setAccentColor, setHeaderBg, setFontFamily,
   setTemplateId, setDensity, setPhotoShape,
-  setHeadingStyle, setNameSize,
+  setHeadingStyle, setNameSize, setColumnRatio,
   applyPreset, resetTheme,
 } = themeSlice.actions
 
