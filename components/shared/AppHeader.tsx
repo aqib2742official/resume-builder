@@ -44,13 +44,20 @@ export function AppHeader() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 flex h-14 items-center justify-between border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 shadow-sm gap-2">
+      <header className="sticky top-0 z-50 flex h-14 items-center justify-between border-b border-gray-200 dark:border-white/[0.07] bg-white dark:bg-[#0d1424] px-3 shadow-sm gap-2">
         {/* Logo */}
-        <div className="flex items-center gap-2 shrink-0">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
-            <FileText size={15} />
+        <div className="flex items-center shrink-0">
+          {/* Desktop: stacked wordmark */}
+          <div className="hidden md:flex flex-col leading-none gap-0.5">
+            <span className="text-[9px] font-medium tracking-[0.18em] text-sky-500 dark:text-sky-400 uppercase">Maria</span>
+            <span className="text-sm font-extrabold tracking-tight text-gray-900 dark:text-white leading-none">
+              Resume<span className="text-sky-500 dark:text-sky-400">Builder</span>
+            </span>
           </div>
-          <span className="text-sm font-semibold text-gray-900 dark:text-white hidden md:block">ResumeBuilder</span>
+          {/* Mobile: icon only */}
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#0f2044] text-white md:hidden">
+            <FileText size={14} />
+          </span>
         </div>
 
         {/* Left controls — undo/redo + save status */}

@@ -1,4 +1,5 @@
 import type { ResumeData } from '@/types/resume'
+import { calculateInternationalScore } from '@/lib/internationalScore'
 
 export interface SectionScore {
   key: string
@@ -80,7 +81,7 @@ export function calculateCompleteness(data: ResumeData): CompletenessResult {
     },
   ]
 
-  const total = sections.reduce((sum, s) => sum + (s.score * s.weight) / 100, 0)
+  const { finalScore } = calculateInternationalScore(data)
 
-  return { total: Math.round(total), sections }
+  return { total: finalScore, sections }
 }

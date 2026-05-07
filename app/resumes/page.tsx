@@ -141,7 +141,7 @@ export default function ResumesPage() {
       </div>
 
       {/* Grid */}
-      <div className="flex-1 p-6 pb-20 lg:pb-6">
+      <div className="flex-1 p-6">
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-64 text-center">
             {search ? (

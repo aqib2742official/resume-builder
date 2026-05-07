@@ -407,7 +407,7 @@ export default function JobTrackerPage() {
         onDragCancel={() => { setActiveId(null); setOverColumn(null) }}
       >
         <div className="flex-1 overflow-x-auto overflow-y-hidden">
-          <div className="flex gap-3 h-full p-4 min-w-max pb-20 lg:pb-4">
+          <div className="flex gap-3 h-full p-4 min-w-max pb-4">
             {ALL_STATUSES.map((status) => {
               const cfg = STATUS_CONFIG[status]
               const colJobs = jobs.filter((j) => j.status === status)

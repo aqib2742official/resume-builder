@@ -15,7 +15,9 @@ export function ResumeManager({ onClose }: ResumeManagerProps) {
   const data = useResumeData()
   const { loadResumeData } = useResumeActions()
   const [savedResumes, setSavedResumes] = useState<SavedResume[]>([])
-  const [saveName, setSaveName] = useState('')
+  const [saveName, setSaveName] = useState(() =>
+    data.personal.fullName ? `${data.personal.fullName} — Resume` : ''
+  )
   const [saved, setSaved] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editingName, setEditingName] = useState('')

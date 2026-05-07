@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono, Inter, Roboto, Playfair_Display } from 'next/font/google'
 import { Providers } from './providers'
-import { Sidebar } from '@/components/shared/Sidebar'
+import { Navbar } from '@/components/shared/Navbar'
 import { DarkModeApplier } from '@/components/shared/DarkModeApplier'
 import './globals.css'
 
@@ -25,8 +25,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className="h-full antialiased">
         <Providers>
           <DarkModeApplier />
-          <div className="flex h-full dark:bg-gray-950">
-            <Sidebar />
+          <div className="flex flex-col h-full bg-gray-50 dark:bg-gray-950">
+            <Navbar />
             <main className="flex-1 overflow-hidden min-w-0">
               {children}
             </main>
