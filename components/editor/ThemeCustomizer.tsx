@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Palette, RotateCcw, Columns2, AlignJustify, Circle, Square, ImageOff } from 'lucide-react'
+import { Palette, RotateCcw, Columns2, AlignJustify, Circle, Square, ImageOff, GraduationCap } from 'lucide-react'
 import { clsx } from 'clsx'
 import { ACCENT_PRESETS, FONT_OPTIONS } from '@/store/themeSlice'
 import type { Density, PhotoShape, TemplateId, HeadingStyle, NameSize } from '@/store/themeSlice'
@@ -20,8 +20,9 @@ const PHOTO_OPTIONS: { value: PhotoShape; icon: React.ReactNode; label: string }
 ]
 
 const TEMPLATE_OPTIONS: { value: TemplateId; icon: React.ReactNode; label: string; sub: string }[] = [
-  { value: 'two-column', icon: <Columns2 size={15} />,     label: 'Classic',  sub: 'Two columns'   },
-  { value: 'minimal',    icon: <AlignJustify size={15} />, label: 'Minimal',  sub: 'Single column' },
+  { value: 'two-column', icon: <Columns2 size={15} />,        label: 'Classic',  sub: 'Two columns'   },
+  { value: 'minimal',    icon: <AlignJustify size={15} />,    label: 'Minimal',  sub: 'Single column' },
+  { value: 'academic',   icon: <GraduationCap size={15} />,   label: 'Academic', sub: 'CV / dense'    },
 ]
 
 const HEADING_STYLE_OPTIONS: { value: HeadingStyle; label: string; preview: React.ReactNode }[] = [

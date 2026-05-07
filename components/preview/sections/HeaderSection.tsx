@@ -94,7 +94,7 @@ export function HeaderSection({
           )}
 
           {summary && (
-            <p style={{ fontSize: 10, color: '#374151', lineHeight: 1.65, maxWidth: 560 }}>
+            <p style={{ fontSize: 10, color: '#374151', lineHeight: 1.65, maxWidth: showPhoto ? 560 : '100%' }}>
               {summary}
             </p>
           )}

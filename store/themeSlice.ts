@@ -1,11 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type FontFamily   = 'geist' | 'inter' | 'roboto' | 'playfair' | 'georgia'
-export type TemplateId   = 'two-column' | 'minimal'
+export type TemplateId   = 'two-column' | 'minimal' | 'academic'
 export type Density      = 'compact' | 'standard' | 'spacious'
 export type PhotoShape   = 'circle' | 'square' | 'none'
 export type HeadingStyle = 'underline' | 'leftbar' | 'plain' | 'filled'
 export type NameSize     = 'normal' | 'large' | 'xlarge'
+
+export const DEFAULT_SECTION_ORDER = [
+  'summary', 'experience', 'education', 'projects',
+  'skills', 'certifications', 'languages', 'awards', 'volunteer', 'interests',
+]
 
 export interface ResumeTheme {
   accentColor: string
@@ -17,6 +22,7 @@ export interface ResumeTheme {
   headingStyle: HeadingStyle
   nameSize: NameSize
   columnRatio: number   // left column %, range 30–70
+  sectionOrder: string[]
 }
 
 const initialState: ResumeTheme = {
@@ -29,6 +35,7 @@ const initialState: ResumeTheme = {
   headingStyle: 'underline',
   nameSize: 'normal',
   columnRatio: 60,
+  sectionOrder: DEFAULT_SECTION_ORDER,
 }
 
 export const ACCENT_PRESETS = [
@@ -69,6 +76,7 @@ export const themeSlice = createSlice({
       state.accentColor = action.payload.accent
       state.headerBg = action.payload.header
     },
+    setSectionOrder(state, action: PayloadAction<string[]>) { state.sectionOrder = action.payload },
     resetTheme() { return initialState },
   },
 })
@@ -77,7 +85,7 @@ export const {
   setAccentColor, setHeaderBg, setFontFamily,
   setTemplateId, setDensity, setPhotoShape,
   setHeadingStyle, setNameSize, setColumnRatio,
-  applyPreset, resetTheme,
+  applyPreset, setSectionOrder, resetTheme,
 } = themeSlice.actions
 
 export default themeSlice.reducer

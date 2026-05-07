@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono, Inter, Roboto, Playfair_Display } from 'next/font/google'
 import { Providers } from './providers'
+import { Sidebar } from '@/components/shared/Sidebar'
+import { DarkModeApplier } from '@/components/shared/DarkModeApplier'
 import './globals.css'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
@@ -21,7 +23,15 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${roboto.variable} ${playfair.variable} h-full`}
     >
       <body className="h-full antialiased">
-        <Providers>{children}</Providers>
+        <Providers>
+          <DarkModeApplier />
+          <div className="flex h-full dark:bg-gray-950">
+            <Sidebar />
+            <main className="flex-1 overflow-hidden min-w-0">
+              {children}
+            </main>
+          </div>
+        </Providers>
       </body>
     </html>
   )

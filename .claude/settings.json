@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Development/Other Data/Resume-Builder/resume-builder/**)",
+      "Bash(npx next *)"
+    ]
+  }
+}

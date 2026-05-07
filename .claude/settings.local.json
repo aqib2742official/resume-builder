@@ -5,7 +5,9 @@
       "PowerShell(Get-ChildItem -Path \"c:\\\\Development\\\\Other Data\\\\Resume-Builder\\\\resume-builder\" -Recurse | Select-Object -ExpandProperty FullName | ForEach-Object { $_ -replace [regex]::Escape\\(\"c:\\\\Development\\\\Other Data\\\\Resume-Builder\\\\resume-builder\"\\), \".\" })",
       "Bash(npm run *)",
       "Bash(npx tsc *)",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "Bash(Get-ChildItem -Recurse -Directory)",
+      "Bash(Select-Object -ExpandProperty FullName)"
     ]
   }
 }

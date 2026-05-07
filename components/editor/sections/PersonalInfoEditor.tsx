@@ -30,7 +30,7 @@ export function PersonalInfoEditor() {
   }
 
   return (
-    <SectionBlock sectionKey="personal" title="Personal Information">
+    <SectionBlock sectionKey="personal" title="Personal Information" hideable={false}>
       <WritingTips sectionKey="personal" />
       {/* Photo upload */}
       <div className="flex items-center gap-3 mb-3">

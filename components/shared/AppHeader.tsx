@@ -39,18 +39,18 @@ export function AppHeader() {
   }
 
   const filename = personal.fullName
-    ? `${personal.fullName.replace(/\s+/g, '_')}_Resume.pdf`
+    ? `${personal.fullName.replaceAll(/\s+/g, '_')}_Resume.pdf`
     : 'resume.pdf'
 
   return (
     <>
-      <header className="sticky top-0 z-50 flex h-14 items-center justify-between border-b border-gray-200 bg-white px-3 shadow-sm gap-2">
+      <header className="sticky top-0 z-50 flex h-14 items-center justify-between border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 shadow-sm gap-2">
         {/* Logo */}
         <div className="flex items-center gap-2 shrink-0">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
             <FileText size={15} />
           </div>
-          <span className="text-sm font-semibold text-gray-900 hidden md:block">ResumeBuilder</span>
+          <span className="text-sm font-semibold text-gray-900 dark:text-white hidden md:block">ResumeBuilder</span>
         </div>
 
         {/* Left controls — undo/redo + save status */}
@@ -93,7 +93,7 @@ export function AppHeader() {
             <FolderOpen size={15} />
           </IconButton>
 
-          <div className="w-px h-5 bg-gray-200 hidden sm:block mx-1" />
+          <div className="w-px h-5 bg-gray-200 dark:bg-gray-700 hidden sm:block mx-1" />
 
           {/* Sample data */}
           <Button variant="ghost" size="sm" onClick={loadSampleData} className="hidden md:inline-flex">

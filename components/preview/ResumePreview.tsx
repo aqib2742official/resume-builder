@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import type { RootState } from '@/store'
 import { ResumeTemplate } from './ResumeTemplate'
 import { MinimalTemplate } from './MinimalTemplate'
+import { AcademicTemplate } from './AcademicTemplate'
 
 const A4_H   = 1123
 const PAGE_GAP = 28
@@ -57,9 +58,16 @@ export function ResumePreview() {
         return t < idealBreak && b > idealBreak
       })
 
-      const breakAt = straddle
-        ? straddle.getBoundingClientRect().top - templateTop
+      // Pull the break back by SECTION_LEAD px so page 2 begins with
+      // the flex-gap whitespace above the section, not flush to the heading.
+      const SECTION_LEAD = 20
+      const prevPageStart = starts[starts.length - 1]
+      const candidateBreak = straddle
+        ? straddle.getBoundingClientRect().top - templateTop - SECTION_LEAD
         : idealBreak
+      // If the section is taller than a full page we can't avoid breaking inside it;
+      // fall back to the ideal break so the while-loop always advances.
+      const breakAt = candidateBreak > prevPageStart ? candidateBreak : idealBreak
 
       starts.push(breakAt)
       idealBreak = breakAt + A4_H
@@ -70,6 +78,12 @@ export function ResumePreview() {
 
   const visualW   = 794 * scale
   const pageCount = pageStarts.length
+
+  function TemplateComponent({ noPdfId }: { noPdfId?: boolean }) {
+    if (templateId === 'minimal') return <MinimalTemplate noPdfId={noPdfId} />
+    if (templateId === 'academic') return <AcademicTemplate noPdfId={noPdfId} />
+    return <ResumeTemplate noPdfId={noPdfId} />
+  }
 
   return (
     <div ref={containerRef} className="flex-1 overflow-y-auto bg-gray-100 custom-scroll">
@@ -86,7 +100,7 @@ export function ResumePreview() {
         style={{ position: 'fixed', left: -9999, top: 0, width: 794, pointerEvents: 'none' }}
         aria-hidden="true"
       >
-        {templateId === 'minimal' ? <MinimalTemplate /> : <ResumeTemplate />}
+        <TemplateComponent />
       </div>
 
       <div className="flex flex-col items-center py-8">
@@ -113,10 +127,7 @@ export function ResumePreview() {
                   transformOrigin: 'top left',
                   width: 794,
                 }}>
-                  {templateId === 'minimal'
-                    ? <MinimalTemplate noPdfId />
-                    : <ResumeTemplate noPdfId />
-                  }
+                  <TemplateComponent noPdfId />
                 </div>
               </div>
 

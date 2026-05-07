@@ -4,6 +4,7 @@ interface UIState {
   mobileTab: 'editor' | 'preview'
   collapsedSections: string[]
   darkEditor: boolean
+  darkMode: boolean
   mobileSheetOpen: boolean
 }
 
@@ -11,6 +12,7 @@ const initialState: UIState = {
   mobileTab: 'editor',
   collapsedSections: [],
   darkEditor: false,
+  darkMode: false,
   mobileSheetOpen: false,
 }
 
@@ -33,11 +35,14 @@ export const uiSlice = createSlice({
     toggleDarkEditor(state) {
       state.darkEditor = !state.darkEditor
     },
+    toggleDarkMode(state) {
+      state.darkMode = !state.darkMode
+    },
     setMobileSheetOpen(state, action: PayloadAction<boolean>) {
       state.mobileSheetOpen = action.payload
     },
   },
 })
 
-export const { setMobileTab, toggleSection, expandSection, toggleDarkEditor, setMobileSheetOpen } = uiSlice.actions
+export const { setMobileTab, toggleSection, expandSection, toggleDarkEditor, toggleDarkMode, setMobileSheetOpen } = uiSlice.actions
 export default uiSlice.reducer

@@ -5,7 +5,7 @@ import {
   setAccentColor, setHeaderBg, setFontFamily,
   setTemplateId, setDensity, setPhotoShape,
   setHeadingStyle, setNameSize, setColumnRatio,
-  applyPreset, resetTheme,
+  applyPreset, setSectionOrder, resetTheme,
 } from '@/store/themeSlice'
 import type { FontFamily, TemplateId, Density, PhotoShape, HeadingStyle, NameSize, ACCENT_PRESETS } from '@/store/themeSlice'
 
@@ -29,6 +29,7 @@ export function useTheme() {
     setNameSize:      (s: NameSize)          => dispatch(setNameSize(s)),
     setColumnRatio:   (n: number)            => dispatch(setColumnRatio(n)),
     applyPreset:     (preset: (typeof ACCENT_PRESETS)[number]) => dispatch(applyPreset(preset)),
+    setSectionOrder: (order: string[])      => dispatch(setSectionOrder(order)),
     resetTheme:      ()                     => dispatch(resetTheme()),
   }
 }
