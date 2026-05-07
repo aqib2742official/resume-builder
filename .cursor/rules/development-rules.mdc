@@ -1,0 +1,632 @@
+---
+alwaysApply: true
+---
+
+
+## Styling Rules
+
+These rules define how we style UI across the project to keep CSS minimal, consistent, and maintainable.
+
+### Core principles
+- **Prefer `src/app/globals.css`**: Centralize shared styles and variables there. Add new global classes only when multiple places need the same style.
+- **Do not duplicate existing classes**: Before adding a new class, search `globals.css`. If it already exists, reuse it; do not redefine or slightly tweak duplicates.
+- **Avoid redundant defaults**: The `body` already sets base typography (normal font size, color, line-height). Headings (`h1`–`h6`) already define font sizes and weights. Do not restyle these unless a component has a specific, justified need.
+
+### When adding styles
+- **Component scope first**: If a style is unique to a component, keep it local (e.g., inline class names or component-level module). Only promote to `globals.css` if reused in 2+ places.
+- **Minimal overrides**: Override only what differs from the default. Do not restate inherited properties (e.g., font-size for body text, heading weights/sizes).
+- **Naming**: Use semantic, purpose-driven class names in `globals.css` (e.g., `btn-primary`, `card`, `container`), not presentational names like `blue-text`.
+
+### Using utility classes from globals.css
+- **Use utility classes as-is**: The `container` class is fully defined in `globals.css` (includes `w-full`, `mx-auto`, `px-4`, and max-width at xl breakpoint). Never add extra properties like `max-w-7xl`, `mx-auto`, or `px-4` when using `.container`.
+- **Don't override utility classes**: Other utility classes (`.link-underline`, `.btn-solid`, `.btn-outline`, `.fs-lg`, `.fs-md`, `.fs-sm`, `.fs-xs`, `.property-swiper`, `.aspect-3/4`) are complete. Use them without adding extra CSS properties.
+- **Example**:
+  - Good: `<div className="container">...</div>` (uses full definition from globals.css)
+  - Bad: `<div className="container mx-auto max-w-7xl">...</div>` (duplicates properties already in `.container`)
+  - Bad: `<h2 className="h2 text-3xl">...</h2>` (duplicates font size already in `.h2`)
+
+### Do / Avoid
+- **Do**: Reuse classes defined in `globals.css` where applicable.
+- **Do**: Add utilities/tokens (variables, color aliases, spacing scales) to `globals.css` when broadly useful.
+- **Avoid**: Creating near-duplicate classes (e.g., `btn`, `btn-1`, `btn-primary-v2`). Refactor or extend thoughtfully.
+- **Avoid**: Setting font sizes/weights on standard headings unless you are intentionally diverging from the global scale.
+- **Avoid**: Applying base text styles to normal paragraphs; the `body` covers defaults.
+- **Avoid**: Adding properties that are already included in utility classes (e.g., don't add `mx-auto` or `max-w-*` with `.container`).
+
+### Checklist before adding a new class
+1. Is this style used in multiple components? If no, keep it local to the component.
+2. Does a suitable class already exist in `globals.css`? If yes, reuse it.
+3. Are you restating defaults on `body` or headings? If yes, remove the redundant rules.
+4. Is the class name semantic and reusable? If not, rename it.
+
+### Examples
+- Good: Use an existing `container` class from `globals.css` instead of redefining margins/padding.
+- Good: Create `badge` in `globals.css` only after at least two components need the same badge styling.
+- Bad: Define `h2 { font-weight: 700; }` when headings already set appropriate weights.
+- Bad: Create `text-base` override on paragraphs; the `body` font size is already set globally.
+
+### Updates to globals.css
+- Prefer grouping related rules and documenting intent with short comments.
+- Keep variables/tokens (colors, spacing) near the top for discoverability.
+- When changing a global class, scan usages to avoid regressions.
+
+By following these rules, we keep styles consistent, avoid duplication, and leverage `globals.css` effectively without unnecessary overrides.
+
+### Colors, backgrounds, and variables
+- **Always use CSS variables from `globals.css`**: All colors, backgrounds, borders, spacing, and other design tokens must reference variables defined in `globals.css`. Never use hardcoded values (e.g., `#fff`, `rgb()`, `#d0d0d0`, raw `px` values for spacing).
+- **Borders**: Use border variables from `globals.css` (e.g., `--border-primary`, `--border-secondary`). Never use hardcoded border colors like `border-gray-200` or `border-[#d0d0d0]`.
+- **Dark mode is handled in `globals.css`**: All variables (colors, backgrounds, borders, etc.) automatically switch for dark mode via CSS variable definitions. Never apply dark mode classes (`dark:`) or conditionally toggle styles in component code.
+- **Typography from `globals.css`**: Use the predefined heading styles (`h1`-`h6` or `.h1`-`.h6` classes) and utility font size classes (`.fs-lg`, `.fs-md`, `.fs-sm`, `.fs-xs`) defined in `globals.css`. Do not override font sizes, weights, or line heights unless the design explicitly requires a deviation from the established scale.
+- **Example**: Use `bg-(--bg-primary)`, `text-(--text-primary)`, `border-(--border-primary)` (Tailwind arbitrary value syntax with CSS variables) or directly reference `var(--bg-primary)`, `var(--text-primary)` in custom CSS. Never use `bg-white`, `text-black`, `border-gray-200`, or `dark:bg-gray-900`.
+
+## Repository-wide AI Coding Rules
+
+These are the exact rules the AI must follow when writing or editing code in this repository. They are derived from your development guide and tuned to this codebase.
+
+### General
+- Follow existing patterns first; consistency over novelty.
+- Prefer composition over large components; keep pages thin and move logic to hooks.
+- Never introduce a new pattern when an equivalent exists in the repo.
+
+### Folder structure (per feature)
+- Put new features under `src/features/{feature}/` with:
+  - `api/`, `components/`, `constants/`, `hooks/`, `models/`, `pages/`, `validation/`, and `index.ts` in each folder.
+- **Always use `constants/` folder**: For feature-specific constants, configuration data, static content, and mock data. Each constant file should have a clear purpose (e.g., `heroSection.ts`, `partners.ts`, `propertyDashboard.ts`).
+- **Always use `models/` folder**: For TypeScript interfaces and types specific to the feature's domain (e.g., `property.ts`, `user.ts`). Export all types from `models/index.ts`.
+- Always add local `index.ts` re-exports for cleaner imports from the feature folder.
+- Co-locate component-specific helpers/types under the feature folder.
+
+Note:
+- This template is for future scale. Do not add folders that have no data/usage yet.
+- If a feature currently only needs `components/` and `constants/`, keep only those. Add others when needed.
+- **Always check existing feature folders** (like `src/features/home/`) to follow the established pattern before creating new structures.
+
+### Component structure (Atomic Design)
+- **Follow Atomic Design pattern**: All shared/reusable components must be organized under `src/components/` using atomic design principles:
+  - **`atoms/`**: Basic building blocks (buttons, inputs, labels, icons). Self-contained, minimal props, no business logic.
+  - **`molecules/`**: Simple combinations of atoms (dropdown with button and menu, search bar with input and icon, form field with label and input).
+  - **`organisms/`**: Complex components made of molecules/atoms (AppHeader, AppFooter, navigation bars, complex forms).
+- **Feature-specific components**: Components used only within a single feature stay in `src/features/{feature}/components/` (e.g., `HeroSection`, `PropertyDashboard`, `PropertyInsights`).
+- **Export pattern**: Each level exports through `index.ts` for clean imports (e.g., `import { AppHeader, AppFooter } from '@/components/organisms'`).
+- **Component placement decision**:
+  - If used in 2+ features → move to `src/components/{atomic-level}/`
+  - If feature-specific → keep in `src/features/{feature}/components/`
+  - If unsure → start in feature folder, refactor when reused
+
+### Naming
+- Files: components `PascalCase.tsx`, hooks and utilities `camelCase.ts`, models `camelCase.ts`, constants `camelCase.ts`.
+- Components: PascalCase and descriptive (e.g., `AddUserModal`, `UsersTable`).
+- Interfaces/types: PascalCase without "I" prefix (e.g., `User`, `CreateUserRequest`).
+- Constants files: Descriptive names matching their purpose (e.g., `heroSection.ts`, `partners.ts`, `propertyDashboard.ts`).
+- One React component per file.
+
+### TypeScript
+- Strict types only; no `any`.
+- Use `interface` for object shapes; `type` for unions/aliases.
+- Use `import type { ... }` for type-only imports.
+
+### Hooks (business logic)
+- One public hook per feature (e.g., `hooks/useFeature.ts`) that encapsulates all business logic, state, side effects, and handlers.
+- Use `useCallback` for event handlers; `useMemo` for computed values (filters, derived lists).
+- Debounce text searches with `useDebounce(value, 500)`.
+- Expose a single return object grouping data, state, and actions.
+
+Note:
+- The “one public hook per feature” is a recommended pattern. Implement it when the feature has real business logic; skip it for purely presentational features.
+
+### Components
+- Keep presentational; consume the feature hook for data/handlers.
+- **Follow atomic design structure**: Place components in the appropriate atomic level (`atoms/`, `molecules/`, `organisms/`) based on complexity and composition.
+- **Feature vs. shared components**: Feature-specific components stay in `src/features/{feature}/components/`. Only promote to `src/components/` when used across 2+ features.
+- Tables: support search, pagination, loading/empty/error states.
+- Do not perform data fetching directly in components; use feature hooks.
+
+### Images and icons
+- Use Next.js `Image` only; never `<img>`.
+- Always specify width/height or `fill`; add meaningful `alt`.
+- Use icons from phosphor-icons package.
+- Never use inline `<svg>`. Create in assets and get from the `assets/index.ts` file.
+
+### Performance
+- `useMemo`: expensive transforms, dropdown options, filtered/sorted lists, API filters.
+- `useCallback`: handlers passed to children or used in deps.
+- `React.memo`: list items or components with expensive render.
+- Lazy-load heavy components (charts, modals) with `lazy`/`Suspense`.
+
+### Accessibility
+- Use semantic elements; associate labels with inputs; ensure keyboard and focus behavior.
+- Provide `aria-*` where appropriate.
+
+### UI/styling
+- Tailwind only; compose with `clsx` and `tailwind-merge`.
+- Keep variants small and clear; avoid inline style duplication.
+
+### Do and Don't
+- Do
+  - Follow feature folder template exactly (with `constants/`, `models/`, `components/`, etc.).
+  - Follow atomic design pattern for all shared components (`atoms/`, `molecules/`, `organisms/`).
+  - Use `constants/` folder for all static/configuration data within features.
+  - Use `models/` folder for all TypeScript interfaces and types within features.
+  - Keep page components thin.
+  - Centralize business logic in hooks.
+  - Use Next Image and SVGR icons.
+  - Check existing patterns in `src/features/home/` before creating new structures.
+- Don't
+  - Don't inline `<svg>` or use `<img>`.
+  - Don't hardcode routes, messages, or domain codes as strings; use constants files.
+  - Don't fetch in components or spread business logic across components.
+  - Don't add new patterns if an equivalent exists.
+  - Don't create components without considering the atomic design level.
+  - Don't mix feature-specific and shared components in the same directory.
+
+### Conflict resolution
+- If a rule conflicts with established code in the same area, follow the existing repository pattern for that area.
+
+---
+
+## Redux Toolkit + RTK Query - State Management Rules
+
+### Core Principles
+- **Redux Toolkit** for global application state (user auth, UI state, settings)
+- **RTK Query** for all API calls (automatic caching, loading states, refetching)
+- **Custom hooks** for feature business logic (orchestrate RTK Query + local state)
+- **Utility hooks** for reusable patterns (debounce, pagination, notifications)
+
+### Redux Folder Structure
+
+```
+src/
+├── store/                          # Core Redux setup
+│   ├── api/
+│   │   └── apiSlice.ts            # Base RTK Query API configuration
+│   ├── slices/
+│   │   └── appSlice.ts            # Global app state (notifications, loading)
+│   ├── hooks.ts                    # Typed Redux hooks (useAppDispatch, useAppSelector)
+│   ├── store.ts                    # Store configuration
+│   └── StoreProvider.tsx           # Next.js provider wrapper
+│
+├── features/{feature}/
+│   ├── api/
+│   │   ├── {feature}Api.ts        # RTK Query endpoints for this feature
+│   │   └── index.ts               # Re-exports
+│   ├── hooks/
+│   │   ├── use{Feature}.ts        # Business logic hook
+│   │   └── index.ts               # Re-exports
+│   └── models/
+│       └── {feature}.ts           # API types/interfaces
+│
+└── hooks/                          # Shared utility hooks
+    ├── useDebounce.ts
+    ├── usePagination.ts
+    └── useNotification.ts
+```
+
+### Store Configuration Rules
+
+#### 1. Base API Slice (`src/store/api/apiSlice.ts`)
+```typescript
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
+
+export const apiSlice = createApi({
+  reducerPath: "api",
+  baseQuery: fetchBaseQuery({
+    baseUrl: BASE_URL,
+    prepareHeaders: (headers) => {
+      // Add auth headers here
+      headers.set("Content-Type", "application/json");
+      return headers;
+    },
+  }),
+  tagTypes: ["Feature1", "Feature2"], // Add cache tags here
+  endpoints: () => ({}), // Features inject endpoints
+});
+```
+
+#### 2. App Slice (`src/store/slices/appSlice.ts`)
+```typescript
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { RootState } from "@/store/store";
+
+interface AppState {
+  isGlobalLoading: boolean;
+  notification: { message: string; type: string; show: boolean } | null;
+}
+
+const initialState: AppState = {
+  isGlobalLoading: false,
+  notification: null,
+};
+
+export const appSlice = createSlice({
+  name: "app",
+  initialState,
+  reducers: {
+    setGlobalLoading: (state, action: PayloadAction<boolean>) => {
+      state.isGlobalLoading = action.payload;
+    },
+    // ... other reducers
+  },
+});
+
+export const { setGlobalLoading } = appSlice.actions;
+export const selectGlobalLoading = (state: RootState) => state.app.isGlobalLoading;
+export default appSlice.reducer;
+```
+
+#### 3. Store Setup (`src/store/store.ts`)
+```typescript
+import { configureStore } from "@reduxjs/toolkit";
+import { apiSlice } from "./api/apiSlice";
+import appReducer from "./slices/appSlice";
+
+export const makeStore = () => {
+  return configureStore({
+    reducer: {
+      app: appReducer,
+      [apiSlice.reducerPath]: apiSlice.reducer,
+      // Add feature slices here
+    },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(apiSlice.middleware),
+  });
+};
+
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore["getState"]>;
+export type AppDispatch = AppStore["dispatch"];
+```
+
+#### 4. Typed Hooks (`src/store/hooks.ts`)
+```typescript
+import { useDispatch, useSelector, useStore } from "react-redux";
+import type { AppDispatch, AppStore, RootState } from "@/store/store";
+
+export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
+export const useAppSelector = useSelector.withTypes<RootState>();
+export const useAppStore = useStore.withTypes<AppStore>();
+```
+
+#### 5. Provider (`src/store/StoreProvider.tsx`)
+```typescript
+"use client";
+import { useRef } from "react";
+import { Provider } from "react-redux";
+import { makeStore, AppStore } from "./store";
+
+export default function StoreProvider({ children }: { children: React.ReactNode }) {
+  const storeRef = useRef<AppStore>();
+  if (!storeRef.current) {
+    storeRef.current = makeStore();
+  }
+  return <Provider store={storeRef.current}>{children}</Provider>;
+}
+```
+
+### Feature API Pattern (RTK Query)
+
+#### Creating Feature API (`features/{feature}/api/{feature}Api.ts`)
+```typescript
+import { apiSlice } from "@/store/api/apiSlice";
+import type { Item, ItemFilters, ItemResponse } from "../models";
+
+export const featureApi = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    // GET: Fetch items with filters
+    getItems: builder.query<ItemResponse, ItemFilters>({
+      query: (filters = {}) => {
+        const params = new URLSearchParams();
+        if (filters.page) params.append("page", String(filters.page));
+        // Add other params
+        return `/items?${params.toString()}`;
+      },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.items.map(({ id }) => ({ type: "Item" as const, id })),
+              { type: "Item", id: "LIST" },
+            ]
+          : [{ type: "Item", id: "LIST" }],
+    }),
+
+    // GET: Single item
+    getItemById: builder.query<Item, string>({
+      query: (id) => `/items/${id}`,
+      providesTags: (result, error, id) => [{ type: "Item", id }],
+    }),
+
+    // POST: Create item (mutation)
+    createItem: builder.mutation<Item, Partial<Item>>({
+      query: (newItem) => ({
+        url: "/items",
+        method: "POST",
+        body: newItem,
+      }),
+      invalidatesTags: [{ type: "Item", id: "LIST" }],
+    }),
+
+    // PATCH: Update item
+    updateItem: builder.mutation<Item, { id: string; data: Partial<Item> }>({
+      query: ({ id, data }) => ({
+        url: `/items/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: (result, error, { id }) => [
+        { type: "Item", id },
+        { type: "Item", id: "LIST" },
+      ],
+    }),
+
+    // DELETE: Delete item
+    deleteItem: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `/items/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: (result, error, id) => [
+        { type: "Item", id },
+        { type: "Item", id: "LIST" },
+      ],
+    }),
+  }),
+});
+
+// Export auto-generated hooks
+export const {
+  useGetItemsQuery,
+  useGetItemByIdQuery,
+  useCreateItemMutation,
+  useUpdateItemMutation,
+  useDeleteItemMutation,
+} = featureApi;
+```
+
+### Feature Hook Pattern (Business Logic)
+
+#### Creating Feature Hook (`features/{feature}/hooks/use{Feature}.ts`)
+```typescript
+import { useState, useCallback, useMemo } from "react";
+import { useDebounce } from "@/hooks/useDebounce";
+import { usePagination } from "@/hooks/usePagination";
+import { useNotification } from "@/hooks/useNotification";
+import { useGetItemsQuery, useCreateItemMutation } from "../api/featureApi";
+
+export const useFeature = () => {
+  // 1. LOCAL STATE
+  const [searchInput, setSearchInput] = useState("");
+  const [filter, setFilter] = useState<string | undefined>();
+
+  // 2. UTILITY HOOKS
+  const { success, error: showError } = useNotification();
+  const debouncedSearch = useDebounce(searchInput, 500);
+  const pagination = usePagination({ defaultPerPage: 10 });
+
+  // 3. BUILD QUERY PARAMS
+  const filters = useMemo(() => ({
+    page: pagination.currentPage,
+    perPage: pagination.itemsPerPage,
+    search: debouncedSearch || undefined,
+    filter,
+  }), [pagination.currentPage, pagination.itemsPerPage, debouncedSearch, filter]);
+
+  // 4. RTK QUERY HOOKS
+  const { data, isLoading, isFetching } = useGetItemsQuery(filters);
+  const [createItem, { isLoading: isCreating }] = useCreateItemMutation();
+
+  // 5. COMPUTED VALUES
+  const items = useMemo(() => data?.items || [], [data?.items]);
+  const totalPages = useMemo(() => data?.totalPages || 1, [data?.totalPages]);
+
+  // 6. EVENT HANDLERS
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value);
+    pagination.setCurrentPage(1);
+  }, [pagination]);
+
+  const handleCreate = useCallback(async (itemData: any) => {
+    try {
+      await createItem(itemData).unwrap();
+      success("Item created successfully");
+      return { success: true };
+    } catch (error) {
+      showError("Failed to create item");
+      return { success: false };
+    }
+  }, [createItem, success, showError]);
+
+  // 7. RETURN API
+  return {
+    // Data
+    items,
+    totalPages,
+    currentPage: pagination.currentPage,
+    // Loading
+    isLoading,
+    isFetching,
+    isCreating,
+    // Search & Filters
+    searchInput,
+    filter,
+    handleSearchChange,
+    setFilter,
+    // Pagination
+    handlePageChange: pagination.handlePageChange,
+    // Actions
+    handleCreate,
+  };
+};
+```
+
+### Utility Hooks
+
+#### useDebounce
+```typescript
+import { useEffect, useState } from "react";
+
+export function useDebounce<T>(value: T, delay: number = 500): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedValue(value), delay);
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+```
+
+#### usePagination
+```typescript
+import { useState, useCallback } from "react";
+
+export function usePagination({ defaultPage = 1, defaultPerPage = 10 } = {}) {
+  const [currentPage, setCurrentPage] = useState(defaultPage);
+  const [itemsPerPage, setItemsPerPage] = useState(defaultPerPage);
+
+  const handlePageChange = useCallback((page: number) => {
+    setCurrentPage(page);
+  }, []);
+
+  const handleItemsPerPageChange = useCallback((perPage: number) => {
+    setItemsPerPage(perPage);
+    setCurrentPage(1);
+  }, []);
+
+  const resetPagination = useCallback(() => {
+    setCurrentPage(defaultPage);
+    setItemsPerPage(defaultPerPage);
+  }, [defaultPage, defaultPerPage]);
+
+  return {
+    currentPage,
+    itemsPerPage,
+    setCurrentPage,
+    setItemsPerPage,
+    handlePageChange,
+    handleItemsPerPageChange,
+    resetPagination,
+  };
+}
+```
+
+#### useNotification
+```typescript
+import { useCallback } from "react";
+import { useAppDispatch } from "@/store/hooks";
+import { showNotification, hideNotification } from "@/store/slices/appSlice";
+
+export function useNotification() {
+  const dispatch = useAppDispatch();
+
+  const success = useCallback((message: string) => {
+    dispatch(showNotification({ message, type: "success" }));
+  }, [dispatch]);
+
+  const error = useCallback((message: string) => {
+    dispatch(showNotification({ message, type: "error" }));
+  }, [dispatch]);
+
+  const info = useCallback((message: string) => {
+    dispatch(showNotification({ message, type: "info" }));
+  }, [dispatch]);
+
+  const hide = useCallback(() => {
+    dispatch(hideNotification());
+  }, [dispatch]);
+
+  return { success, error, info, hide };
+}
+```
+
+### Usage in Components
+
+#### Using Feature Hook (Recommended)
+```typescript
+"use client";
+import { useFeature } from "@/features/myfeature/hooks";
+
+export default function MyFeaturePage() {
+  const {
+    items,
+    isLoading,
+    searchInput,
+    handleSearchChange,
+    currentPage,
+    totalPages,
+    handlePageChange,
+    handleCreate,
+  } = useFeature();
+
+  return (
+    <div>
+      <input value={searchInput} onChange={handleSearchChange} />
+      {isLoading ? <Loading /> : <ItemsList items={items} />}
+      <Pagination current={currentPage} total={totalPages} onChange={handlePageChange} />
+    </div>
+  );
+}
+```
+
+#### Using Direct RTK Query Hook (Simple Cases)
+```typescript
+"use client";
+import { useGetItemsQuery } from "@/features/myfeature/api";
+
+export default function SimpleList() {
+  const { data, isLoading } = useGetItemsQuery({ page: 1, perPage: 10 });
+
+  if (isLoading) return <Loading />;
+  return <ItemsList items={data?.items} />;
+}
+```
+
+### Redux Rules Summary
+
+#### DO
+- **Always use typed hooks** (`useAppDispatch`, `useAppSelector`, not plain Redux hooks)
+- **Create feature APIs** by injecting endpoints into `apiSlice`
+- **Use RTK Query** for all API calls (queries and mutations)
+- **Create custom feature hooks** to orchestrate RTK Query + local state + business logic
+- **Use utility hooks** for common patterns (debounce, pagination, notifications)
+- **Memoize computed values** with `useMemo`
+- **Memoize callbacks** with `useCallback` when passed to children or used in deps
+- **Use cache tags** properly for automatic refetching (`providesTags`, `invalidatesTags`)
+- **Keep components thin** - all logic in hooks
+- **Follow folder structure exactly** (api/, hooks/, models/ in features/)
+- **Export from index.ts** for clean imports
+
+#### DON'T
+- **Don't use plain Redux hooks** (`useDispatch`, `useSelector` without types)
+- **Don't fetch with fetch/axios** - always use RTK Query
+- **Don't put business logic in components** - use custom hooks
+- **Don't hardcode API URLs** - use `NEXT_PUBLIC_API_URL` env variable
+- **Don't skip cache tags** - they enable automatic refetching
+- **Don't create multiple hooks per feature** - one public hook that orchestrates everything
+- **Don't mix API logic with component logic**
+- **Don't forget to add new tag types** to `apiSlice` tagTypes array
+- **Don't create duplicate state** - if RTK Query has it, use it
+
+#### Integration Checklist
+When adding Redux to a new feature:
+1. ✅ Create `features/{feature}/api/{feature}Api.ts` with endpoints
+2. ✅ Add cache tags to `store/api/apiSlice.ts` tagTypes
+3. ✅ Create types in `features/{feature}/models/{feature}.ts`
+4. ✅ Create `features/{feature}/hooks/use{Feature}.ts` hook
+5. ✅ Export from `api/index.ts` and `hooks/index.ts`
+6. ✅ Use feature hook in components
+7. ✅ Test queries and mutations work
+8. ✅ Verify caching and refetching behavior
+
+#### Environment Setup
+- Create `.env.local` with `NEXT_PUBLIC_API_URL=your-api-url`
+- API calls will automatically use this base URL
+- Auth headers can be added in `apiSlice.ts` prepareHeaders
+
+#### File Naming
+- API files: `{feature}Api.ts` (e.g., `userApi.ts`, `productApi.ts`)
+- Hooks: `use{Feature}.ts` (e.g., `useUser.ts`, `useProduct.ts`)
+- Models: `{feature}.ts` (e.g., `user.ts`, `product.ts`)
+
+By following these Redux rules, you ensure consistent, maintainable, and scalable state management across the entire application.s
