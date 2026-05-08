@@ -15,17 +15,17 @@ export function ProjectsSection({ projects, accentColor = '#1e3a5f' }: Readonly<
       <SectionHeading accentColor={accentColor}>Projects</SectionHeading>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         {visible.map((project) => (
-          <div key={project.id}>
+          <div key={project.id} className="page-break-avoid">
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, flexWrap: 'wrap' }}>
-              <p style={{ fontSize: 11, fontWeight: 700, color: '#111827' }}>{project.title}</p>
+              <p style={{ fontSize: 12, fontWeight: 700, color: '#111827' }}>{project.title}</p>
               {(project.liveLink || project.githubLink) && (
-                <span style={{ fontSize: 9, color: accentColor }}>
+                <span style={{ fontSize: 10, color: accentColor }}>
                   {project.liveLink || project.githubLink}
                 </span>
               )}
             </div>
             {project.techStack && (
-              <p style={{ fontSize: 9.5, color: '#7c3aed', fontWeight: 600, marginTop: 1 }}>
+              <p style={{ fontSize: 10.5, color: '#7c3aed', fontWeight: 600, marginTop: 1 }}>
                 {project.techStack}
               </p>
             )}
@@ -34,7 +34,7 @@ export function ProjectsSection({ projects, accentColor = '#1e3a5f' }: Readonly<
                 {project.bullets.filter(Boolean).map((bullet) => (
                   <li key={bullet} style={{ display: 'flex', gap: 6, alignItems: 'flex-start' }}>
                     <span style={{ marginTop: 4, width: 3, height: 3, borderRadius: '50%', backgroundColor: accentColor, flexShrink: 0 }} />
-                    <span style={{ fontSize: 10, color: '#374151', lineHeight: 1.55 }}>{bullet}</span>
+                    <span style={{ fontSize: 11, color: '#374151', lineHeight: 1.55 }}>{bullet}</span>
                   </li>
                 ))}
               </ul>

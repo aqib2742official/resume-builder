@@ -17,7 +17,7 @@ export function InterestsSection({ interests, accentColor }: Readonly<InterestsS
           <span
             key={interest}
             style={{
-              fontSize: 9.5,
+              fontSize: 10.5,
               color: '#374151',
               backgroundColor: '#f3f4f6',
               border: '1px solid #e5e7eb',

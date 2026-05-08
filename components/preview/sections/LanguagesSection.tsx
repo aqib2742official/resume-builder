@@ -26,9 +26,9 @@ export function LanguagesSection({ languages, accentColor = '#1e3a5f' }: Readonl
           const filled = PROFICIENCY_DOTS[lang.proficiency] ?? 3
           return (
             <div key={lang.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <p style={{ fontSize: 10.5, color: '#111827', fontWeight: 600 }}>{lang.name}</p>
+              <p style={{ fontSize: 11.5, color: '#111827', fontWeight: 600 }}>{lang.name}</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-                <span style={{ fontSize: 9, color: '#6b7280', marginRight: 4 }}>{lang.proficiency}</span>
+                <span style={{ fontSize: 10, color: '#6b7280', marginRight: 4 }}>{lang.proficiency}</span>
                 {[1, 2, 3, 4, 5].map((dot) => (
                   <span
                     key={dot}

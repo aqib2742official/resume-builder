@@ -15,9 +15,9 @@ export function SkillsSection({ skills, accentColor = '#1e3a5f' }: Readonly<Skil
       <SectionHeading accentColor={accentColor}>Skills</SectionHeading>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
         {visible.map((cat) => (
-          <div key={cat.id}>
+          <div key={cat.id} className="page-break-avoid">
             {cat.category && (
-              <p style={{ fontSize: 9.5, fontWeight: 700, color: accentColor, marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <p style={{ fontSize: 10.5, fontWeight: 700, color: accentColor, marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 {cat.category}
               </p>
             )}
@@ -27,7 +27,7 @@ export function SkillsSection({ skills, accentColor = '#1e3a5f' }: Readonly<Skil
                   key={skill}
                   style={{
                     display: 'inline-block',
-                    fontSize: 9.5,
+                    fontSize: 10.5,
                     color: '#1e40af',
                     backgroundColor: '#eff6ff',
                     border: '0.5px solid #bfdbfe',

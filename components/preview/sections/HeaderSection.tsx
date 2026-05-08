@@ -83,7 +83,7 @@ export function HeaderSection({
 
           {personal.jobTitle && (
             <p style={{
-              fontSize: 12,
+              fontSize: 13,
               fontWeight: 500,
               color: accentColor,
               marginBottom: summary ? 9 : 0,
@@ -94,7 +94,7 @@ export function HeaderSection({
           )}
 
           {summary && (
-            <p style={{ fontSize: 10, color: '#374151', lineHeight: 1.65, maxWidth: showPhoto ? 560 : '100%' }}>
+            <p style={{ fontSize: 11, color: '#374151', lineHeight: 1.65, maxWidth: showPhoto ? 560 : '100%' }}>
               {summary}
             </p>
           )}
@@ -113,7 +113,7 @@ export function HeaderSection({
           gap: '4px 24px',
         }}>
           {contacts.map(({ key, icon: Icon, value }) => (
-            <span key={key} style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 9.5, color: '#4b5563' }}>
+            <span key={key} style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 10.5, color: '#4b5563' }}>
               <Icon size={10} style={{ flexShrink: 0, color: accentColor }} />
               <span style={{ maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {value}

@@ -18,13 +18,13 @@ export function AwardsSection({ awards, accentColor }: Readonly<AwardsSectionPro
         {visible.map((award) => (
           <div key={award.id}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-              <p style={{ fontSize: 10.5, fontWeight: 700, color: '#111827' }}>{award.title}</p>
+              <p style={{ fontSize: 11.5, fontWeight: 700, color: '#111827' }}>{award.title}</p>
               {award.date && (
-                <p style={{ fontSize: 9, color: '#6b7280', flexShrink: 0 }}>{formatSingleDate(award.date)}</p>
+                <p style={{ fontSize: 10, color: '#6b7280', flexShrink: 0 }}>{formatSingleDate(award.date)}</p>
               )}
             </div>
             {award.description && (
-              <p style={{ fontSize: 10, color: '#374151', lineHeight: 1.55, marginTop: 2 }}>{award.description}</p>
+              <p style={{ fontSize: 11, color: '#374151', lineHeight: 1.55, marginTop: 2 }}>{award.description}</p>
             )}
           </div>
         ))}

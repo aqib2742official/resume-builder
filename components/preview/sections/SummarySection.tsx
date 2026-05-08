@@ -11,7 +11,7 @@ export function SummarySection({ summary, accentColor }: Readonly<SummarySection
   return (
     <div>
       <SectionHeading accentColor={accentColor}>Profile</SectionHeading>
-      <p style={{ fontSize: 10.5, color: '#374151', lineHeight: 1.65, marginTop: 6 }}>
+      <p style={{ fontSize: 11.5, color: '#374151', lineHeight: 1.65, marginTop: 6 }}>
         {summary}
       </p>
     </div>

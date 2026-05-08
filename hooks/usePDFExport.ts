@@ -30,13 +30,9 @@ export function usePDFExport() {
     .a4-page { width: 210mm; min-height: 297mm; box-shadow: none !important; }
     .page-break-avoid { break-inside: avoid; page-break-inside: avoid; }
 
-    /* Standard resume page margins: 15mm top/bottom, 0 sides (resume has its own side padding) */
-    @page { size: A4 portrait; margin: 15mm 0; }
-
-    /* Match the @page top/bottom margin inside the content so the first page
-       doesn't start flush and the last line has breathing room before the edge */
-    body { padding: 0; }
-    .a4-page { padding-top: 0; padding-bottom: 0; }
+    /* margin:0 removes browser-added headers/footers (URL, page number, date).
+       The template itself provides all internal padding. */
+    @page { size: A4 portrait; margin: 0; }
   </style>
 </head>
 <body>${clone.outerHTML}</body>

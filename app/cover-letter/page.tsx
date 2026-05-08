@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Mail, Plus, Save, Trash2, Download, FileText, ChevronDown, X, Check, Loader2 } from 'lucide-react'
+import { Mail, Plus, Save, Trash2, Download, FileText, ChevronDown, X, Check, Loader2, Sparkles } from 'lucide-react'
 import { clsx } from 'clsx'
 import { getSavedResumes, type SavedResume } from '@/lib/resumeStorage'
+import { callAI } from '@/lib/ai'
 import {
   getCoverLetters, saveCoverLetter, updateCoverLetter, deleteCoverLetter,
   type CoverLetter,
@@ -84,6 +85,8 @@ export default function CoverLetterPage() {
   const [savedFeedback, setSavedFeedback] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [showList, setShowList] = useState(false)
+  const [aiGenerating, setAiGenerating] = useState(false)
+  const [aiError, setAiError] = useState(false)
 
   function loadAll() {
     const cls = getCoverLetters()
@@ -153,6 +156,29 @@ export default function CoverLetterPage() {
   const senderName = linkedResume?.data.personal.fullName || personal.fullName || ''
   const senderEmail = linkedResume?.data.personal.email || personal.email || ''
   const senderPhone = linkedResume?.data.personal.phone || personal.phone || ''
+
+  async function handleAIGenerate() {
+    setAiGenerating(true)
+    setAiError(false)
+    try {
+      const resumeData = linkedResume?.data
+      const skills = (resumeData?.skills ?? []).flatMap((c) => c.skills).slice(0, 15).join(', ')
+      const summary = resumeData?.personal.summary || personal.summary || ''
+      const result = await callAI('cover-letter', {
+        company: draft.companyName,
+        role: draft.jobTitle,
+        senderName,
+        skills,
+        summary,
+      })
+      setDraft((d) => ({ ...d, body: result }))
+    } catch {
+      setAiError(true)
+      setTimeout(() => setAiError(false), 3000)
+    } finally {
+      setAiGenerating(false)
+    }
+  }
 
   return (
     <div className="flex flex-col h-full overflow-hidden bg-gray-50 dark:bg-gray-950">
@@ -279,6 +305,27 @@ export default function CoverLetterPage() {
                   value={draft.jobTitle}
                   onChange={(e) => setDraft((d) => ({ ...d, jobTitle: e.target.value }))}
                 />
+              </div>
+            </div>
+
+            {/* AI Generate button */}
+            <div className="flex items-center justify-between gap-2 border-t border-gray-100 dark:border-gray-700 pt-4">
+              <div>
+                <p className="text-xs font-semibold text-gray-700 dark:text-gray-200 flex items-center gap-1">
+                  <Sparkles size={12} className="text-[#0f2044] dark:text-sky-400" /> AI Cover Letter
+                </p>
+                <p className="text-xs text-gray-400 mt-0.5">Generates from company, role + resume</p>
+              </div>
+              <div className="flex flex-col items-end gap-1">
+                {aiError && <span className="text-[10px] text-red-500">Failed — check API key</span>}
+                <button
+                  onClick={handleAIGenerate}
+                  disabled={aiGenerating || (!draft.companyName.trim() && !draft.jobTitle.trim())}
+                  className="flex items-center gap-1.5 rounded-lg bg-[#0f2044] hover:bg-[#162d5c] text-white px-3 py-1.5 text-xs font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  {aiGenerating ? <Loader2 size={12} className="animate-spin" /> : <Sparkles size={12} />}
+                  {aiGenerating ? 'Writing…' : 'Generate with AI'}
+                </button>
               </div>
             </div>
 
