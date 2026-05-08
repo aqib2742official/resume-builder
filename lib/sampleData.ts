@@ -2,6 +2,128 @@ import type { ResumeData } from '@/types/resume'
 
 export const sampleResumeData: ResumeData = {
   personal: {
+    fullName: 'Maria Ameen',
+    jobTitle: 'Aspiring Full Stack Developer (MERN)',
+    email: 'ameenmaria11@gmail.com',
+    phone: '0309-4605656',
+    location: 'Gullberg, Lahore, PK',
+    linkedin: '',
+    github: '',
+    portfolio: '',
+    photo: '',
+    summary:
+      'Computer Science student with a strong interest in web development and modern frontend technologies. Skilled in building responsive web interfaces using HTML, CSS, and Bootstrap, with a solid foundation in programming concepts. Eager to begin a career in development, contribute to real-world projects, and continuously enhance skills in JavaScript and modern frameworks.',
+  },
+  experience: [
+    {
+      id: crypto.randomUUID(),
+      company: 'Government Health Department – Pakistan',
+      position: 'Polio Campaign Worker',
+      location: 'Pakistan',
+      startDate: '',
+      endDate: '',
+      currentlyWorking: false,
+      bullets: [
+        'Participated in community outreach programs',
+        'Developed communication and teamwork skills in fieldwork',
+      ],
+    },
+    {
+      id: crypto.randomUUID(),
+      company: 'Organization',
+      position: 'Nursing Training (Basic Level)',
+      location: '',
+      startDate: '',
+      endDate: '',
+      currentlyWorking: false,
+      bullets: [
+        'Gained practical exposure to structured training environments',
+        'Improved discipline, responsibility, and coordination',
+      ],
+    },
+  ],
+  education: [
+    {
+      id: crypto.randomUUID(),
+      institution: 'Government College University Faisalabad',
+      degree: 'BS Computer Science',
+      fieldOfStudy: 'Computer Science',
+      location: 'Faisalabad',
+      startDate: '2022-06',
+      endDate: '2026-06',
+      description: 'CGPA: 3.78 | Expected Graduation',
+    },
+  ],
+  projects: [
+    {
+      id: crypto.randomUUID(),
+      title: 'Portfolio Website',
+      techStack: 'HTML, CSS, Bootstrap — Self-Initiated Project',
+      liveLink: '',
+      githubLink: '',
+      bullets: [
+        'Developed a responsive personal portfolio using HTML, CSS, and Bootstrap',
+        'Designed clean UI layout for showcasing profile and skills',
+        'Ensured mobile-friendly design for multiple screen sizes',
+        'Structured clean UI with reusable sections',
+      ],
+    },
+    {
+      id: crypto.randomUUID(),
+      title: 'Responsive Landing Page',
+      techStack: 'HTML, CSS, Bootstrap — Academic Project',
+      liveLink: '',
+      githubLink: '',
+      bullets: [
+        'Created a modern landing page using Bootstrap',
+        'Focused on layout structure, styling, and user-friendly design',
+        'Applied responsive techniques for cross-device compatibility',
+      ],
+    },
+  ],
+  skills: [
+    {
+      id: crypto.randomUUID(),
+      category: 'Web',
+      skills: ['HTML5', 'CSS', 'JavaScript (ES6+)', 'Tailwind CSS / Bootstrap', 'Responsive Design'],
+    },
+    {
+      id: crypto.randomUUID(),
+      category: 'Tools',
+      skills: ['Git & GitHub', 'VS Code'],
+    },
+    {
+      id: crypto.randomUUID(),
+      category: 'Other',
+      skills: ['C++ (Fundamentals, Problem Solving)', 'MS Word', 'Excel', 'PowerPoint'],
+    },
+  ],
+  certifications: [
+    {
+      id: crypto.randomUUID(),
+      title: 'Web Development',
+      issuer: 'Training Program',
+      date: '',
+      credentialLink: '',
+    },
+    {
+      id: crypto.randomUUID(),
+      title: 'Graphic Designing',
+      issuer: 'Training Program',
+      date: '',
+      credentialLink: '',
+    },
+  ],
+  languages: [],
+  awards: [],
+  volunteer: [],
+  interests: [],
+  customSections: [],
+  hiddenSections: [],
+}
+
+export const aqibAliResumeData: ResumeData = {
+  personal: {
     fullName: 'Aqib Ali',
     jobTitle: 'ReactJS | Next.js | Node.js Developer',
     email: 'aqib.ali018634@gmail.com',
@@ -25,11 +147,10 @@ export const sampleResumeData: ResumeData = {
       currentlyWorking: true,
       bullets: [
         'Developed scalable e-commerce and multi-vendor platforms with dynamic content, multi-language, and role-based access.',
-        'Led development of Fast Travel Solutions, a comprehensive web platform including interactive dashboards for Customers, Operators, Drivers, and Admins. Real-time booking, bidding, and vehicle management.',
+        'Led development of Fast Travel Solutions, a comprehensive web platform including interactive dashboards for Customers, Operators, Drivers, and Admins.',
         'Contributed to a SaaS-based HR system covering attendance, payroll, performance, and recruitment modules.',
         'Built and maintained Anicson Solar Admin Portal for real-time inverter data monitoring and analytics.',
-        'Updated and optimized multiple legacy projects for better performance and UI consistency.',
-        'Integrated Node.js services in current projects to handle backend tasks such as API development, authentication, and server-side logic.',
+        'Integrated Node.js services to handle API development, authentication, and server-side logic.',
       ],
     },
     {
@@ -41,9 +162,9 @@ export const sampleResumeData: ResumeData = {
       endDate: '2024-05',
       currentlyWorking: false,
       bullets: [
-        'Developed Mavard, a scalable platform for selling construction materials, implementing seamless vendor onboarding and store management.',
-        'Enhanced the Industry Mall platform by implementing direct sales features, allowing companies and individual sellers to list and sell machines efficiently.',
-        'Led the integration of secure user/vendor authentication, order management, and comprehensive dashboards.',
+        'Developed Mavard, a scalable platform for selling construction materials with seamless vendor onboarding.',
+        'Enhanced Industry Mall by implementing direct sales features for companies and individual sellers.',
+        'Led integration of secure authentication, order management, and comprehensive dashboards.',
       ],
     },
     {
@@ -55,7 +176,7 @@ export const sampleResumeData: ResumeData = {
       endDate: '2023-01',
       currentlyWorking: false,
       bullets: [
-        'Developed a smart web app for 200+ companies using SIE, automating finance, billing, and user-specific dashboards.',
+        'Developed a smart web app for 200+ companies automating finance, billing, and user-specific dashboards.',
         'Secured authentication, dynamic data visualization (ApexCharts), and responsive UI with ReactJS and .NET Core APIs.',
       ],
     },
@@ -80,27 +201,7 @@ export const sampleResumeData: ResumeData = {
       liveLink: 'https://fasttravelmade.co.uk',
       githubLink: '',
       bullets: [
-        'Developed a versatile system with role-based dashboards for customers, operators, admins, and drivers, enabling seamless booking, bidding, tracking, and trip management.',
-      ],
-    },
-    {
-      id: crypto.randomUUID(),
-      title: 'Gulfcars (London VIP Cars in Wembley)',
-      techStack: 'Next.js, React, Redux, Tailwind CSS',
-      liveLink: 'https://gulfcars.com',
-      githubLink: '',
-      bullets: [
-        'Developed admin-controlled pages for a car hire platform offering city, local, and airport transport services. Enabled full content management and booking flow via a user-friendly interface.',
-      ],
-    },
-    {
-      id: crypto.randomUUID(),
-      title: 'HR Attendance Management System',
-      techStack: 'React, Redux, Node.js, PostgreSQL',
-      liveLink: '',
-      githubLink: '',
-      bullets: [
-        'Product-based SaaS platform for managing employee attendance, payroll, leaves, performance, and recruitment. Features include multi-role access, automated salary processing, and streamlined onboarding workflows.',
+        'Role-based dashboards for customers, operators, admins, and drivers enabling seamless booking, bidding, tracking, and trip management.',
       ],
     },
     {
@@ -110,95 +211,35 @@ export const sampleResumeData: ResumeData = {
       liveLink: 'https://ojha.pk',
       githubLink: '',
       bullets: [
-        'A multi-vendor marketplace allowing vendors to manage stores, products, and orders. Features include secure payments, customizable listings, and smooth buyer-seller interaction.',
+        'Multi-vendor marketplace with vendor store management, secure payments, and smooth buyer-seller interaction.',
       ],
     },
     {
       id: crypto.randomUUID(),
-      title: 'Anicson Solar Admin Portal',
-      techStack: 'React, Redux, ApexCharts, REST APIs',
-      liveLink: 'https://anicson.store',
+      title: 'HR Attendance Management System',
+      techStack: 'React, Redux, Node.js, PostgreSQL',
+      liveLink: '',
       githubLink: '',
       bullets: [
-        'A smart system to manage Anicson solar inverter inventory and complaints, with real-time tracking and seamless app integration for support and service.',
+        'SaaS platform for managing attendance, payroll, leaves, performance, and recruitment with multi-role access.',
       ],
     },
   ],
   skills: [
-    {
-      id: crypto.randomUUID(),
-      category: 'Frontend',
-      skills: ['HTML', 'CSS', 'Bootstrap', 'Javascript', 'Typescript', 'Tailwind CSS'],
-    },
-    {
-      id: crypto.randomUUID(),
-      category: 'Libraries & Frameworks',
-      skills: ['React Hooks', 'Redux Toolkit', 'React Router', 'OOP', 'NextJs'],
-    },
-    {
-      id: crypto.randomUUID(),
-      category: 'Backend & Tools',
-      skills: ['Basic ASP.NET', 'Github', 'Problem Solving', 'Node.js', 'REST APIs', 'Material-UI'],
-    },
-    {
-      id: crypto.randomUUID(),
-      category: 'Soft Skills',
-      skills: ['Proven ability to work well in a team', 'Multi-language Support'],
-    },
+    { id: crypto.randomUUID(), category: 'Frontend', skills: ['HTML', 'CSS', 'Bootstrap', 'Javascript', 'Typescript', 'Tailwind CSS'] },
+    { id: crypto.randomUUID(), category: 'Libraries & Frameworks', skills: ['React Hooks', 'Redux Toolkit', 'React Router', 'NextJs'] },
+    { id: crypto.randomUUID(), category: 'Backend & Tools', skills: ['Node.js', 'REST APIs', 'Github', 'Material-UI', 'Basic ASP.NET'] },
   ],
   certifications: [
-    {
-      id: crypto.randomUUID(),
-      title: 'Meta Front-End Developer',
-      issuer: 'Meta (Coursera)',
-      date: '2023-08',
-      credentialLink: 'https://coursera.org/verify/meta-frontend',
-    },
-    {
-      id: crypto.randomUUID(),
-      title: 'JavaScript Algorithms & Data Structures',
-      issuer: 'freeCodeCamp',
-      date: '2022-06',
-      credentialLink: 'https://freecodecamp.org/certification/aqib/javascript-algorithms-and-data-structures',
-    },
-    {
-      id: crypto.randomUUID(),
-      title: 'React — The Complete Guide',
-      issuer: 'Udemy (Maximilian Schwarzmüller)',
-      date: '2022-03',
-      credentialLink: '',
-    },
+    { id: crypto.randomUUID(), title: 'Meta Front-End Developer', issuer: 'Meta (Coursera)', date: '2023-08', credentialLink: '' },
+    { id: crypto.randomUUID(), title: 'React — The Complete Guide', issuer: 'Udemy', date: '2022-03', credentialLink: '' },
   ],
   languages: [
-    {
-      id: crypto.randomUUID(),
-      name: 'Urdu',
-      proficiency: 'Native',
-    },
-    {
-      id: crypto.randomUUID(),
-      name: 'English',
-      proficiency: 'Intermediate',
-    },
-    {
-      id: crypto.randomUUID(),
-      name: 'Punjabi',
-      proficiency: 'Native',
-    },
+    { id: crypto.randomUUID(), name: 'Urdu', proficiency: 'Native' },
+    { id: crypto.randomUUID(), name: 'English', proficiency: 'Intermediate' },
   ],
   awards: [
-    {
-      id: crypto.randomUUID(),
-      title: 'Best Developer of the Quarter',
-      date: '2024-09',
-      description: 'Recognized for delivering the Fast Travel Solutions platform ahead of schedule with zero critical defects.',
-    },
-    {
-      id: crypto.randomUUID(),
-      title: 'Top Contributor — Open Source Hackathon',
-      date: '2023-04',
-      description: 'Placed 2nd among 120+ participants for building an accessible civic-reporting web app in 48 hours.',
-    },
+    { id: crypto.randomUUID(), title: 'Best Developer of the Quarter', date: '2024-09', description: 'Recognized for delivering the Fast Travel Solutions platform ahead of schedule with zero critical defects.' },
   ],
   volunteer: [
     {
@@ -209,23 +250,10 @@ export const sampleResumeData: ResumeData = {
       startDate: '2023-03',
       endDate: '',
       currentlyVolunteering: true,
-      description: 'Mentoring junior developers and students through weekly code reviews, pair-programming sessions, and workshops on React and modern JavaScript.',
-    },
-    {
-      id: crypto.randomUUID(),
-      organization: 'Lahore Tech Community',
-      role: 'Workshop Facilitator',
-      location: 'Lahore, Pakistan',
-      startDate: '2022-09',
-      endDate: '2023-02',
-      currentlyVolunteering: false,
-      description: 'Organized and facilitated monthly hands-on workshops covering web fundamentals, Git workflows, and career guidance for fresh graduates.',
+      description: 'Mentoring junior developers through weekly code reviews, pair-programming sessions, and workshops on React and modern JavaScript.',
     },
   ],
-  interests: [
-    'Open Source', 'Competitive Programming', 'UI/UX Design', 'Photography',
-    'Hiking', 'Chess', 'Tech Podcasts', 'Football',
-  ],
+  interests: ['Open Source', 'Competitive Programming', 'UI/UX Design', 'Photography', 'Chess', 'Football'],
   customSections: [],
   hiddenSections: [],
 }

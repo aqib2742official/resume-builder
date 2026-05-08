@@ -1,6 +1,7 @@
 import type { ResumeData } from '@/types/resume'
 
-const STORAGE_KEY = 'resume-builder-saved-v1'
+const STORAGE_KEY  = 'resume-builder-saved-v1'
+const SEEDED_KEY   = 'resume-builder-seeded-v1'
 const MAX_VERSIONS = 10
 
 export interface ResumeVersion {
@@ -96,4 +97,25 @@ export function updateResume(id: string, data: ResumeData): void {
     r.id === id ? { ...r, data, savedAt: new Date().toISOString() } : r
   )
   localStorage.setItem(STORAGE_KEY, JSON.stringify(resumes))
+}
+
+export function seedInitialResumes(): void {
+  if (typeof window === 'undefined') return
+  if (localStorage.getItem(SEEDED_KEY)) return
+  // Lazy import to avoid circular deps at module level
+  import('@/lib/sampleData').then(({ aqibAliResumeData }) => {
+    const now = new Date().toISOString()
+    const record: SavedResume = {
+      id: 'seed-aqib-ali',
+      name: 'Aqib Ali',
+      data: aqibAliResumeData,
+      versions: [{ versionId: 'seed-aqib-ali-v1', label: 'v1', data: aqibAliResumeData, savedAt: now }],
+      savedAt: now,
+    }
+    const existing = getSavedResumes()
+    if (!existing.find((r) => r.id === 'seed-aqib-ali')) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([record, ...existing]))
+    }
+    localStorage.setItem(SEEDED_KEY, '1')
+  })
 }
