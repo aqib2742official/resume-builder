@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Palette, RotateCcw, Columns2, AlignJustify, Circle, Square, ImageOff, GraduationCap } from 'lucide-react'
+import { Palette, RotateCcw, Columns2, AlignJustify, Circle, Square, ImageOff, GraduationCap, FileText, LayoutPanelLeft, Zap } from 'lucide-react'
 import { clsx } from 'clsx'
 import { ACCENT_PRESETS, FONT_OPTIONS } from '@/store/themeSlice'
 import type { Density, PhotoShape, TemplateId, HeadingStyle, NameSize } from '@/store/themeSlice'
@@ -20,9 +20,12 @@ const PHOTO_OPTIONS: { value: PhotoShape; icon: React.ReactNode; label: string }
 ]
 
 const TEMPLATE_OPTIONS: { value: TemplateId; icon: React.ReactNode; label: string; sub: string }[] = [
-  { value: 'two-column', icon: <Columns2 size={15} />,        label: 'Classic',  sub: 'Two columns'   },
-  { value: 'minimal',    icon: <AlignJustify size={15} />,    label: 'Minimal',  sub: 'Single column' },
-  { value: 'academic',   icon: <GraduationCap size={15} />,   label: 'Academic', sub: 'CV / dense'    },
+  { value: 'two-column',   icon: <Columns2 size={15} />,        label: 'Classic',      sub: 'Two columns'   },
+  { value: 'minimal',      icon: <AlignJustify size={15} />,    label: 'Minimal',      sub: 'Single column' },
+  { value: 'academic',     icon: <GraduationCap size={15} />,   label: 'Academic',     sub: 'CV / dense'    },
+  { value: 'professional', icon: <FileText size={15} />,        label: 'Professional', sub: 'Clean & formal'},
+  { value: 'executive',    icon: <LayoutPanelLeft size={15} />, label: 'Executive',    sub: 'Sidebar layout'},
+  { value: 'modern',       icon: <Zap size={15} />,             label: 'Modern',       sub: 'Timeline style'},
 ]
 
 const HEADING_STYLE_OPTIONS: { value: HeadingStyle; label: string; preview: React.ReactNode }[] = [
@@ -117,7 +120,7 @@ export function ThemeCustomizer() {
               {/* Layout */}
               <div>
                 <p className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-2">Layout</p>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-3 gap-2">
                   {TEMPLATE_OPTIONS.map((t) => (
                     <button
                       key={t.value}

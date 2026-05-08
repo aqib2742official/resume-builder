@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
-import { LayoutDashboard, FileText, PenSquare, Mail, Briefcase, BarChart3, Moon, Sun } from 'lucide-react'
+import { LayoutDashboard, FileText, PenSquare, Mail, Briefcase, BarChart3, Moon, Sun, LayoutTemplate } from 'lucide-react'
 import { clsx } from 'clsx'
 import { toggleDarkMode } from '@/store/uiSlice'
 import type { RootState, AppDispatch } from '@/store'
@@ -11,6 +11,7 @@ import type { RootState, AppDispatch } from '@/store'
 const navItems = [
   { href: '/', icon: LayoutDashboard, label: 'Dashboard' },
   { href: '/resumes', icon: FileText, label: 'My Resumes' },
+  { href: '/templates', icon: LayoutTemplate, label: 'Templates' },
   { href: '/editor', icon: PenSquare, label: 'Editor' },
   { href: '/cover-letter', icon: Mail, label: 'Cover Letter' },
   { href: '/job-tracker', icon: Briefcase, label: 'Job Tracker' },

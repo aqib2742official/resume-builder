@@ -6,6 +6,9 @@ import type { RootState } from '@/store'
 import { ResumeTemplate } from './ResumeTemplate'
 import { MinimalTemplate } from './MinimalTemplate'
 import { AcademicTemplate } from './AcademicTemplate'
+import { ProfessionalTemplate } from './ProfessionalTemplate'
+import { ExecutiveTemplate } from './ExecutiveTemplate'
+import { ModernTemplate } from './ModernTemplate'
 
 export function ResumePreview() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -36,8 +39,11 @@ export function ResumePreview() {
   const visualH = templateH * scale
 
   function TemplateComponent({ noPdfId }: { noPdfId?: boolean }) {
-    if (templateId === 'minimal') return <MinimalTemplate noPdfId={noPdfId} />
-    if (templateId === 'academic') return <AcademicTemplate noPdfId={noPdfId} />
+    if (templateId === 'minimal')       return <MinimalTemplate noPdfId={noPdfId} />
+    if (templateId === 'academic')      return <AcademicTemplate noPdfId={noPdfId} />
+    if (templateId === 'professional')  return <ProfessionalTemplate noPdfId={noPdfId} />
+    if (templateId === 'executive')     return <ExecutiveTemplate noPdfId={noPdfId} />
+    if (templateId === 'modern')        return <ModernTemplate noPdfId={noPdfId} />
     return <ResumeTemplate noPdfId={noPdfId} />
   }
 

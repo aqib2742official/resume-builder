@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type FontFamily   = 'geist' | 'inter' | 'roboto' | 'playfair' | 'georgia'
-export type TemplateId   = 'two-column' | 'minimal' | 'academic'
+export type TemplateId   = 'two-column' | 'minimal' | 'academic' | 'professional' | 'executive' | 'modern'
 export type Density      = 'compact' | 'standard' | 'spacious'
 export type PhotoShape   = 'circle' | 'square' | 'none'
 export type HeadingStyle = 'underline' | 'leftbar' | 'plain' | 'filled'

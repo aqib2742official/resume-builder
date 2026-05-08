@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
-import { LayoutDashboard, FileText, PenSquare, Mail, Briefcase, BarChart3, Globe, Moon, Sun, Menu, X } from 'lucide-react'
+import { LayoutDashboard, FileText, PenSquare, Mail, Briefcase, BarChart3, Globe, Moon, Sun, Menu, X, LayoutTemplate } from 'lucide-react'
 import { clsx } from 'clsx'
 import { toggleDarkMode } from '@/store/uiSlice'
 import type { RootState, AppDispatch } from '@/store'
@@ -12,6 +12,7 @@ import type { RootState, AppDispatch } from '@/store'
 const navItems = [
   { href: '/', icon: LayoutDashboard, label: 'Dashboard' },
   { href: '/resumes', icon: FileText, label: 'My Resumes' },
+  { href: '/templates', icon: LayoutTemplate, label: 'Templates' },
   { href: '/editor', icon: PenSquare, label: 'Editor' },
   { href: '/cover-letter', icon: Mail, label: 'Cover Letter' },
   { href: '/job-tracker', icon: Briefcase, label: 'Job Tracker' },
@@ -75,7 +76,7 @@ export function Navbar() {
             {/* CTA — inverted white-on-navy for clean contrast */}
             <Link
               href="/editor"
-              className="hidden sm:inline-flex items-center gap-2 rounded-lg text-sm font-bold px-4 py-2 bg-white text-[#0f2044] hover:bg-sky-50 transition-colors shadow-md"
+              className="hidden sm:inline-flex items-center gap-2 rounded-lg text-sm font-bold px-4 py-2 bg-white text-[#0f2044] hover:bg-sky-50 transition-colors shadow-md whitespace-nowrap shrink-0"
             >
               <PenSquare size={14} />
               Build Resume
