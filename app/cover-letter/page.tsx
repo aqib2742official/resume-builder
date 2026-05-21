@@ -195,15 +195,15 @@ export default function CoverLetterPage() {
       const summary = resumeData?.personal.summary || personal.summary || ''
       const experience = (resumeData?.experience ?? [])
         .slice(0, 3)
-        .map((e) => `${e.role} at ${e.company}: ${(e.bullets ?? []).slice(0, 2).join('; ')}`)
+        .map((e) => `${e.position} at ${e.company}: ${(e.bullets ?? []).slice(0, 2).join('; ')}`)
         .join(' | ')
       const education = (resumeData?.education ?? [])
         .slice(0, 2)
-        .map((e) => `${e.degree} from ${e.school}`)
+        .map((e) => `${e.degree} from ${e.institution}`)
         .join(', ')
       const projects = (resumeData?.projects ?? [])
         .slice(0, 2)
-        .map((p) => p.name)
+        .map((p) => p.title)
         .join(', ')
       const result = await callAI('cover-letter', {
         company: draft.companyName,

@@ -33,7 +33,7 @@ export function getJobs(): JobApplication[] {
   } catch { return [] }
 }
 
-export function addJob(data: Omit<JobApplication, 'id'>): JobApplication {
+export function addJob(data: Omit<JobApplication, 'id' | 'notesHistory' | 'deadline' | 'interviewDate' | 'interviewType'> & Partial<Pick<JobApplication, 'notesHistory' | 'deadline' | 'interviewDate' | 'interviewType'>>): JobApplication {
   const jobs = getJobs()
   const job: JobApplication = {
     notesHistory: [],
