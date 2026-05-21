@@ -1,0 +1,123 @@
+<svg width="820" height="580" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <text x="410" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#0f172a">Figure 4.3 — MongoDB Entity-Relationship Diagram</text>
+
+  <!-- ═══ USER (center top) ═══ -->
+  <rect x="290" y="45" width="240" height="185" rx="7" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <rect x="290" y="45" width="240" height="28" rx="7" fill="#2563eb"/>
+  <rect x="290" y="66" width="240" height="7" fill="#2563eb"/>
+  <text x="410" y="65" text-anchor="middle" font-size="12" font-weight="bold" fill="white">User</text>
+  <text x="305" y="90" font-size="9.5" fill="#1e3a8a">_id          ObjectId  (PK)</text>
+  <text x="305" y="106" font-size="9.5" fill="#1e3a8a">fullName   String</text>
+  <text x="305" y="122" font-size="9.5" fill="#1e3a8a">email        String  (unique, indexed)</text>
+  <text x="305" y="138" font-size="9.5" fill="#1e3a8a">phone       String</text>
+  <text x="305" y="154" font-size="9.5" fill="#1e3a8a">avatar       String  (URL)</text>
+  <text x="305" y="170" font-size="9.5" fill="#1e3a8a">password  String  (bcrypt hash)</text>
+  <text x="305" y="186" font-size="9.5" fill="#dc2626" font-weight="bold">role          'user'|'admin'|'super_admin'</text>
+  <text x="305" y="202" font-size="9.5" fill="#1e3a8a">disabled    Boolean</text>
+  <text x="305" y="218" font-size="9.5" fill="#1e3a8a">createdAt  Date</text>
+
+  <!-- ═══ RESUME (bottom-left) ═══ -->
+  <rect x="30" y="300" width="230" height="235" rx="7" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <rect x="30" y="300" width="230" height="28" rx="7" fill="#16a34a"/>
+  <rect x="30" y="321" width="230" height="7" fill="#16a34a"/>
+  <text x="145" y="320" text-anchor="middle" font-size="12" font-weight="bold" fill="white">Resume</text>
+  <text x="45" y="345" font-size="9.5" fill="#14532d">_id           ObjectId  (PK)</text>
+  <text x="45" y="361" font-size="9.5" fill="#dc2626" font-weight="bold">userId       ObjectId  (FK → User)</text>
+  <text x="45" y="377" font-size="9.5" fill="#14532d">name         String</text>
+  <text x="45" y="393" font-size="9.5" fill="#14532d">template    String</text>
+  <text x="45" y="409" font-size="9.5" fill="#14532d">data          Mixed  (ResumeData)</text>
+  <text x="45" y="425" font-size="9.5" fill="#14532d">theme        Mixed</text>
+  <text x="45" y="441" font-size="9.5" fill="#14532d">versions[]  ResumeVersion[]</text>
+  <text x="45" y="457" font-size="9.5" fill="#14532d">isFavorite  Boolean</text>
+  <text x="45" y="473" font-size="9.5" fill="#14532d">completeness Number</text>
+  <text x="45" y="489" font-size="9.5" fill="#14532d">createdAt   Date</text>
+  <text x="45" y="505" font-size="9.5" fill="#14532d">updatedAt  Date</text>
+  <!-- ResumeVersion sub-box -->
+  <rect x="38" y="515" width="214" height="14" rx="3" fill="#bbf7d0"/>
+  <text x="145" y="526" text-anchor="middle" font-size="8.5" fill="#166534">▸ versions[]: {versionId, label, data, theme, savedAt}</text>
+
+  <!-- ═══ COVER LETTER (bottom-center-left) ═══ -->
+  <rect x="290" y="300" width="215" height="195" rx="7" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <rect x="290" y="300" width="215" height="28" rx="7" fill="#d97706"/>
+  <rect x="290" y="321" width="215" height="7" fill="#d97706"/>
+  <text x="397" y="320" text-anchor="middle" font-size="12" font-weight="bold" fill="white">CoverLetter</text>
+  <text x="305" y="345" font-size="9.5" fill="#78350f">_id              ObjectId  (PK)</text>
+  <text x="305" y="361" font-size="9.5" fill="#dc2626" font-weight="bold">userId          ObjectId  (FK → User)</text>
+  <text x="305" y="377" font-size="9.5" fill="#92400e">resumeId      ObjectId?  (FK → Resume)</text>
+  <text x="305" y="393" font-size="9.5" fill="#78350f">name             String</text>
+  <text x="305" y="409" font-size="9.5" fill="#78350f">recipientName String</text>
+  <text x="305" y="425" font-size="9.5" fill="#78350f">companyName String</text>
+  <text x="305" y="441" font-size="9.5" fill="#78350f">jobTitle          String</text>
+  <text x="305" y="457" font-size="9.5" fill="#78350f">body               String</text>
+  <text x="305" y="473" font-size="9.5" fill="#78350f">createdAt       Date</text>
+
+  <!-- ═══ JOB (bottom-center-right) ═══ -->
+  <rect x="530" y="300" width="225" height="250" rx="7" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+  <rect x="530" y="300" width="225" height="28" rx="7" fill="#7c3aed"/>
+  <rect x="530" y="321" width="225" height="7" fill="#7c3aed"/>
+  <text x="643" y="320" text-anchor="middle" font-size="12" font-weight="bold" fill="white">Job</text>
+  <text x="545" y="345" font-size="9.5" fill="#3b0764">_id               ObjectId  (PK)</text>
+  <text x="545" y="361" font-size="9.5" fill="#dc2626" font-weight="bold">userId           ObjectId  (FK → User)</text>
+  <text x="545" y="377" font-size="9.5" fill="#3b0764">company         String</text>
+  <text x="545" y="393" font-size="9.5" fill="#3b0764">role                String</text>
+  <text x="545" y="409" font-size="9.5" fill="#3b0764">location           String</text>
+  <text x="545" y="425" font-size="9.5" fill="#7c3aed" font-weight="bold">status              wishlist|applied|phone-screen</text>
+  <text x="545" y="441" font-size="9.5" fill="#7c3aed" font-weight="bold">                        |interview|offer|rejected</text>
+  <text x="545" y="457" font-size="9.5" fill="#3b0764">appliedDate     Date</text>
+  <text x="545" y="473" font-size="9.5" fill="#92400e">resumeId         ObjectId?  (FK)</text>
+  <text x="545" y="489" font-size="9.5" fill="#92400e">coverId            ObjectId?  (FK)</text>
+  <text x="545" y="505" font-size="9.5" fill="#3b0764">notes               String</text>
+  <text x="545" y="521" font-size="9.5" fill="#3b0764">notesHistory[]  Mixed</text>
+  <text x="545" y="537" font-size="9.5" fill="#3b0764">deadline           Date</text>
+
+  <!-- ═══ ACTIVITY LOG (bottom-right) ═══ -->
+  <rect x="635" y="45" width="165" height="165" rx="7" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+  <rect x="635" y="45" width="165" height="28" rx="7" fill="#dc2626"/>
+  <rect x="635" y="66" width="165" height="7" fill="#dc2626"/>
+  <text x="717" y="65" text-anchor="middle" font-size="12" font-weight="bold" fill="white">ActivityLog</text>
+  <text x="650" y="90" font-size="9.5" fill="#7f1d1d">_id         ObjectId (PK)</text>
+  <text x="650" y="106" font-size="9.5" fill="#dc2626" font-weight="bold">userId     ObjectId (FK)</text>
+  <text x="650" y="122" font-size="9.5" fill="#991b1b" font-weight="bold">action    signup|resume_saved</text>
+  <text x="650" y="138" font-size="9.5" fill="#991b1b" font-weight="bold">              |resume_deleted</text>
+  <text x="650" y="154" font-size="9.5" fill="#991b1b" font-weight="bold">              |cover_letter_saved</text>
+  <text x="650" y="170" font-size="9.5" fill="#991b1b" font-weight="bold">              |job_added</text>
+  <text x="650" y="186" font-size="9.5" fill="#7f1d1d">meta        Mixed</text>
+  <text x="650" y="202" font-size="9.5" fill="#7f1d1d">createdAt Date</text>
+
+  <!-- ═══ SYSTEM SETTINGS (top-right) ═══ -->
+  <rect x="30" y="45" width="230" height="110" rx="7" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+  <rect x="30" y="45" width="230" height="28" rx="7" fill="#0284c7"/>
+  <rect x="30" y="66" width="230" height="7" fill="#0284c7"/>
+  <text x="145" y="65" text-anchor="middle" font-size="12" font-weight="bold" fill="white">SystemSettings</text>
+  <text x="45" y="90" font-size="9.5" fill="#0c4a6e">_id              ObjectId (PK)</text>
+  <text x="45" y="106" font-size="9.5" fill="#0c4a6e">key               String (unique)</text>
+  <text x="45" y="122" font-size="9.5" fill="#0c4a6e">value            Mixed</text>
+  <text x="45" y="138" font-size="9.5" fill="#94a3b8">Announcements, feature flags, etc.</text>
+
+  <!-- ═══ Relationship lines ═══ -->
+  <!-- User → Resume -->
+  <line x1="290" y1="190" x2="145" y2="300" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="185" y="252" font-size="9" fill="#475569" transform="rotate(-35 185 252)">1 owns *</text>
+
+  <!-- User → CoverLetter -->
+  <line x1="410" y1="230" x2="410" y2="300" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="418" y="272" font-size="9" fill="#475569">1 owns *</text>
+
+  <!-- User → Job -->
+  <line x1="495" y1="190" x2="620" y2="300" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="560" y="248" font-size="9" fill="#475569" transform="rotate(32 560 248)">1 owns *</text>
+
+  <!-- User → ActivityLog -->
+  <line x1="530" y1="130" x2="635" y2="130" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="555" y="124" font-size="9" fill="#475569">1 logs *</text>
+
+  <!-- Resume → CoverLetter (optional FK) -->
+  <line x1="260" y1="390" x2="290" y2="390" stroke="#94a3b8" stroke-width="1" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+  <text x="262" y="385" font-size="8" fill="#94a3b8">opt</text>
+</svg>

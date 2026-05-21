@@ -1,0 +1,104 @@
+<svg width="820" height="560" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <text x="410" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#0f172a">Figure 4.5 — Redux State Management Architecture</text>
+
+  <!-- Redux Store outer box -->
+  <rect x="30" y="40" width="760" height="490" rx="10" fill="#f8fafc" stroke="#334155" stroke-width="2"/>
+  <rect x="30" y="40" width="760" height="36" rx="10" fill="#0f172a"/>
+  <rect x="30" y="64" width="760" height="12" fill="#0f172a"/>
+  <text x="410" y="64" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Redux Store  (configured via Redux Toolkit + redux-persist)</text>
+
+  <!-- ── resume slice ── -->
+  <rect x="50" y="88" width="340" height="285" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.8"/>
+  <rect x="50" y="88" width="340" height="30" rx="8" fill="#2563eb"/>
+  <rect x="50" y="108" width="340" height="10" fill="#2563eb"/>
+  <text x="220" y="108" text-anchor="middle" font-size="11" font-weight="bold" fill="white">resumeSlice</text>
+  <rect x="65" y="120" width="155" height="18" rx="4" fill="#dc2626"/>
+  <text x="142" y="133" text-anchor="middle" font-size="8.5" font-weight="bold" fill="white">NOT persisted to localStorage</text>
+  <text x="230" y="133" font-size="8.5" fill="#1e40af">(loaded from DB on mount)</text>
+
+  <text x="65" y="158" font-size="10" font-weight="bold" fill="#1e3a8a">State fields:</text>
+  <text x="75" y="174" font-size="9.5" fill="#1e40af">data: ResumeData</text>
+  <text x="200" y="174" font-size="8.5" fill="#475569">live resume being edited</text>
+  <text x="75" y="190" font-size="9.5" fill="#1e40af">past: ResumeData[ ]</text>
+  <text x="200" y="190" font-size="8.5" fill="#475569">undo stack (max 25)</text>
+  <text x="75" y="206" font-size="9.5" fill="#1e40af">future: ResumeData[ ]</text>
+  <text x="200" y="206" font-size="8.5" fill="#475569">redo stack</text>
+
+  <text x="65" y="228" font-size="10" font-weight="bold" fill="#1e3a8a">Actions (dispatched by editor components):</text>
+  <text x="75" y="244" font-size="9" fill="#1e40af">updatePersonal  /  updateSummary</text>
+  <text x="75" y="258" font-size="9" fill="#1e40af">addExperience  /  updateExperience  /  removeExperience</text>
+  <text x="75" y="272" font-size="9" fill="#1e40af">moveExperience  /  duplicateExperience  /  reorderExperience</text>
+  <text x="75" y="286" font-size="9" fill="#1e40af">addEducation  /  addProject  /  addSkillCategory  /  addSkill</text>
+  <text x="75" y="300" font-size="9" fill="#1e40af">addCertification  /  addLanguage  /  addAward  /  addVolunteer</text>
+  <text x="75" y="314" font-size="9" fill="#1e40af">toggleSectionVisibility  /  loadResumeData</text>
+  <text x="75" y="330" font-size="9.5" font-weight="bold" fill="#dc2626">undo  /  redo  (dual-stack, capped at 25 states)</text>
+  <text x="75" y="350" font-size="8.5" fill="#64748b">On every mutation: push current → past, clear future</text>
+  <text x="75" y="364" font-size="8.5" fill="#64748b">On undo: pop past → data, push data → future</text>
+
+  <!-- ── theme slice ── -->
+  <rect x="430" y="88" width="340" height="230" rx="8" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.8"/>
+  <rect x="430" y="88" width="340" height="30" rx="8" fill="#ca8a04"/>
+  <rect x="430" y="108" width="340" height="10" fill="#ca8a04"/>
+  <text x="600" y="108" text-anchor="middle" font-size="11" font-weight="bold" fill="white">themeSlice</text>
+  <rect x="445" y="120" width="170" height="18" rx="4" fill="#16a34a"/>
+  <text x="530" y="133" text-anchor="middle" font-size="8.5" font-weight="bold" fill="white">PERSISTED to localStorage</text>
+
+  <text x="445" y="158" font-size="10" font-weight="bold" fill="#92400e">State fields:</text>
+  <text x="455" y="174" font-size="9.5" fill="#78350f">templateId</text>
+  <text x="545" y="174" font-size="8.5" fill="#475569">'two-column'|'minimal'|'academic'|'professional'|'executive'|'modern'</text>
+  <text x="455" y="190" font-size="9.5" fill="#78350f">accentColor</text>
+  <text x="545" y="190" font-size="8.5" fill="#475569">hex color string</text>
+  <text x="455" y="206" font-size="9.5" fill="#78350f">fontFamily</text>
+  <text x="545" y="206" font-size="8.5" fill="#475569">'geist'|'inter'|'roboto'|'playfair'|'georgia'</text>
+  <text x="455" y="222" font-size="9.5" fill="#78350f">density</text>
+  <text x="545" y="222" font-size="8.5" fill="#475569">'compact'|'standard'|'spacious'</text>
+  <text x="455" y="238" font-size="9.5" fill="#78350f">photoShape</text>
+  <text x="545" y="238" font-size="8.5" fill="#475569">'circle'|'square'|'none'</text>
+  <text x="455" y="254" font-size="9.5" fill="#78350f">headingStyle</text>
+  <text x="545" y="254" font-size="8.5" fill="#475569">'underline'|'leftbar'|'plain'|'filled'</text>
+  <text x="455" y="270" font-size="9.5" fill="#78350f">columnRatio</text>
+  <text x="545" y="270" font-size="8.5" fill="#475569">30–70  (sidebar % width for two-column template)</text>
+  <text x="455" y="286" font-size="9.5" fill="#78350f">sectionOrder</text>
+  <text x="545" y="286" font-size="8.5" fill="#475569">string[ ]  (user-defined drag order)</text>
+
+  <text x="445" y="306" font-size="10" font-weight="bold" fill="#92400e">Actions:</text>
+  <text x="455" y="322" font-size="9" fill="#78350f">setTemplateId  /  setAccentColor  /  setFontFamily  /  setDensity</text>
+  <text x="455" y="336" font-size="9" fill="#78350f">setPhotoShape  /  setHeadingStyle  /  setColumnRatio  /  applyPreset  /  resetTheme</text>
+
+  <!-- ── ui slice ── -->
+  <rect x="430" y="335" width="340" height="130" rx="8" fill="#ecfdf5" stroke="#16a34a" stroke-width="1.8"/>
+  <rect x="430" y="335" width="340" height="30" rx="8" fill="#16a34a"/>
+  <rect x="430" y="355" width="340" height="10" fill="#16a34a"/>
+  <text x="600" y="355" text-anchor="middle" font-size="11" font-weight="bold" fill="white">uiSlice</text>
+  <rect x="445" y="367" width="170" height="18" rx="4" fill="#16a34a" opacity="0.7"/>
+  <text x="530" y="380" text-anchor="middle" font-size="8.5" font-weight="bold" fill="white">PERSISTED to localStorage</text>
+
+  <text x="445" y="406" font-size="9.5" fill="#065f46">mobileTab</text>
+  <text x="530" y="406" font-size="8.5" fill="#475569">'editor' | 'preview'   (active panel on small screens)</text>
+  <text x="445" y="422" font-size="9.5" fill="#065f46">darkEditor</text>
+  <text x="530" y="422" font-size="8.5" fill="#475569">boolean   (dark background for editor panel)</text>
+  <text x="445" y="445" font-size="10" font-weight="bold" fill="#065f46">Actions:</text>
+  <text x="445" y="461" font-size="9" fill="#065f46">setMobileTab  /  toggleDarkEditor</text>
+
+  <!-- Flow annotation at bottom -->
+  <rect x="50" y="390" width="340" height="130" rx="8" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.5"/>
+  <text x="220" y="410" text-anchor="middle" font-size="10" font-weight="bold" fill="#0369a1">Data Flow Summary</text>
+  <text x="65" y="428" font-size="9" fill="#0c4a6e">1. User edits a field → editor component dispatches action</text>
+  <text x="65" y="444" font-size="9" fill="#0c4a6e">2. resumeSlice updates state, pushes undo snapshot</text>
+  <text x="65" y="460" font-size="9" fill="#0c4a6e">3. useSelector re-renders live preview (ResumePreview)</text>
+  <text x="65" y="476" font-size="9" fill="#0c4a6e">4. useAutoSave detects dirty state (snapshot mismatch)</text>
+  <text x="65" y="492" font-size="9" fill="#0c4a6e">5. Ctrl+S → saveToCloud() → PUT /api/resumes/[id]</text>
+  <text x="65" y="508" font-size="9" fill="#0c4a6e">6. MongoDB updated, snapshot refreshed, isDirty = false</text>
+
+  <!-- Persist badge -->
+  <rect x="580" y="478" width="190" height="42" rx="6" fill="#0f172a"/>
+  <text x="675" y="495" text-anchor="middle" font-size="9" font-weight="bold" fill="white">redux-persist</text>
+  <text x="675" y="510" text-anchor="middle" font-size="8.5" fill="#94a3b8">theme + ui → localStorage only</text>
+  <text x="675" y="522" text-anchor="middle" font-size="8.5" fill="#64748b">resume is NOT persisted locally</text>
+</svg>

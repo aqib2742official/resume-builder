@@ -1,0 +1,107 @@
+<svg width="820" height="580" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <text x="410" y="24" text-anchor="middle" font-size="15" font-weight="bold" fill="#0f172a">Figure 7.2 — Interview Prep Page UI (Single-Column Layout)</text>
+
+  <!-- Browser chrome -->
+  <rect x="20" y="35" width="780" height="530" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+  <rect x="20" y="35" width="780" height="30" rx="8" fill="#e2e8f0"/>
+  <circle cx="42" cy="50" r="6" fill="#ef4444"/>
+  <circle cx="60" cy="50" r="6" fill="#f59e0b"/>
+  <circle cx="78" cy="50" r="6" fill="#22c55e"/>
+  <rect x="140" y="41" width="420" height="18" rx="9" fill="white" stroke="#cbd5e1"/>
+  <text x="350" y="55" text-anchor="middle" font-size="9" fill="#94a3b8">localhost:3000/interview-prep?resumeId=abc&amp;resumeName=My+Resume</text>
+
+  <!-- Navbar -->
+  <rect x="20" y="65" width="780" height="36" rx="0" fill="#0f2044"/>
+  <text x="50" y="88" font-size="11" font-weight="bold" fill="white">ResumeAI</text>
+  <text x="200" y="85" font-size="9" fill="#93c5fd">Editor</text>
+  <text x="260" y="85" font-size="9" fill="#93c5fd">My Resumes</text>
+  <text x="410" y="85" font-size="9" font-weight="bold" fill="white">Interview Prep ●</text>
+  <text x="510" y="85" font-size="9" fill="#93c5fd">Job Tracker</text>
+
+  <!-- Page content area (scrollable) -->
+  <rect x="20" y="101" width="780" height="464" rx="0" fill="#f9fafb"/>
+
+  <!-- Page header -->
+  <rect x="60" y="115" width="700" height="58" rx="0" fill="none"/>
+  <!-- Context badge -->
+  <rect x="60" y="115" width="700" height="26" rx="6" fill="#f5f3ff" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="80" y="133" font-size="8.5" fill="#5b21b6">⭐  TechCorp  —  Using resume: <tspan font-weight="bold">My Resume</tspan></text>
+
+  <rect x="60" y="148" width="36" height="36" rx="8" fill="#0f2044"/>
+  <text x="78" y="172" text-anchor="middle" font-size="14" fill="white">💬</text>
+  <text x="106" y="163" font-size="14" font-weight="bold" fill="#0f172a">Interview Prep</text>
+  <text x="106" y="178" font-size="9" fill="#6b7280">AI-generated questions + STAR-method answers tailored to you</text>
+
+  <!-- Input Form Card -->
+  <rect x="60" y="192" width="700" height="96" rx="8" fill="white" stroke="#e2e8f0" stroke-width="1.2"/>
+  <!-- Job Title input -->
+  <text x="76" y="212" font-size="8" font-weight="bold" fill="#4b5563">Job Title *</text>
+  <rect x="76" y="216" width="300" height="22" rx="4" fill="#f9fafb" stroke="#d1d5db" stroke-width="1"/>
+  <text x="84" y="232" font-size="8.5" fill="#374151">Senior React Developer</text>
+  <!-- Job Description textarea -->
+  <text x="388" y="212" font-size="8" font-weight="bold" fill="#4b5563">Job Description <tspan fill="#9ca3af">(optional)</tspan></text>
+  <rect x="388" y="216" width="355" height="58" rx="4" fill="#f9fafb" stroke="#d1d5db" stroke-width="1"/>
+  <text x="396" y="230" font-size="7.5" fill="#9ca3af">Paste job description for targeted questions…</text>
+  <!-- Checkbox row -->
+  <rect x="76" y="246" width="11" height="11" rx="2" fill="#2563eb"/>
+  <text x="92" y="256" font-size="8.5" fill="#374151">Use my active resume</text>
+  <text x="92" y="268" font-size="7.5" fill="#9ca3af">Tailors questions to your experience &amp; skills</text>
+  <!-- Generate button -->
+  <rect x="516" y="243" width="160" height="30" rx="6" fill="#0f2044"/>
+  <text x="596" y="263" text-anchor="middle" font-size="9" font-weight="bold" fill="white">✨ Generate 20 Questions</text>
+
+  <!-- Results header -->
+  <rect x="60" y="298" width="700" height="26" rx="5" fill="none"/>
+  <text x="60" y="316" font-size="10" font-weight="bold" fill="#374151">20 Questions</text>
+  <!-- Type chips -->
+  <rect x="130" y="304" width="90" height="18" rx="9" fill="#f3e8ff"/>
+  <text x="175" y="317" text-anchor="middle" font-size="8" fill="#7c3aed">👥  7 Behavioral</text>
+  <rect x="226" y="304" width="82" height="18" rx="9" fill="#dbeafe"/>
+  <text x="267" y="317" text-anchor="middle" font-size="8" fill="#2563eb">⌨  7 Technical</text>
+  <rect x="314" y="304" width="90" height="18" rx="9" fill="#fef3c7"/>
+  <text x="359" y="317" text-anchor="middle" font-size="8" fill="#d97706">💡  6 Situational</text>
+
+  <!-- QA Card 1 (expanded) -->
+  <rect x="60" y="330" width="700" height="86" rx="8" fill="white" stroke="#e2e8f0" stroke-width="1.2"/>
+  <!-- Question row -->
+  <rect x="72" y="342" width="22" height="22" rx="11" fill="#f1f5f9"/>
+  <text x="83" y="358" text-anchor="middle" font-size="9" font-weight="bold" fill="#64748b">1</text>
+  <rect x="100" y="344" width="62" height="16" rx="8" fill="#f3e8ff"/>
+  <text x="131" y="356" text-anchor="middle" font-size="7.5" fill="#7c3aed">👥 Behavioral</text>
+  <text x="170" y="358" font-size="8.5" font-weight="bold" fill="#111827">Tell me about a time you led a team through a difficult technical challenge.</text>
+  <text x="746" y="352" text-anchor="middle" font-size="10" fill="#9ca3af">∧</text>
+  <!-- Answer area -->
+  <line x1="72" y1="367" x2="748" y2="367" stroke="#f3f4f6" stroke-width="1"/>
+  <text x="80" y="381" font-size="7.5" fill="#4b5563">In my previous role, I led a migration from a monolithic architecture to microservices under a tight deadline. I began</text>
+  <text x="80" y="393" font-size="7.5" fill="#4b5563">by breaking the project into phases (Situation), assigned tasks based on team strengths (Task), held daily standups...</text>
+  <!-- Regenerate button -->
+  <text x="80" y="410" font-size="8" fill="#0284c7">↻  Regenerate answer</text>
+
+  <!-- QA Card 2 (collapsed) -->
+  <rect x="60" y="424" width="700" height="40" rx="8" fill="white" stroke="#e2e8f0" stroke-width="1.2"/>
+  <rect x="72" y="436" width="22" height="22" rx="11" fill="#f1f5f9"/>
+  <text x="83" y="452" text-anchor="middle" font-size="9" font-weight="bold" fill="#64748b">2</text>
+  <rect x="100" y="438" width="55" height="16" rx="8" fill="#dbeafe"/>
+  <text x="127" y="450" text-anchor="middle" font-size="7.5" fill="#2563eb">⌨ Technical</text>
+  <text x="162" y="452" font-size="8.5" font-weight="bold" fill="#111827">Explain the difference between SSR and CSR in Next.js and when to use each.</text>
+  <text x="746" y="448" text-anchor="middle" font-size="10" fill="#9ca3af">∨</text>
+
+  <!-- QA Card 3 (collapsed) -->
+  <rect x="60" y="472" width="700" height="40" rx="8" fill="white" stroke="#e2e8f0" stroke-width="1.2"/>
+  <rect x="72" y="484" width="22" height="22" rx="11" fill="#f1f5f9"/>
+  <text x="83" y="500" text-anchor="middle" font-size="9" font-weight="bold" fill="#64748b">3</text>
+  <rect x="100" y="486" width="62" height="16" rx="8" fill="#fef3c7"/>
+  <text x="131" y="498" text-anchor="middle" font-size="7.5" fill="#d97706">💡 Situational</text>
+  <text x="170" y="500" font-size="8.5" font-weight="bold" fill="#111827">You have 2 hours to fix a production bug. What steps do you take?</text>
+  <text x="746" y="496" text-anchor="middle" font-size="10" fill="#9ca3af">∨</text>
+
+  <!-- More cards indicator -->
+  <text x="410" y="530" text-anchor="middle" font-size="8.5" fill="#94a3b8">· · ·  17 more questions below (scroll to view)  · · ·</text>
+
+  <!-- Annotation arrows -->
+  <rect x="30" y="192" width="22" height="96" rx="0" fill="none"/>
+  <text x="25" y="248" font-size="22" fill="#3b82f6" transform="rotate(-90 25 248)">Input Form</text>
+
+  <rect x="30" y="330" width="22" height="186" rx="0" fill="none"/>
+  <text x="25" y="430" font-size="22" fill="#16a34a" transform="rotate(-90 25 430)">Q&amp;A Results</text>
+</svg>

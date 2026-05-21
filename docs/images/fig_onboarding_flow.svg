@@ -1,0 +1,112 @@
+<svg width="820" height="400" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <text x="410" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#0f172a">Figure 7.4 — Onboarding Wizard Flow</text>
+
+  <!-- Progress bar track -->
+  <rect x="60" y="55" width="700" height="8" rx="4" fill="#e2e8f0"/>
+  <rect x="60" y="55" width="560" height="8" rx="4" fill="#2563eb"/>
+  <!-- Progress dots -->
+  <circle cx="60" cy="59" r="12" fill="#2563eb" stroke="white" stroke-width="2"/>
+  <text x="60" y="64" text-anchor="middle" font-size="9" font-weight="bold" fill="white">1</text>
+  <circle cx="235" cy="59" r="12" fill="#2563eb" stroke="white" stroke-width="2"/>
+  <text x="235" y="64" text-anchor="middle" font-size="9" font-weight="bold" fill="white">2</text>
+  <circle cx="410" cy="59" r="12" fill="#2563eb" stroke="white" stroke-width="2"/>
+  <text x="410" y="64" text-anchor="middle" font-size="9" font-weight="bold" fill="white">3</text>
+  <circle cx="585" cy="59" r="12" fill="#2563eb" stroke="white" stroke-width="2"/>
+  <text x="585" y="64" text-anchor="middle" font-size="9" font-weight="bold" fill="white">4</text>
+  <circle cx="760" cy="59" r="12" fill="#e2e8f0" stroke="white" stroke-width="2"/>
+  <text x="760" y="64" text-anchor="middle" font-size="9" font-weight="bold" fill="#94a3b8">5</text>
+
+  <!-- Step labels -->
+  <text x="60" y="85" text-anchor="middle" font-size="8.5" fill="#2563eb" font-weight="bold">Welcome</text>
+  <text x="235" y="85" text-anchor="middle" font-size="8.5" fill="#2563eb" font-weight="bold">Profile</text>
+  <text x="410" y="85" text-anchor="middle" font-size="8.5" fill="#2563eb" font-weight="bold">Template</text>
+  <text x="585" y="85" text-anchor="middle" font-size="8.5" fill="#2563eb" font-weight="bold">Resume Data</text>
+  <text x="760" y="85" text-anchor="middle" font-size="8.5" fill="#94a3b8" font-weight="bold">Launch!</text>
+
+  <!-- Step 1 card -->
+  <rect x="25" y="100" width="150" height="195" rx="10" fill="white" stroke="#dbeafe" stroke-width="1.8"/>
+  <rect x="25" y="100" width="150" height="36" rx="10" fill="#2563eb"/>
+  <rect x="25" y="126" width="150" height="10" fill="#2563eb"/>
+  <text x="100" y="123" text-anchor="middle" font-size="10" font-weight="bold" fill="white">Step 1: Welcome</text>
+  <text x="40" y="150" font-size="8.5" fill="#374151">• Platform overview</text>
+  <text x="40" y="165" font-size="8.5" fill="#374151">• Feature highlights</text>
+  <text x="40" y="180" font-size="8.5" fill="#374151">• What to expect</text>
+  <text x="40" y="195" font-size="8.5" fill="#374151">• Account confirmed</text>
+  <line x1="33" y1="210" x2="167" y2="210" stroke="#f1f5f9"/>
+  <rect x="50" y="218" width="100" height="20" rx="10" fill="#2563eb"/>
+  <text x="100" y="232" text-anchor="middle" font-size="8.5" fill="white">Get Started →</text>
+  <text x="40" y="275" font-size="7.5" fill="#94a3b8">First-time users</text>
+  <text x="40" y="288" font-size="7.5" fill="#94a3b8">only (guided once)</text>
+
+  <!-- Step 2 card -->
+  <rect x="200" y="100" width="150" height="195" rx="10" fill="white" stroke="#dbeafe" stroke-width="1.8"/>
+  <rect x="200" y="100" width="150" height="36" rx="10" fill="#2563eb"/>
+  <rect x="200" y="126" width="150" height="10" fill="#2563eb"/>
+  <text x="275" y="123" text-anchor="middle" font-size="10" font-weight="bold" fill="white">Step 2: Profile</text>
+  <text x="215" y="150" font-size="8.5" fill="#374151">• Full name</text>
+  <text x="215" y="165" font-size="8.5" fill="#374151">• Email (pre-filled)</text>
+  <text x="215" y="180" font-size="8.5" fill="#374151">• Phone number</text>
+  <text x="215" y="195" font-size="8.5" fill="#374151">• Profile photo (optional)</text>
+  <text x="215" y="210" font-size="8.5" fill="#374151">• Current job title</text>
+  <line x1="208" y1="222" x2="342" y2="222" stroke="#f1f5f9"/>
+  <text x="215" y="240" font-size="7.5" fill="#94a3b8">Pre-populates resume</text>
+  <text x="215" y="253" font-size="7.5" fill="#94a3b8">personal info section</text>
+  <text x="215" y="267" font-size="7.5" fill="#94a3b8">Saved to User + Resume</text>
+
+  <!-- Step 3 card -->
+  <rect x="375" y="100" width="150" height="195" rx="10" fill="white" stroke="#dbeafe" stroke-width="1.8"/>
+  <rect x="375" y="100" width="150" height="36" rx="10" fill="#7c3aed"/>
+  <rect x="375" y="126" width="150" height="10" fill="#7c3aed"/>
+  <text x="450" y="123" text-anchor="middle" font-size="10" font-weight="bold" fill="white">Step 3: Template</text>
+  <text x="390" y="150" font-size="8.5" fill="#374151">• 6 templates shown</text>
+  <text x="390" y="165" font-size="8.5" fill="#374151">• Live miniature preview</text>
+  <text x="390" y="180" font-size="8.5" fill="#374151">• Click to select</text>
+  <text x="390" y="195" font-size="8.5" fill="#374151">• Color preset picker</text>
+  <line x1="383" y1="208" x2="517" y2="208" stroke="#f1f5f9"/>
+  <text x="390" y="226" font-size="7.5" fill="#94a3b8">Sets themeSlice.templateId</text>
+  <text x="390" y="239" font-size="7.5" fill="#94a3b8">Persisted to localStorage</text>
+  <text x="390" y="252" font-size="7.5" fill="#94a3b8">Can be changed anytime</text>
+
+  <!-- Step 4 card -->
+  <rect x="550" y="100" width="150" height="195" rx="10" fill="white" stroke="#dbeafe" stroke-width="1.8"/>
+  <rect x="550" y="100" width="150" height="36" rx="10" fill="#ca8a04"/>
+  <rect x="550" y="126" width="150" height="10" fill="#ca8a04"/>
+  <text x="625" y="123" text-anchor="middle" font-size="10" font-weight="bold" fill="white">Step 4: Resume Data</text>
+  <text x="565" y="150" font-size="8.5" fill="#374151">• 1st experience entry</text>
+  <text x="565" y="165" font-size="8.5" fill="#374151">• Education</text>
+  <text x="565" y="180" font-size="8.5" fill="#374151">• Key skills</text>
+  <text x="565" y="195" font-size="8.5" fill="#374151">• (can skip all)</text>
+  <line x1="558" y1="208" x2="692" y2="208" stroke="#f1f5f9"/>
+  <text x="565" y="226" font-size="7.5" fill="#94a3b8">Dispatched to resumeSlice</text>
+  <text x="565" y="239" font-size="7.5" fill="#94a3b8">Saved to MongoDB on</text>
+  <text x="565" y="252" font-size="7.5" fill="#94a3b8">final step completion</text>
+
+  <!-- Step 5 card -->
+  <rect x="725" y="100" width="75" height="195" rx="10" fill="white" stroke="#dcfce7" stroke-width="1.8"/>
+  <rect x="725" y="100" width="75" height="36" rx="10" fill="#16a34a"/>
+  <rect x="725" y="126" width="75" height="10" fill="#16a34a"/>
+  <text x="762" y="117" text-anchor="middle" font-size="9" font-weight="bold" fill="white">Launch!</text>
+  <text x="732" y="150" font-size="7.5" fill="#374151">Resume</text>
+  <text x="732" y="163" font-size="7.5" fill="#374151">created</text>
+  <text x="732" y="178" font-size="7.5" fill="#374151">in MongoDB</text>
+  <text x="732" y="205" font-size="7.5" fill="#16a34a">→ /editor</text>
+
+  <!-- Arrows between cards -->
+  <line x1="175" y1="197" x2="200" y2="197" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="350" y1="197" x2="375" y2="197" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="525" y1="197" x2="550" y2="197" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="700" y1="197" x2="725" y2="197" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Bottom note -->
+  <rect x="25" y="308" width="770" height="70" rx="8" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1.2"/>
+  <text x="410" y="326" text-anchor="middle" font-size="10" font-weight="bold" fill="#0369a1">Integration Points</text>
+  <text x="45" y="345" font-size="8.5" fill="#0c4a6e">Profile data (Step 2) → pre-fills PersonalInfo in ResumeData → dispatched to resumeSlice → later saved to MongoDB (Resume + User)</text>
+  <text x="45" y="362" font-size="8.5" fill="#0c4a6e">Template choice (Step 3) → sets themeSlice via Redux → persisted to localStorage via redux-persist → applied immediately in editor</text>
+  <text x="45" y="378" font-size="8.5" fill="#0c4a6e">On completion → POST /api/resumes with all accumulated data → redirect to /editor?id=[newId] → fully editable immediately</text>
+</svg>

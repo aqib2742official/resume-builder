@@ -1,0 +1,111 @@
+<svg width="820" height="540" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <text x="410" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#0f172a">Figure 5.4 — Admin Dashboard Architecture</text>
+
+  <!-- Auth guard label -->
+  <rect x="260" y="40" width="300" height="34" rx="7" fill="#dc2626"/>
+  <text x="410" y="52" text-anchor="middle" font-size="10" font-weight="bold" fill="white">🔒  requireAdmin()  gate</text>
+  <text x="410" y="66" text-anchor="middle" font-size="9" fill="#fecaca">All admin routes verify role ≥ admin before any DB operation</text>
+
+  <!-- Arrow down -->
+  <line x1="410" y1="74" x2="410" y2="92" stroke="#dc2626" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- 4 page boxes -->
+  <!-- Overview -->
+  <rect x="30" y="92" width="175" height="125" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.8"/>
+  <rect x="30" y="92" width="175" height="28" rx="8" fill="#dc2626"/>
+  <rect x="30" y="112" width="175" height="8" fill="#dc2626"/>
+  <text x="117" y="110" text-anchor="middle" font-size="10" font-weight="bold" fill="white">/admin  (Overview)</text>
+  <text x="45" y="134" font-size="9" fill="#7f1d1d">GET /api/admin/stats</text>
+  <text x="45" y="150" font-size="8.5" fill="#991b1b">• Total users</text>
+  <text x="45" y="164" font-size="8.5" fill="#991b1b">• New users this month</text>
+  <text x="45" y="178" font-size="8.5" fill="#991b1b">• Total resumes / letters</text>
+  <text x="45" y="192" font-size="8.5" fill="#991b1b">• Active today</text>
+  <text x="45" y="208" font-size="8.5" fill="#991b1b">Stat card grid display</text>
+
+  <!-- User Management -->
+  <rect x="220" y="92" width="185" height="190" rx="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1.8"/>
+  <rect x="220" y="92" width="185" height="28" rx="8" fill="#ea580c"/>
+  <rect x="220" y="112" width="185" height="8" fill="#ea580c"/>
+  <text x="312" y="110" text-anchor="middle" font-size="10" font-weight="bold" fill="white">/admin/users</text>
+  <text x="235" y="134" font-size="9" fill="#7c2d12">GET /api/admin/users</text>
+  <text x="235" y="149" font-size="8.5" fill="#9a3412">params: search, role, page</text>
+  <text x="235" y="168" font-size="8.5" font-weight="bold" fill="#9a3412">Per-user actions:</text>
+  <text x="235" y="182" font-size="8.5" fill="#9a3412">• Toggle role (user ↔ admin)*</text>
+  <text x="235" y="196" font-size="8.5" fill="#9a3412">• Disable / Enable account</text>
+  <text x="235" y="210" font-size="8.5" fill="#9a3412">• View resume preview</text>
+  <text x="235" y="224" font-size="8.5" fill="#9a3412">• Delete user + data*</text>
+  <text x="235" y="242" font-size="8" fill="#c2410c">* super_admin role required</text>
+  <text x="235" y="258" font-size="8.5" fill="#9a3412">Bulk CSV export</text>
+  <text x="235" y="273" font-size="8.5" fill="#9a3412">Search + role filter + sort</text>
+
+  <!-- Activity Log -->
+  <rect x="420" y="92" width="175" height="155" rx="8" fill="#fdf4ff" stroke="#a21caf" stroke-width="1.8"/>
+  <rect x="420" y="92" width="175" height="28" rx="8" fill="#a21caf"/>
+  <rect x="420" y="112" width="175" height="8" fill="#a21caf"/>
+  <text x="507" y="110" text-anchor="middle" font-size="10" font-weight="bold" fill="white">/admin/activity</text>
+  <text x="435" y="134" font-size="9" fill="#6b21a8">GET /api/admin/activity</text>
+  <text x="435" y="149" font-size="8.5" fill="#7e22ce">params: page, action filter</text>
+  <text x="435" y="168" font-size="8.5" font-weight="bold" fill="#7e22ce">Logged events:</text>
+  <text x="435" y="182" font-size="8.5" fill="#7e22ce">• signup</text>
+  <text x="435" y="196" font-size="8.5" fill="#7e22ce">• resume_saved</text>
+  <text x="435" y="210" font-size="8.5" fill="#7e22ce">• resume_deleted</text>
+  <text x="435" y="224" font-size="8.5" fill="#7e22ce">• cover_letter_saved</text>
+  <text x="435" y="238" font-size="8.5" fill="#7e22ce">• job_added</text>
+
+  <!-- Settings -->
+  <rect x="610" y="92" width="180" height="120" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.8"/>
+  <rect x="610" y="92" width="180" height="28" rx="8" fill="#15803d"/>
+  <rect x="610" y="112" width="180" height="8" fill="#15803d"/>
+  <text x="700" y="110" text-anchor="middle" font-size="10" font-weight="bold" fill="white">/admin/settings *</text>
+  <text x="625" y="134" font-size="9" fill="#14532d">GET / PUT /api/admin/settings</text>
+  <text x="625" y="149" font-size="8.5" fill="#166534">• Announcement banner text</text>
+  <text x="625" y="163" font-size="8.5" fill="#166534">• Platform feature flags</text>
+  <text x="625" y="177" font-size="8.5" fill="#166534">• Maintenance messages</text>
+  <text x="625" y="196" font-size="8" fill="#15803d">* super_admin only</text>
+
+  <!-- requireAdmin code box -->
+  <rect x="30" y="310" width="360" height="120" rx="8" fill="#0f172a"/>
+  <text x="210" y="330" text-anchor="middle" font-size="10" font-weight="bold" fill="#94a3b8">lib/adminAuth.ts — RBAC Guard</text>
+  <text x="45" y="348" font-size="9.5" fill="#86efac">export async function</text>
+  <text x="175" y="348" font-size="9.5" fill="#fbbf24">requireAdmin</text>
+  <text x="265" y="348" font-size="9.5" fill="#94a3b8">(minRole = 'admin') {</text>
+  <text x="55" y="364" font-size="9.5" fill="#94a3b8">const session = await</text>
+  <text x="175" y="364" font-size="9.5" fill="#7dd3fc">auth()</text>
+  <text x="55" y="380" font-size="9.5" fill="#f87171">if (!session?.user?.id) throw</text>
+  <text x="255" y="380" font-size="9.5" fill="#fca5a5">'Unauthenticated'</text>
+  <text x="55" y="396" font-size="9.5" fill="#94a3b8">const roleOrder = {</text>
+  <text x="175" y="396" font-size="9.5" fill="#fbbf24">user:0, admin:1, super_admin:2</text>
+  <text x="55" y="412" font-size="9.5" fill="#f87171">if (roleOrder[session.user.role] &lt; roleOrder[minRole])</text>
+  <text x="55" y="428" font-size="9.5" fill="#f87171">  throw</text>
+  <text x="95" y="428" font-size="9.5" fill="#fca5a5">'Forbidden'</text>
+
+  <!-- MongoDB collections used by admin -->
+  <rect x="420" y="310" width="370" height="120" rx="8" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.5"/>
+  <text x="605" y="330" text-anchor="middle" font-size="10" font-weight="bold" fill="#92400e">MongoDB Collections Accessed by Admin</text>
+  <rect x="435" y="340" width="80" height="28" rx="5" fill="#ca8a04"/>
+  <text x="475" y="359" text-anchor="middle" font-size="9" fill="white">users</text>
+  <rect x="528" y="340" width="80" height="28" rx="5" fill="#ca8a04"/>
+  <text x="568" y="359" text-anchor="middle" font-size="9" fill="white">resumes</text>
+  <rect x="621" y="340" width="80" height="28" rx="5" fill="#ca8a04"/>
+  <text x="661" y="359" text-anchor="middle" font-size="9" fill="white">coverletters</text>
+  <rect x="714" y="340" width="68" height="28" rx="5" fill="#b45309"/>
+  <text x="748" y="359" text-anchor="middle" font-size="9" fill="white">jobs</text>
+  <rect x="435" y="378" width="120" height="28" rx="5" fill="#b45309"/>
+  <text x="495" y="397" text-anchor="middle" font-size="9" fill="white">activitylogs</text>
+  <rect x="568" y="378" width="140" height="28" rx="5" fill="#b45309"/>
+  <text x="638" y="397" text-anchor="middle" font-size="9" fill="white">systemsettings</text>
+  <text x="605" y="425" text-anchor="middle" font-size="8.5" fill="#92400e">Admin routes use .lean() and cross-user queries (no userId filter)</text>
+
+  <!-- Activity logging note -->
+  <rect x="30" y="445" width="760" height="80" rx="8" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.5"/>
+  <text x="410" y="465" text-anchor="middle" font-size="10" font-weight="bold" fill="#0369a1">Activity Logging — How It Works</text>
+  <text x="50" y="485" font-size="9" fill="#0c4a6e">1. User performs a tracked action (signup, save resume, add job, etc.)</text>
+  <text x="50" y="500" font-size="9" fill="#0c4a6e">2. API route calls  logActivity(userId, actionName, metaObject)  from lib/activityLog.ts</text>
+  <text x="50" y="515" font-size="9" fill="#0c4a6e">3. An immutable ActivityLog document is inserted into MongoDB  →  visible in /admin/activity with timestamp, user, and action type</text>
+</svg>

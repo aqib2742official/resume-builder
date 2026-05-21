@@ -1,0 +1,93 @@
+<svg width="820" height="420" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <text x="410" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#0f172a">Figure 5.1 — Technology Stack Overview</text>
+
+  <!-- Row 1: Frontend -->
+  <rect x="30" y="40" width="760" height="90" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="50" y="60" font-size="10" font-weight="bold" fill="#1e40af">FRONTEND</text>
+
+  <rect x="50" y="68" width="100" height="46" rx="6" fill="#2563eb"/>
+  <text x="100" y="87" text-anchor="middle" font-size="10" font-weight="bold" fill="white">React 19</text>
+  <text x="100" y="101" text-anchor="middle" font-size="8.5" fill="#bfdbfe">UI Components</text>
+
+  <rect x="162" y="68" width="110" height="46" rx="6" fill="#2563eb"/>
+  <text x="217" y="87" text-anchor="middle" font-size="10" font-weight="bold" fill="white">TypeScript 5</text>
+  <text x="217" y="101" text-anchor="middle" font-size="8.5" fill="#bfdbfe">Type Safety</text>
+
+  <rect x="284" y="68" width="120" height="46" rx="6" fill="#2563eb"/>
+  <text x="344" y="87" text-anchor="middle" font-size="10" font-weight="bold" fill="white">Tailwind CSS 4</text>
+  <text x="344" y="101" text-anchor="middle" font-size="8.5" fill="#bfdbfe">Utility Styling</text>
+
+  <rect x="416" y="68" width="130" height="46" rx="6" fill="#2563eb"/>
+  <text x="481" y="87" text-anchor="middle" font-size="10" font-weight="bold" fill="white">Redux Toolkit</text>
+  <text x="481" y="101" text-anchor="middle" font-size="8.5" fill="#bfdbfe">State Management</text>
+
+  <rect x="558" y="68" width="100" height="46" rx="6" fill="#1d4ed8"/>
+  <text x="608" y="87" text-anchor="middle" font-size="10" font-weight="bold" fill="white">dnd-kit</text>
+  <text x="608" y="101" text-anchor="middle" font-size="8.5" fill="#bfdbfe">Drag &amp; Drop</text>
+
+  <rect x="670" y="68" width="108" height="46" rx="6" fill="#1d4ed8"/>
+  <text x="724" y="87" text-anchor="middle" font-size="10" font-weight="bold" fill="white">html2pdf.js</text>
+  <text x="724" y="101" text-anchor="middle" font-size="8.5" fill="#bfdbfe">PDF Export</text>
+
+  <!-- Row 2: Framework -->
+  <rect x="280" y="145" width="260" height="60" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+  <text x="410" y="168" text-anchor="middle" font-size="12" font-weight="bold" fill="white">Next.js 16 App Router</text>
+  <text x="410" y="186" text-anchor="middle" font-size="9.5" fill="#94a3b8">Full-Stack Framework  (Client + Server + API Routes)</text>
+  <!-- Arrows from Row1 to Row2 -->
+  <line x1="410" y1="130" x2="410" y2="145" stroke="#94a3b8" stroke-width="1.5"/>
+  <polygon points="406,143 414,143 410,148" fill="#94a3b8"/>
+
+  <!-- Row 3: Backend -->
+  <rect x="30" y="222" width="760" height="90" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="50" y="242" font-size="10" font-weight="bold" fill="#15803d">BACKEND &amp; DATA</text>
+
+  <rect x="50" y="250" width="130" height="46" rx="6" fill="#16a34a"/>
+  <text x="115" y="269" text-anchor="middle" font-size="10" font-weight="bold" fill="white">MongoDB Atlas</text>
+  <text x="115" y="283" text-anchor="middle" font-size="8.5" fill="#dcfce7">Cloud Database</text>
+
+  <rect x="192" y="250" width="120" height="46" rx="6" fill="#16a34a"/>
+  <text x="252" y="269" text-anchor="middle" font-size="10" font-weight="bold" fill="white">Mongoose 9</text>
+  <text x="252" y="283" text-anchor="middle" font-size="8.5" fill="#dcfce7">ODM / Schemas</text>
+
+  <rect x="324" y="250" width="120" height="46" rx="6" fill="#16a34a"/>
+  <text x="384" y="269" text-anchor="middle" font-size="10" font-weight="bold" fill="white">NextAuth v5</text>
+  <text x="384" y="283" text-anchor="middle" font-size="8.5" fill="#dcfce7">JWT Sessions</text>
+
+  <rect x="456" y="250" width="120" height="46" rx="6" fill="#15803d"/>
+  <text x="516" y="269" text-anchor="middle" font-size="10" font-weight="bold" fill="white">bcryptjs</text>
+  <text x="516" y="283" text-anchor="middle" font-size="8.5" fill="#dcfce7">Password Hashing</text>
+
+  <rect x="588" y="250" width="90" height="46" rx="6" fill="#15803d"/>
+  <text x="633" y="269" text-anchor="middle" font-size="10" font-weight="bold" fill="white">Zod 4</text>
+  <text x="633" y="283" text-anchor="middle" font-size="8.5" fill="#dcfce7">Validation</text>
+
+  <rect x="690" y="250" width="90" height="46" rx="6" fill="#15803d"/>
+  <text x="735" y="269" text-anchor="middle" font-size="10" font-weight="bold" fill="white">date-fns</text>
+  <text x="735" y="283" text-anchor="middle" font-size="8.5" fill="#dcfce7">Date Utils</text>
+  <!-- Arrow from Row2 to Row3 -->
+  <line x1="410" y1="205" x2="410" y2="222" stroke="#94a3b8" stroke-width="1.5"/>
+  <polygon points="406,220 414,220 410,225" fill="#94a3b8"/>
+
+  <!-- Row 4: External -->
+  <rect x="30" y="328" width="760" height="72" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="50" y="348" font-size="10" font-weight="bold" fill="#5b21b6">EXTERNAL SERVICES</text>
+
+  <rect x="50" y="356" width="200" height="38" rx="6" fill="#7c3aed"/>
+  <text x="150" y="371" text-anchor="middle" font-size="10" font-weight="bold" fill="white">Groq AI API</text>
+  <text x="150" y="385" text-anchor="middle" font-size="8.5" fill="#e9d5ff">LLaMA 3.3 70B  |  LPU Inference  |  ~1.8s avg</text>
+
+  <rect x="265" y="356" width="200" height="38" rx="6" fill="#7c3aed"/>
+  <text x="365" y="371" text-anchor="middle" font-size="10" font-weight="bold" fill="white">Remotive Jobs API</text>
+  <text x="365" y="385" text-anchor="middle" font-size="8.5" fill="#e9d5ff">Remote job listings  |  REST  |  Free tier</text>
+
+  <rect x="480" y="356" width="180" height="38" rx="6" fill="#6d28d9"/>
+  <text x="570" y="371" text-anchor="middle" font-size="10" font-weight="bold" fill="white">redux-persist</text>
+  <text x="570" y="385" text-anchor="middle" font-size="8.5" fill="#e9d5ff">localStorage: theme + UI state</text>
+
+  <rect x="675" y="356" width="105" height="38" rx="6" fill="#6d28d9"/>
+  <text x="727" y="371" text-anchor="middle" font-size="10" font-weight="bold" fill="white">Lucide React</text>
+  <text x="727" y="385" text-anchor="middle" font-size="8.5" fill="#e9d5ff">SVG icon set</text>
+  <!-- Arrow from Row3 to Row4 -->
+  <line x1="410" y1="312" x2="410" y2="328" stroke="#94a3b8" stroke-width="1.5"/>
+  <polygon points="406,326 414,326 410,331" fill="#94a3b8"/>
+</svg>

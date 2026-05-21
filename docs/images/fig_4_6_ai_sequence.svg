@@ -1,0 +1,96 @@
+<svg width="820" height="520" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#475569"/>
+    </marker>
+    <marker id="arrR" markerWidth="9" markerHeight="7" refX="1" refY="3.5" orient="auto">
+      <polygon points="9 0, 0 3.5, 9 7" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <text x="410" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#0f172a">Figure 4.6 — AI Feature Sequence: Interview Question Generation</text>
+
+  <!-- Swimlane headers -->
+  <rect x="30" y="40" width="155" height="40" rx="6" fill="#1e3a8a"/>
+  <text x="107" y="65" text-anchor="middle" font-size="11" font-weight="bold" fill="white">User / Browser</text>
+
+  <rect x="230" y="40" width="185" height="40" rx="6" fill="#15803d"/>
+  <text x="322" y="65" text-anchor="middle" font-size="11" font-weight="bold" fill="white">InterviewPrepPage</text>
+
+  <rect x="460" y="40" width="160" height="40" rx="6" fill="#92400e"/>
+  <text x="540" y="58" text-anchor="middle" font-size="11" font-weight="bold" fill="white">/api/ai Route</text>
+  <text x="540" y="73" text-anchor="middle" font-size="9" fill="#fef3c7">(Next.js server)</text>
+
+  <rect x="665" y="40" width="130" height="40" rx="6" fill="#5b21b6"/>
+  <text x="730" y="58" text-anchor="middle" font-size="11" font-weight="bold" fill="white">Groq API</text>
+  <text x="730" y="73" text-anchor="middle" font-size="9" fill="#e9d5ff">LLaMA 3.3 70B</text>
+
+  <!-- Lifelines -->
+  <line x1="107" y1="80" x2="107" y2="500" stroke="#1e3a8a" stroke-width="1" stroke-dasharray="5,4"/>
+  <line x1="322" y1="80" x2="322" y2="500" stroke="#15803d" stroke-width="1" stroke-dasharray="5,4"/>
+  <line x1="540" y1="80" x2="540" y2="500" stroke="#92400e" stroke-width="1" stroke-dasharray="5,4"/>
+  <line x1="730" y1="80" x2="730" y2="500" stroke="#5b21b6" stroke-width="1" stroke-dasharray="5,4"/>
+
+  <!-- ── Step 1 ── -->
+  <text x="30" y="115" font-size="9" fill="#475569">① Enter job title + optional description</text>
+  <line x1="107" y1="120" x2="315" y2="120" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="190" y="117" text-anchor="middle" font-size="9" fill="#475569">click "Generate 20 Questions"</text>
+
+  <!-- ── Step 2 ── -->
+  <text x="30" y="148" font-size="9" fill="#475569">② Validate job title, set generating=true</text>
+  <rect x="298" y="135" width="48" height="18" rx="3" fill="#15803d" opacity="0.3"/>
+  <text x="322" y="148" text-anchor="middle" font-size="8" fill="#15803d">handleGenerate()</text>
+
+  <!-- ── Step 3 ── -->
+  <line x1="322" y1="168" x2="533" y2="168" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="420" y="163" text-anchor="middle" font-size="9" fill="#475569">POST /api/ai</text>
+  <text x="420" y="176" text-anchor="middle" font-size="8" fill="#94a3b8">{action:"interview-questions", jobTitle, experience, skills, projects}</text>
+
+  <!-- ── Step 4 ── -->
+  <rect x="516" y="190" width="48" height="18" rx="3" fill="#92400e" opacity="0.3"/>
+  <text x="540" y="203" text-anchor="middle" font-size="8" fill="#92400e">auth() check</text>
+
+  <line x1="540" y1="218" x2="723" y2="218" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="630" y="213" text-anchor="middle" font-size="9" fill="#475569">groq.chat.completions.create()</text>
+  <text x="630" y="226" text-anchor="middle" font-size="8" fill="#94a3b8">model: llama-3.3-70b-versatile, max_tokens: 6000</text>
+
+  <!-- Groq processing box -->
+  <rect x="695" y="238" width="68" height="30" rx="4" fill="#5b21b6" opacity="0.2"/>
+  <text x="730" y="257" text-anchor="middle" font-size="8" fill="#5b21b6">LLM inference</text>
+  <text x="730" y="268" text-anchor="middle" font-size="8" fill="#5b21b6">~8 seconds</text>
+
+  <!-- ── Step 5 ── -->
+  <line x1="723" y1="280" x2="547" y2="280" stroke="#475569" stroke-width="1.5" marker-end="url(#arrR)"/>
+  <text x="630" y="275" text-anchor="middle" font-size="9" fill="#475569">JSON array [20 QA objects]</text>
+
+  <!-- ── Step 6 ── -->
+  <rect x="516" y="292" width="48" height="18" rx="3" fill="#92400e" opacity="0.3"/>
+  <text x="540" y="305" text-anchor="middle" font-size="8" fill="#92400e">NextResponse.json()</text>
+
+  <line x1="533" y1="320" x2="329" y2="320" stroke="#475569" stroke-width="1.5" marker-end="url(#arrR)"/>
+  <text x="420" y="315" text-anchor="middle" font-size="9" fill="#475569">{ result: "[ {...}, ... ]" }</text>
+
+  <!-- ── Step 7 ── -->
+  <rect x="298" y="330" width="48" height="18" rx="3" fill="#15803d" opacity="0.3"/>
+  <text x="322" y="343" text-anchor="middle" font-size="8" fill="#15803d">JSON.parse(raw)</text>
+  <text x="322" y="357" text-anchor="middle" font-size="8" fill="#15803d">setQuestions(parsed)</text>
+
+  <!-- ── Step 8 ── -->
+  <line x1="322" y1="370" x2="114" y2="370" stroke="#475569" stroke-width="1.5" marker-end="url(#arrR)"/>
+  <text x="210" y="365" text-anchor="middle" font-size="9" fill="#475569">Render 20 QACard components (answers open)</text>
+
+  <!-- ── Regen step ── -->
+  <line x1="30" y1="400" x2="790" y2="400" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="410" y="398" text-anchor="middle" font-size="8" fill="#94a3b8">— optional: per-answer regeneration —</text>
+
+  <line x1="107" y1="420" x2="315" y2="420" stroke="#d97706" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+  <text x="210" y="416" text-anchor="middle" font-size="9" fill="#d97706">click "Regenerate" on card #N</text>
+
+  <line x1="322" y1="435" x2="533" y2="435" stroke="#d97706" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+  <line x1="540" y1="450" x2="723" y2="450" stroke="#d97706" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+  <line x1="723" y1="465" x2="547" y2="465" stroke="#d97706" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrR)"/>
+  <line x1="533" y1="480" x2="329" y2="480" stroke="#d97706" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrR)"/>
+  <line x1="322" y1="490" x2="114" y2="490" stroke="#d97706" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrR)"/>
+  <text x="630" y="447" text-anchor="middle" font-size="8" fill="#d97706">single-Q re-prompt</text>
+  <text x="210" y="494" text-anchor="middle" font-size="8" fill="#d97706">update questions[N].answer only</text>
+</svg>

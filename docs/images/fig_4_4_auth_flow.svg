@@ -1,0 +1,104 @@
+<svg width="820" height="520" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#475569"/>
+    </marker>
+    <marker id="arrGreen" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <marker id="arrBlue" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+  </defs>
+
+  <text x="410" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#0f172a">Figure 4.4 — Authentication and Authorization Flow</text>
+
+  <!-- ══ REGISTRATION FLOW (left) ══ -->
+  <text x="205" y="55" text-anchor="middle" font-size="12" font-weight="bold" fill="#15803d">Registration Flow</text>
+
+  <rect x="80" y="65" width="250" height="36" rx="6" fill="#16a34a"/>
+  <text x="205" y="88" text-anchor="middle" font-size="10" fill="white">User submits name / email / password</text>
+
+  <line x1="205" y1="101" x2="205" y2="120" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrGreen)"/>
+
+  <rect x="80" y="120" width="250" height="36" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="205" y="143" text-anchor="middle" font-size="10" fill="#15803d">POST /api/auth/register</text>
+
+  <line x1="205" y1="156" x2="205" y2="175" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrGreen)"/>
+
+  <rect x="80" y="175" width="250" height="36" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="205" y="198" text-anchor="middle" font-size="10" fill="#15803d">Zod schema validation</text>
+
+  <line x1="205" y1="211" x2="205" y2="230" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrGreen)"/>
+
+  <rect x="80" y="230" width="250" height="36" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="205" y="253" text-anchor="middle" font-size="10" fill="#15803d">Check email not already used</text>
+
+  <line x1="205" y1="266" x2="205" y2="285" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrGreen)"/>
+
+  <rect x="80" y="285" width="250" height="36" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="205" y="308" text-anchor="middle" font-size="10" fill="#15803d">bcrypt.hash(password, 10)</text>
+
+  <line x1="205" y1="321" x2="205" y2="340" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrGreen)"/>
+
+  <rect x="80" y="340" width="250" height="36" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="205" y="363" text-anchor="middle" font-size="10" fill="#15803d">Insert User document → MongoDB</text>
+
+  <line x1="205" y1="376" x2="205" y2="395" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrGreen)"/>
+
+  <rect x="80" y="395" width="250" height="36" rx="6" fill="#16a34a"/>
+  <text x="205" y="418" text-anchor="middle" font-size="10" fill="white">201 Created → redirect to /sign-in</text>
+
+  <!-- ══ LOGIN FLOW (right) ══ -->
+  <text x="610" y="55" text-anchor="middle" font-size="12" font-weight="bold" fill="#1e40af">Login Flow</text>
+
+  <rect x="485" y="65" width="250" height="36" rx="6" fill="#2563eb"/>
+  <text x="610" y="88" text-anchor="middle" font-size="10" fill="white">User submits email / password</text>
+
+  <line x1="610" y1="101" x2="610" y2="120" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrBlue)"/>
+
+  <rect x="485" y="120" width="250" height="36" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="610" y="143" text-anchor="middle" font-size="10" fill="#1e40af">NextAuth credentials.authorize()</text>
+
+  <line x1="610" y1="156" x2="610" y2="175" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrBlue)"/>
+
+  <rect x="485" y="175" width="250" height="36" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="610" y="198" text-anchor="middle" font-size="10" fill="#1e40af">Find user by email in MongoDB</text>
+
+  <line x1="610" y1="211" x2="610" y2="230" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrBlue)"/>
+
+  <rect x="485" y="230" width="250" height="36" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="610" y="253" text-anchor="middle" font-size="10" fill="#1e40af">bcrypt.compare(password, hash)</text>
+
+  <line x1="610" y1="266" x2="610" y2="285" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrBlue)"/>
+
+  <rect x="485" y="285" width="250" height="36" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="610" y="308" text-anchor="middle" font-size="10" fill="#1e40af">Return {id, email, name, role}</text>
+
+  <line x1="610" y1="321" x2="610" y2="340" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrBlue)"/>
+
+  <rect x="485" y="340" width="250" height="36" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="610" y="363" text-anchor="middle" font-size="10" fill="#1e40af">NextAuth signs JWT → httpOnly cookie</text>
+
+  <line x1="610" y1="376" x2="610" y2="395" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrBlue)"/>
+
+  <rect x="485" y="395" width="250" height="36" rx="6" fill="#2563eb"/>
+  <text x="610" y="418" text-anchor="middle" font-size="10" fill="white">Session via useSession() / auth()</text>
+
+  <!-- ══ RBAC TABLE ══ -->
+  <text x="410" y="458" text-anchor="middle" font-size="11" font-weight="bold" fill="#0f172a">Role-Based Access Control (RBAC)</text>
+  <rect x="100" y="464" width="620" height="46" rx="6" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="200" y="481" text-anchor="middle" font-size="9" font-weight="bold" fill="#475569">Route / Resource</text>
+  <text x="390" y="481" text-anchor="middle" font-size="9" font-weight="bold" fill="#16a34a">user</text>
+  <text x="490" y="481" text-anchor="middle" font-size="9" font-weight="bold" fill="#d97706">admin</text>
+  <text x="610" y="481" text-anchor="middle" font-size="9" font-weight="bold" fill="#dc2626">super_admin</text>
+  <line x1="100" y1="486" x2="720" y2="486" stroke="#e2e8f0"/>
+  <text x="200" y="501" text-anchor="middle" font-size="9" fill="#334155">/editor, /resumes, /profile, /jobs</text>
+  <text x="390" y="501" text-anchor="middle" font-size="10" fill="#16a34a">✓</text>
+  <text x="490" y="501" text-anchor="middle" font-size="10" fill="#16a34a">✓</text>
+  <text x="610" y="501" text-anchor="middle" font-size="10" fill="#16a34a">✓</text>
+  <text x="200" y="514" text-anchor="middle" font-size="9" fill="#334155">/admin/*  (stats, users, activity)</text>
+  <text x="390" y="514" text-anchor="middle" font-size="10" fill="#dc2626">✗</text>
+  <text x="490" y="514" text-anchor="middle" font-size="10" fill="#16a34a">✓</text>
+  <text x="610" y="514" text-anchor="middle" font-size="10" fill="#16a34a">✓</text>
+</svg>

@@ -1,0 +1,155 @@
+<svg width="820" height="480" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <text x="410" y="24" text-anchor="middle" font-size="15" font-weight="bold" fill="#0f172a">Figure 7.3 — Kanban Job Application Tracker</text>
+
+  <!-- Background -->
+  <rect x="20" y="35" width="780" height="430" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Column headers row -->
+  <!-- Wishlist -->
+  <rect x="30" y="45" width="118" height="28" rx="6" fill="#64748b"/>
+  <text x="89" y="64" text-anchor="middle" font-size="9.5" font-weight="bold" fill="white">⭐ Wishlist</text>
+  <rect x="136" y="51" width="18" height="16" rx="8" fill="white" opacity="0.3"/>
+  <text x="145" y="63" text-anchor="middle" font-size="8.5" fill="white">2</text>
+
+  <!-- Applied -->
+  <rect x="158" y="45" width="118" height="28" rx="6" fill="#2563eb"/>
+  <text x="217" y="64" text-anchor="middle" font-size="9.5" font-weight="bold" fill="white">📤 Applied</text>
+  <rect x="264" y="51" width="18" height="16" rx="8" fill="white" opacity="0.3"/>
+  <text x="273" y="63" text-anchor="middle" font-size="8.5" fill="white">3</text>
+
+  <!-- Phone Screen -->
+  <rect x="286" y="45" width="118" height="28" rx="6" fill="#7c3aed"/>
+  <text x="345" y="64" text-anchor="middle" font-size="9.5" font-weight="bold" fill="white">📞 Phone Screen</text>
+  <rect x="392" y="51" width="18" height="16" rx="8" fill="white" opacity="0.3"/>
+  <text x="401" y="63" text-anchor="middle" font-size="8.5" fill="white">1</text>
+
+  <!-- Interview -->
+  <rect x="414" y="45" width="118" height="28" rx="6" fill="#d97706"/>
+  <text x="473" y="64" text-anchor="middle" font-size="9.5" font-weight="bold" fill="white">🎯 Interview</text>
+  <rect x="520" y="51" width="18" height="16" rx="8" fill="white" opacity="0.3"/>
+  <text x="529" y="63" text-anchor="middle" font-size="8.5" fill="white">2</text>
+
+  <!-- Offer -->
+  <rect x="542" y="45" width="118" height="28" rx="6" fill="#16a34a"/>
+  <text x="601" y="64" text-anchor="middle" font-size="9.5" font-weight="bold" fill="white">🎉 Offer</text>
+  <rect x="648" y="51" width="18" height="16" rx="8" fill="white" opacity="0.3"/>
+  <text x="657" y="63" text-anchor="middle" font-size="8.5" fill="white">1</text>
+
+  <!-- Rejected -->
+  <rect x="670" y="45" width="118" height="28" rx="6" fill="#dc2626"/>
+  <text x="729" y="64" text-anchor="middle" font-size="9.5" font-weight="bold" fill="white">✗ Rejected</text>
+  <rect x="776" y="51" width="18" height="16" rx="8" fill="white" opacity="0.3"/>
+  <text x="785" y="63" text-anchor="middle" font-size="8.5" fill="white">1</text>
+
+  <!-- Column lanes -->
+  <rect x="30" y="80" width="118" height="368" rx="6" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+  <rect x="158" y="80" width="118" height="368" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+  <rect x="286" y="80" width="118" height="368" rx="6" fill="#f5f3ff" stroke="#ddd6fe" stroke-width="1"/>
+  <rect x="414" y="80" width="118" height="368" rx="6" fill="#fffbeb" stroke="#fde68a" stroke-width="1"/>
+  <rect x="542" y="80" width="118" height="368" rx="6" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1"/>
+  <rect x="670" y="80" width="118" height="368" rx="6" fill="#fef2f2" stroke="#fecaca" stroke-width="1"/>
+
+  <!-- ── WISHLIST CARDS ── -->
+  <rect x="38" y="88" width="102" height="80" rx="6" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="48" y="103" font-size="8.5" font-weight="bold" fill="#374151">Stripe</text>
+  <text x="48" y="116" font-size="7.5" fill="#6b7280">Frontend Engineer</text>
+  <text x="48" y="129" font-size="7" fill="#94a3b8">Remote  •  $120k</text>
+  <line x1="38" y1="135" x2="140" y2="135" stroke="#f3f4f6"/>
+  <text x="48" y="148" font-size="7" fill="#9ca3af">Added 2 days ago</text>
+  <rect x="94" y="141" width="38" height="14" rx="7" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <text x="113" y="152" text-anchor="middle" font-size="7" fill="#64748b">+ Apply</text>
+
+  <rect x="38" y="176" width="102" height="72" rx="6" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="48" y="191" font-size="8.5" font-weight="bold" fill="#374151">Vercel</text>
+  <text x="48" y="204" font-size="7.5" fill="#6b7280">Full Stack Engineer</text>
+  <text x="48" y="217" font-size="7" fill="#94a3b8">Remote  •  $110k</text>
+  <text x="48" y="238" font-size="7" fill="#9ca3af">Added 5 days ago</text>
+
+  <!-- Add button -->
+  <rect x="38" y="256" width="102" height="22" rx="6" fill="none" stroke="#cbd5e1" stroke-dasharray="4,3"/>
+  <text x="89" y="272" text-anchor="middle" font-size="8" fill="#9ca3af">+ Add application</text>
+
+  <!-- ── APPLIED CARDS ── -->
+  <rect x="166" y="88" width="102" height="88" rx="6" fill="white" stroke="#bfdbfe" stroke-width="1.2"/>
+  <rect x="166" y="88" width="4" height="88" rx="2" fill="#2563eb"/>
+  <text x="178" y="103" font-size="8.5" font-weight="bold" fill="#374151">Google</text>
+  <text x="178" y="116" font-size="7.5" fill="#6b7280">SWE II — Infra</text>
+  <text x="178" y="129" font-size="7" fill="#94a3b8">Hybrid, NYC</text>
+  <line x1="170" y1="136" x2="266" y2="136" stroke="#f3f4f6"/>
+  <text x="178" y="150" font-size="7" fill="#2563eb">Applied: Jan 15, 2025</text>
+  <text x="178" y="163" font-size="7" fill="#9ca3af">Deadline: Feb 1</text>
+
+  <rect x="166" y="184" width="102" height="80" rx="6" fill="white" stroke="#bfdbfe" stroke-width="1.2"/>
+  <rect x="166" y="184" width="4" height="80" rx="2" fill="#2563eb"/>
+  <text x="178" y="199" font-size="8.5" font-weight="bold" fill="#374151">Meta</text>
+  <text x="178" y="212" font-size="7.5" fill="#6b7280">React Engineer</text>
+  <text x="178" y="225" font-size="7" fill="#94a3b8">Remote, US</text>
+  <text x="178" y="246" font-size="7" fill="#2563eb">Applied: Jan 20, 2025</text>
+
+  <rect x="166" y="272" width="102" height="72" rx="6" fill="white" stroke="#bfdbfe" stroke-width="1.2"/>
+  <rect x="166" y="272" width="4" height="72" rx="2" fill="#2563eb"/>
+  <text x="178" y="287" font-size="8.5" font-weight="bold" fill="#374151">Shopify</text>
+  <text x="178" y="300" font-size="7.5" fill="#6b7280">Platform Eng</text>
+  <text x="178" y="332" font-size="7" fill="#2563eb">Applied: Jan 22, 2025</text>
+
+  <!-- ── PHONE SCREEN CARD ── -->
+  <rect x="294" y="88" width="102" height="96" rx="6" fill="white" stroke="#ddd6fe" stroke-width="1.2"/>
+  <rect x="294" y="88" width="4" height="96" rx="2" fill="#7c3aed"/>
+  <text x="306" y="103" font-size="8.5" font-weight="bold" fill="#374151">Airbnb</text>
+  <text x="306" y="116" font-size="7.5" fill="#6b7280">UI Engineer</text>
+  <text x="306" y="129" font-size="7" fill="#94a3b8">Remote</text>
+  <line x1="298" y1="136" x2="394" y2="136" stroke="#f3f4f6"/>
+  <text x="306" y="150" font-size="7" fill="#7c3aed">📞 Jan 28, 2:00 PM</text>
+  <text x="306" y="163" font-size="7" fill="#9ca3af">Recruiter screen</text>
+  <text x="306" y="174" font-size="7" fill="#7c3aed">⏰ In 3 days</text>
+
+  <!-- ── INTERVIEW CARDS ── -->
+  <rect x="422" y="88" width="102" height="100" rx="6" fill="white" stroke="#fde68a" stroke-width="1.2"/>
+  <rect x="422" y="88" width="4" height="100" rx="2" fill="#d97706"/>
+  <text x="434" y="103" font-size="8.5" font-weight="bold" fill="#374151">Netflix</text>
+  <text x="434" y="116" font-size="7.5" fill="#6b7280">Sr. Frontend Eng</text>
+  <text x="434" y="129" font-size="7" fill="#94a3b8">Remote, US</text>
+  <line x1="426" y1="136" x2="522" y2="136" stroke="#f3f4f6"/>
+  <text x="434" y="150" font-size="7" fill="#d97706">🎯 Feb 3, 10:00 AM</text>
+  <text x="434" y="163" font-size="7" fill="#9ca3af">Technical round</text>
+  <text x="434" y="175" font-size="7" fill="#d97706">⏰ Tomorrow!</text>
+
+  <rect x="422" y="196" width="102" height="80" rx="6" fill="white" stroke="#fde68a" stroke-width="1.2"/>
+  <rect x="422" y="196" width="4" height="80" rx="2" fill="#d97706"/>
+  <text x="434" y="211" font-size="8.5" font-weight="bold" fill="#374151">Atlassian</text>
+  <text x="434" y="224" font-size="7.5" fill="#6b7280">React Developer</text>
+  <text x="434" y="254" font-size="7" fill="#d97706">🎯 Feb 8, 3:00 PM</text>
+  <text x="434" y="266" font-size="7" fill="#9ca3af">Final round</text>
+
+  <!-- ── OFFER CARD ── -->
+  <rect x="550" y="88" width="102" height="100" rx="6" fill="white" stroke="#bbf7d0" stroke-width="1.8"/>
+  <rect x="550" y="88" width="4" height="100" rx="2" fill="#16a34a"/>
+  <text x="562" y="103" font-size="8.5" font-weight="bold" fill="#374151">TechCorp</text>
+  <text x="562" y="116" font-size="7.5" fill="#6b7280">Full Stack Dev</text>
+  <text x="562" y="129" font-size="7" fill="#94a3b8">Islamabad</text>
+  <line x1="554" y1="136" x2="650" y2="136" stroke="#f3f4f6"/>
+  <text x="562" y="150" font-size="7" fill="#16a34a">💰 PKR 250k/mo</text>
+  <text x="562" y="163" font-size="7" fill="#16a34a">🎉 Offer received!</text>
+  <text x="562" y="176" font-size="7" fill="#9ca3af">Deadline: Feb 10</text>
+
+  <!-- ── REJECTED CARD ── -->
+  <rect x="678" y="88" width="102" height="80" rx="6" fill="white" stroke="#fecaca" stroke-width="1.2"/>
+  <rect x="678" y="88" width="4" height="80" rx="2" fill="#dc2626"/>
+  <text x="690" y="103" font-size="8.5" font-weight="bold" fill="#374151">Amazon</text>
+  <text x="690" y="116" font-size="7.5" fill="#6b7280">SDE II</text>
+  <text x="690" y="129" font-size="7" fill="#94a3b8">Remote, US</text>
+  <text x="690" y="148" font-size="7" fill="#dc2626">✗ Jan 25, 2025</text>
+  <text x="690" y="160" font-size="7" fill="#9ca3af">After phone screen</text>
+
+  <!-- Drag-drop indicator -->
+  <rect x="166" y="184" width="102" height="80" rx="6" fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="4,2" opacity="0.6"/>
+  <text x="217" y="290" text-anchor="middle" font-size="7.5" fill="#2563eb">drag to move →</text>
+
+  <!-- Bottom legend -->
+  <rect x="30" y="418" width="760" height="36" rx="6" fill="white" stroke="#e2e8f0"/>
+  <text x="50" y="432" font-size="8.5" font-weight="bold" fill="#374151">Features:</text>
+  <text x="120" y="432" font-size="8.5" fill="#6b7280">Drag cards between columns to update status</text>
+  <text x="400" y="432" font-size="8.5" fill="#6b7280">|  Notes and dates per card</text>
+  <text x="540" y="432" font-size="8.5" fill="#6b7280">|  Linked resume + cover letter</text>
+  <text x="50" y="447" font-size="8.5" fill="#6b7280">Status saved to MongoDB instantly  |  Interview reminders  |  All data cloud-synced per user account</text>
+</svg>

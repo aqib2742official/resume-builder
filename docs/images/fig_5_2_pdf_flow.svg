@@ -1,0 +1,76 @@
+<svg width="820" height="520" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#475569"/>
+    </marker>
+    <marker id="arrG" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+  </defs>
+
+  <text x="410" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#0f172a">Figure 5.2 — PDF Export Flow</text>
+
+  <!-- Step boxes - centered column -->
+  <!-- Step 1 -->
+  <rect x="255" y="45" width="310" height="48" rx="8" fill="#1e3a8a"/>
+  <text x="410" y="64" text-anchor="middle" font-size="11" font-weight="bold" fill="white">① User clicks "Download PDF"</text>
+  <text x="410" y="82" text-anchor="middle" font-size="9.5" fill="#bfdbfe">AppHeader → usePDFExport hook invoked</text>
+
+  <line x1="410" y1="93" x2="410" y2="112" stroke="#475569" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 2 -->
+  <rect x="255" y="112" width="310" height="48" rx="8" fill="#0369a1" stroke="none"/>
+  <text x="410" y="131" text-anchor="middle" font-size="11" font-weight="bold" fill="white">② Set  exporting = true</text>
+  <text x="410" y="149" text-anchor="middle" font-size="9.5" fill="#e0f2fe">Hide UI-only elements (action buttons, tooltips)</text>
+
+  <line x1="410" y1="160" x2="410" y2="179" stroke="#475569" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 3 -->
+  <rect x="255" y="179" width="310" height="48" rx="8" fill="#7c3aed"/>
+  <text x="410" y="198" text-anchor="middle" font-size="11" font-weight="bold" fill="white">③ html2pdf.js targets  #resume-preview</text>
+  <text x="410" y="216" text-anchor="middle" font-size="9.5" fill="#e9d5ff">DOM element (the live rendered template)</text>
+
+  <line x1="410" y1="227" x2="410" y2="246" stroke="#475569" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 4 -->
+  <rect x="255" y="246" width="310" height="60" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="410" y="265" text-anchor="middle" font-size="11" font-weight="bold" fill="#5b21b6">④ html2pdf Config Applied</text>
+  <text x="410" y="281" text-anchor="middle" font-size="9.5" fill="#6d28d9">format: 'a4'  |  margin: 0  |  scale: 2</text>
+  <text x="410" y="297" text-anchor="middle" font-size="9.5" fill="#6d28d9">useCORS: true  |  html2canvas: { scale: 2 }</text>
+
+  <line x1="410" y1="306" x2="410" y2="325" stroke="#475569" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 5 -->
+  <rect x="255" y="325" width="310" height="48" rx="8" fill="#ca8a04"/>
+  <text x="410" y="344" text-anchor="middle" font-size="11" font-weight="bold" fill="white">⑤ html2canvas renders DOM → &lt;canvas&gt;</text>
+  <text x="410" y="362" text-anchor="middle" font-size="9.5" fill="#fef9c3">Captures exact pixel layout at 2× resolution</text>
+
+  <line x1="410" y1="373" x2="410" y2="392" stroke="#475569" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Step 6 -->
+  <rect x="255" y="392" width="310" height="48" rx="8" fill="#15803d"/>
+  <text x="410" y="411" text-anchor="middle" font-size="11" font-weight="bold" fill="white">⑥ jsPDF converts canvas → PDF blob</text>
+  <text x="410" y="429" text-anchor="middle" font-size="9.5" fill="#dcfce7">A4 dimensions  |  vector-quality text layer</text>
+
+  <line x1="410" y1="440" x2="410" y2="459" stroke="#16a34a" stroke-width="2" marker-end="url(#arrG)"/>
+
+  <!-- Step 7 -->
+  <rect x="255" y="459" width="310" height="48" rx="8" fill="#16a34a"/>
+  <text x="410" y="478" text-anchor="middle" font-size="11" font-weight="bold" fill="white">⑦ Browser triggers file download</text>
+  <text x="410" y="496" text-anchor="middle" font-size="9.5" fill="#dcfce7">FullName_Resume.pdf  |  set exporting = false</text>
+
+  <!-- Side annotations -->
+  <rect x="30" y="178" width="190" height="55" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="1.2"/>
+  <text x="125" y="195" text-anchor="middle" font-size="9" font-weight="bold" fill="#92400e">Why inline styles?</text>
+  <text x="125" y="210" text-anchor="middle" font-size="8.5" fill="#78350f">Tailwind utility classes are</text>
+  <text x="125" y="222" text-anchor="middle" font-size="8.5" fill="#78350f">not available in canvas mode.</text>
+  <text x="125" y="234" text-anchor="middle" font-size="8.5" fill="#78350f">Accent color uses inline style.</text>
+  <line x1="220" y1="205" x2="255" y2="266" stroke="#d97706" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <rect x="600" y="325" width="190" height="55" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.2"/>
+  <text x="695" y="342" text-anchor="middle" font-size="9" font-weight="bold" fill="#1e40af">Performance Note</text>
+  <text x="695" y="357" text-anchor="middle" font-size="8.5" fill="#1e40af">scale: 2 doubles resolution</text>
+  <text x="695" y="369" text-anchor="middle" font-size="8.5" fill="#1e40af">for crisp text on HiDPI</text>
+  <text x="695" y="381" text-anchor="middle" font-size="8.5" fill="#1e40af">displays. Avg export: ~2.4s</text>
+  <line x1="600" y1="352" x2="565" y2="352" stroke="#2563eb" stroke-width="1" stroke-dasharray="4,3"/>
+</svg>

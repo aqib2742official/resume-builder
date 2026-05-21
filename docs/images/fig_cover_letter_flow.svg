@@ -1,0 +1,102 @@
+<svg width="820" height="420" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#475569"/>
+    </marker>
+    <marker id="arrP" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#a21caf"/>
+    </marker>
+  </defs>
+
+  <text x="410" y="24" text-anchor="middle" font-size="15" font-weight="bold" fill="#0f172a">Figure 5.3 — Cover Letter Generation Flow</text>
+
+  <!-- Step boxes top row -->
+  <!-- Step 1 -->
+  <rect x="20" y="44" width="130" height="70" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.8"/>
+  <text x="85" y="63" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#1e40af">Step 1</text>
+  <text x="85" y="78" text-anchor="middle" font-size="8.5" fill="#1e40af">User opens</text>
+  <text x="85" y="91" text-anchor="middle" font-size="8.5" fill="#1e40af">Cover Letter</text>
+  <text x="85" y="104" text-anchor="middle" font-size="8.5" fill="#1e40af">modal</text>
+
+  <line x1="150" y1="79" x2="175" y2="79" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Step 2 -->
+  <rect x="175" y="44" width="140" height="70" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.8"/>
+  <text x="245" y="63" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#1e40af">Step 2</text>
+  <text x="245" y="78" text-anchor="middle" font-size="8.5" fill="#1e40af">User enters:</text>
+  <text x="245" y="91" text-anchor="middle" font-size="8" fill="#1e40af">jobTitle, company</text>
+  <text x="245" y="104" text-anchor="middle" font-size="8" fill="#1e40af">jobDescription, tone</text>
+
+  <line x1="315" y1="79" x2="340" y2="79" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Step 3 -->
+  <rect x="340" y="44" width="145" height="70" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.8"/>
+  <text x="412" y="63" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#5b21b6">Step 3</text>
+  <text x="412" y="78" text-anchor="middle" font-size="8.5" fill="#5b21b6">Build prompt from</text>
+  <text x="412" y="91" text-anchor="middle" font-size="8" fill="#5b21b6">Redux resumeSlice</text>
+  <text x="412" y="104" text-anchor="middle" font-size="8" fill="#5b21b6">+ user inputs</text>
+
+  <line x1="485" y1="79" x2="510" y2="79" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Step 4 -->
+  <rect x="510" y="44" width="140" height="70" rx="8" fill="#fdf2f8" stroke="#a21caf" stroke-width="1.8"/>
+  <text x="580" y="63" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#86198f">Step 4</text>
+  <text x="580" y="78" text-anchor="middle" font-size="8.5" fill="#86198f">POST /api/ai</text>
+  <text x="580" y="91" text-anchor="middle" font-size="8" fill="#86198f">action: cover-letter</text>
+  <text x="580" y="104" text-anchor="middle" font-size="8" fill="#86198f">Server validates</text>
+
+  <line x1="650" y1="79" x2="675" y2="79" stroke="#a21caf" stroke-width="1.5" marker-end="url(#arrP)"/>
+
+  <!-- Step 5 Groq -->
+  <rect x="675" y="44" width="120" height="70" rx="8" fill="#fdf2f8" stroke="#a21caf" stroke-width="1.8"/>
+  <text x="735" y="63" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#86198f">Step 5</text>
+  <text x="735" y="78" text-anchor="middle" font-size="8.5" fill="#86198f">Groq LLaMA</text>
+  <text x="735" y="91" text-anchor="middle" font-size="8.5" fill="#86198f">generates letter</text>
+  <text x="735" y="104" text-anchor="middle" font-size="8" fill="#94a3b8">~4s</text>
+
+  <!-- Prompt detail box -->
+  <rect x="20" y="132" width="460" height="110" rx="8" fill="#0f172a"/>
+  <text x="250" y="152" text-anchor="middle" font-size="9" font-weight="bold" fill="#e2e8f0">Prompt Injected into Groq (action: cover-letter)</text>
+  <text x="36" y="170" font-size="7.5" fill="#94a3b8">You are a professional cover letter writer. Write a {tone} cover letter for:</text>
+  <text x="36" y="184" font-size="7.5" fill="#64748b">Role: {jobTitle} at {company}</text>
+  <text x="36" y="198" font-size="7.5" fill="#64748b">Candidate: {fullName}, {summary}</text>
+  <text x="36" y="212" font-size="7.5" fill="#64748b">Skills: {skills.join(', ')}</text>
+  <text x="36" y="226" font-size="7.5" fill="#64748b">Experience: {experience[0].role} at {experience[0].company}</text>
+  <text x="36" y="236" font-size="7.5" fill="#64748b">Job description excerpt: {jobDescription.slice(0, 500)}</text>
+
+  <!-- Arrow from step 5 down to response -->
+  <line x1="735" y1="114" x2="735" y2="155" stroke="#a21caf" stroke-width="1.5" marker-end="url(#arrP)"/>
+
+  <!-- Step 6: Response handling -->
+  <rect x="510" y="132" width="285" height="110" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.8"/>
+  <text x="652" y="152" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#15803d">Step 6 — Response &amp; Storage</text>
+  <text x="525" y="170" font-size="8.5" fill="#15803d">• Streamed text returned to client</text>
+  <text x="525" y="184" font-size="8.5" fill="#15803d">• Displayed in preview panel (editable)</text>
+  <text x="525" y="198" font-size="8.5" fill="#15803d">• "Save to Library" → POST /api/cover-letters</text>
+  <text x="525" y="212" font-size="8.5" fill="#15803d">• Stored in CoverLetter collection (MongoDB)</text>
+  <text x="525" y="226" font-size="8" fill="#94a3b8">• User can copy, download PDF, or regenerate</text>
+
+  <!-- Data model box -->
+  <rect x="20" y="256" width="340" height="110" rx="8" fill="#fffbeb" stroke="#fde68a" stroke-width="1.8"/>
+  <text x="190" y="276" text-anchor="middle" font-size="10" font-weight="bold" fill="#92400e">CoverLetter MongoDB Document</text>
+  <text x="36" y="295" font-size="8.5" fill="#374151">userId:        ObjectId (ref: User)</text>
+  <text x="36" y="310" font-size="8.5" fill="#374151">resumeId:      ObjectId (ref: Resume)</text>
+  <text x="36" y="325" font-size="8.5" fill="#374151">jobTitle:      String</text>
+  <text x="36" y="340" font-size="8.5" fill="#374151">company:       String</text>
+  <text x="36" y="355" font-size="8.5" fill="#374151">content:       String (full letter text)</text>
+
+  <rect x="200" y="295" width="140" height="65" rx="6" fill="#fef3c7" stroke="#fde68a"/>
+  <text x="270" y="314" text-anchor="middle" font-size="8.5" fill="#92400e">tone:       String</text>
+  <text x="270" y="328" text-anchor="middle" font-size="8.5" fill="#92400e">createdAt:  Date</text>
+  <text x="270" y="342" text-anchor="middle" font-size="8.5" fill="#92400e">updatedAt:  Date</text>
+  <text x="270" y="356" text-anchor="middle" font-size="7.5" fill="#94a3b8">auto-timestamps</text>
+
+  <!-- Features box -->
+  <rect x="375" y="256" width="420" height="110" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="585" y="276" text-anchor="middle" font-size="10" font-weight="bold" fill="#374151">Cover Letter Features &amp; Library</text>
+  <text x="390" y="295" font-size="8.5" fill="#374151">• Saved letters accessible from /cover-letters library page</text>
+  <text x="390" y="310" font-size="8.5" fill="#374151">• Each letter linked to its source resume and job</text>
+  <text x="390" y="325" font-size="8.5" fill="#374151">• Tone options: Professional, Enthusiastic, Formal, Creative</text>
+  <text x="390" y="340" font-size="8.5" fill="#374151">• Download as PDF using same html2pdf.js pipeline</text>
+  <text x="390" y="355" font-size="8.5" fill="#374151">• Available via Resume card context menu ( ⋯ → Cover Letter)</text>
+</svg>
