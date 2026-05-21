@@ -110,8 +110,7 @@ export function ResumeCard({ resume, onUpdate, onCompareSelect, compareSelected,
   ].filter(Boolean).length
 
   function openInEditor() {
-    dispatch(loadResumeData(resume.data))
-    router.push('/editor')
+    router.push(`/editor?id=${resume.id}`)
   }
 
   async function handleRename() {

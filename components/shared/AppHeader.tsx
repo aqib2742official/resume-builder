@@ -12,26 +12,30 @@ import { ATSChecker } from '@/components/features/ATSChecker'
 import { ResumeManager } from '@/components/features/ResumeManager'
 import { AuthToSaveModal } from '@/components/shared/AuthToSaveModal'
 import { useResumeActions } from '@/hooks/useResumeActions'
-import { useAutoSave } from '@/hooks/useAutoSave'
 import { usePDFExport } from '@/hooks/usePDFExport'
 import { useUndoRedo } from '@/hooks/useUndoRedo'
 import { usePersonal } from '@/hooks/useResumeData'
 import type { RootState } from '@/store'
 
-export function AppHeader() {
+interface AppHeaderProps {
+  saveToCloud: () => Promise<string | null>
+  saveStatus: 'idle' | 'saved'
+  onNewResumeId?: (id: string) => void
+}
+
+export function AppHeader({ saveToCloud, saveStatus, onNewResumeId }: Readonly<AppHeaderProps>) {
   const { loadSampleData, clearResume, toggleDarkEditor } = useResumeActions()
-  const { status, saveToCloud } = useAutoSave()
   const { exportPDF, exporting } = usePDFExport()
   const { canUndo, canRedo, undo, redo } = useUndoRedo()
-  const personal  = usePersonal()
+  const personal   = usePersonal()
   const darkEditor = useSelector((state: RootState) => state.ui.darkEditor)
   const { data: session } = useSession()
 
-  const [confirmClear,   setConfirmClear]   = useState(false)
-  const [showATS,        setShowATS]        = useState(false)
-  const [showManager,    setShowManager]    = useState(false)
+  const [confirmClear,    setConfirmClear]    = useState(false)
+  const [showATS,         setShowATS]         = useState(false)
+  const [showManager,     setShowManager]     = useState(false)
   const [showSignInModal, setShowSignInModal] = useState(false)
-  const [saving, setSaving] = useState(false)
+  const [saving,          setSaving]          = useState(false)
 
   function handleClear() {
     if (confirmClear) {
@@ -44,13 +48,11 @@ export function AppHeader() {
   }
 
   async function handleSave() {
-    if (!session) {
-      setShowSignInModal(true)
-      return
-    }
+    if (!session) { setShowSignInModal(true); return }
     setSaving(true)
-    await saveToCloud()
+    const newId = await saveToCloud()
     setSaving(false)
+    if (newId) onNewResumeId?.(newId)
   }
 
   const filename = personal.fullName
@@ -73,7 +75,7 @@ export function AppHeader() {
           </span>
         </div>
 
-        {/* Left controls — undo/redo + save status */}
+        {/* Left controls */}
         <div className="flex items-center gap-1">
           <IconButton tooltip="Undo (Ctrl+Z)" onClick={undo} disabled={!canUndo} size="sm">
             <Undo2 size={15} />
@@ -81,7 +83,7 @@ export function AppHeader() {
           <IconButton tooltip="Redo (Ctrl+Y)" onClick={redo} disabled={!canRedo} size="sm">
             <Redo2 size={15} />
           </IconButton>
-          {status === 'saved' && (
+          {saveStatus === 'saved' && (
             <span className="hidden sm:flex items-center gap-1 text-xs text-green-600 ml-1">
               <Check size={11} /> Saved
             </span>
@@ -125,7 +127,6 @@ export function AppHeader() {
             <span>{confirmClear ? 'Confirm?' : 'Clear'}</span>
           </Button>
 
-          {/* Save to cloud */}
           <Button
             variant="ghost"
             size="sm"
@@ -138,7 +139,6 @@ export function AppHeader() {
             <span className="hidden md:block">{saving ? 'Saving…' : 'Save'}</span>
           </Button>
 
-          {/* PDF download */}
           <Button variant="primary" size="sm" onClick={() => exportPDF(filename)} disabled={exporting}>
             {exporting ? <Loader2 size={13} className="animate-spin" /> : <Download size={13} />}
             <span className="hidden sm:block">{exporting ? 'Exporting…' : 'Download PDF'}</span>
@@ -146,12 +146,16 @@ export function AppHeader() {
         </div>
       </header>
 
-      {showATS        && <ATSChecker onClose={() => setShowATS(false)} />}
-      {showManager    && <ResumeManager onClose={() => setShowManager(false)} />}
+      {showATS     && <ATSChecker onClose={() => setShowATS(false)} />}
+      {showManager && <ResumeManager onClose={() => setShowManager(false)} />}
       {showSignInModal && (
         <AuthToSaveModal
           onClose={() => setShowSignInModal(false)}
-          onSuccess={saveToCloud}
+          onSuccess={async () => {
+            const newId = await saveToCloud()
+            if (newId) onNewResumeId?.(newId)
+            setShowSignInModal(false)
+          }}
         />
       )}
     </>

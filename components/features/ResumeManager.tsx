@@ -1,19 +1,16 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { X, Save, FolderOpen, Trash2, Check, FileText, Copy, LayoutTemplate, ChevronDown, Loader2, LogIn } from 'lucide-react'
 import { ConfirmModal } from '@/components/shared/ConfirmModal'
 import { AuthToSaveModal } from '@/components/shared/AuthToSaveModal'
 import { useResumeData } from '@/hooks/useResumeData'
-import { useResumeActions } from '@/hooks/useResumeActions'
 import { setTemplateId, type TemplateId } from '@/store/themeSlice'
-import { loadResumeData } from '@/store/resumeSlice'
 import { Button } from '@/components/ui/Button'
 import { useSelector } from 'react-redux'
-import type { AppDispatch, RootState } from '@/store'
+import type { RootState } from '@/store'
 
 const TEMPLATE_LIST: { id: TemplateId; label: string }[] = [
   { id: 'two-column',   label: 'Classic (Two-Column)' },
@@ -42,9 +39,7 @@ const DB_RESUME_ID_KEY = 'resume-builder-db-id'
 export function ResumeManager({ onClose }: ResumeManagerProps) {
   const data    = useResumeData()
   const theme   = useSelector((state: RootState) => state.theme)
-  const { loadResumeData: loadCurrent } = useResumeActions()
-  const dispatch = useDispatch<AppDispatch>()
-  const router   = useRouter()
+const router   = useRouter()
   const { data: session } = useSession()
 
   const [resumes, setResumes]       = useState<DBResume[]>([])
@@ -117,21 +112,15 @@ export function ResumeManager({ onClose }: ResumeManagerProps) {
 
   function confirmLoad() {
     if (!loadTarget) return
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    loadCurrent(loadTarget.data as any)
-    sessionStorage.setItem(DB_RESUME_ID_KEY, loadTarget._id)
     setLoadTarget(null)
     onClose()
+    router.push(`/editor?id=${loadTarget._id}`)
   }
 
   function handleOpenWithTemplate(resume: DBResume, templateId: TemplateId) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    dispatch(loadResumeData(resume.data as any))
-    dispatch(setTemplateId(templateId))
-    sessionStorage.setItem(DB_RESUME_ID_KEY, resume._id)
     setTemplateMenuId(null)
     onClose()
-    router.push('/editor')
+    router.push(`/editor?id=${resume._id}&template=${templateId}`)
   }
 
   async function handleDuplicate(id: string) {

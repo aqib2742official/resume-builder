@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { useParams, useRouter } from 'next/navigation'
 import { formatDistanceToNow, format } from 'date-fns'
-import { ArrowLeft, FileText, Mail, Briefcase, Activity, ShieldCheck, User, ToggleLeft, ToggleRight, Trash2, Loader2 } from 'lucide-react'
+import { ArrowLeft, FileText, Mail, Briefcase, Activity, ShieldCheck, User, ToggleLeft, ToggleRight, Trash2, Loader2, Eye } from 'lucide-react'
 import { ConfirmModal } from '@/components/shared/ConfirmModal'
+import { AdminResumePreviewModal } from '@/components/admin/AdminResumePreviewModal'
 
 type Tab = 'resumes' | 'coverLetters' | 'jobs' | 'activity'
 
@@ -37,6 +38,7 @@ export default function AdminUserDetailPage() {
   const [tab, setTab] = useState<Tab>('resumes')
   const [actionLoading, setActionLoading] = useState<string | null>(null)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [previewResume, setPreviewResume] = useState<{ id: string; name: string } | null>(null)
 
   useEffect(() => {
     fetch(`/api/admin/users/${id}/detail`)
@@ -194,14 +196,34 @@ export default function AdminUserDetailPage() {
       <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
         {tab === 'resumes' && (
           resumes.length === 0 ? <Empty label="No resumes" /> :
-          <table className="w-full text-sm"><thead><tr className="border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80"><th className="text-left px-5 py-3 text-gray-500 dark:text-gray-400 font-medium">Name</th><th className="text-left px-5 py-3 text-gray-500 dark:text-gray-400 font-medium">Score</th><th className="text-left px-5 py-3 text-gray-500 dark:text-gray-400 font-medium">Last updated</th></tr></thead>
-            <tbody className="divide-y divide-gray-100 dark:divide-gray-700">{resumes.map((r) => (
-              <tr key={r._id} className="hover:bg-gray-50 dark:hover:bg-gray-700/40">
-                <td className="px-5 py-3 font-medium text-gray-900 dark:text-white">{r.name}</td>
-                <td className="px-5 py-3 text-gray-600 dark:text-gray-300">{r.completenessScore ?? '—'}%</td>
-                <td className="px-5 py-3 text-gray-500 dark:text-gray-400 text-xs">{formatDistanceToNow(new Date(r.updatedAt), { addSuffix: true })}</td>
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80">
+                <th className="text-left px-5 py-3 text-gray-500 dark:text-gray-400 font-medium">Name</th>
+                <th className="text-left px-5 py-3 text-gray-500 dark:text-gray-400 font-medium">Score</th>
+                <th className="text-left px-5 py-3 text-gray-500 dark:text-gray-400 font-medium">Last updated</th>
+                <th className="px-5 py-3" />
               </tr>
-            ))}</tbody></table>
+            </thead>
+            <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
+              {resumes.map((r) => (
+                <tr key={r._id} className="hover:bg-gray-50 dark:hover:bg-gray-700/40">
+                  <td className="px-5 py-3 font-medium text-gray-900 dark:text-white">{r.name}</td>
+                  <td className="px-5 py-3 text-gray-600 dark:text-gray-300">{r.completenessScore ?? '—'}%</td>
+                  <td className="px-5 py-3 text-gray-500 dark:text-gray-400 text-xs">{formatDistanceToNow(new Date(r.updatedAt), { addSuffix: true })}</td>
+                  <td className="px-5 py-3 text-right">
+                    <button
+                      onClick={() => setPreviewResume({ id: r._id, name: r.name })}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-sky-200 dark:border-sky-700 text-sky-700 dark:text-sky-400 hover:bg-sky-50 dark:hover:bg-sky-900/20 transition-colors"
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                      Preview & Download
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         )}
 
         {tab === 'coverLetters' && (
@@ -240,6 +262,13 @@ export default function AdminUserDetailPage() {
           ))}</div>
         )}
       </div>
+
+      {previewResume && (
+        <AdminResumePreviewModal
+          resumeId={previewResume.id}
+          onClose={() => setPreviewResume(null)}
+        />
+      )}
 
       {showDeleteModal && (
         <ConfirmModal
