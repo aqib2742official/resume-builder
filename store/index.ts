@@ -24,7 +24,7 @@ const persistConfig = {
   key: 'resume-v1',
   version: 1,
   storage,
-  whitelist: ['resume', 'theme'],
+  whitelist: ['theme'],
   transforms: [historyTransform],
 }
 

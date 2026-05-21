@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { Mail, Plus, Save, Trash2, Download, FileText, ChevronDown, X, Check, Loader2, Sparkles } from 'lucide-react'
+import { useSession } from 'next-auth/react'
+import { Mail, Plus, Save, Trash2, Download, FileText, ChevronDown, Check, Loader2, Sparkles } from 'lucide-react'
 import { clsx } from 'clsx'
 import { getSavedResumes, type SavedResume } from '@/lib/resumeStorage'
 import { callAI } from '@/lib/ai'
@@ -77,6 +77,7 @@ function CoverLetterPreview({ letter, senderName, senderEmail, senderPhone }: {
 
 export default function CoverLetterPage() {
   const personal = usePersonal()
+  const { data: session } = useSession()
   const [letters, setLetters] = useState<CoverLetter[]>([])
   const [savedResumes, setSavedResumes] = useState<SavedResume[]>([])
   const [activeId, setActiveId] = useState<string | null>(null)
@@ -88,13 +89,29 @@ export default function CoverLetterPage() {
   const [aiGenerating, setAiGenerating] = useState(false)
   const [aiError, setAiError] = useState(false)
 
-  function loadAll() {
-    const cls = getCoverLetters()
-    setLetters(cls)
-    setSavedResumes(getSavedResumes())
+  async function loadAll() {
+    if (session) {
+      const [clRes, resumeRes] = await Promise.all([
+        fetch('/api/cover-letters'),
+        fetch('/api/resumes'),
+      ])
+      if (clRes.ok) {
+        const { letters: raw } = await clRes.json()
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        setLetters(raw.map((l: any) => ({ ...l, id: l._id ?? l.id, savedAt: l.updatedAt ?? l.createdAt })))
+      }
+      if (resumeRes.ok) {
+        const { resumes: raw } = await resumeRes.json()
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        setSavedResumes(raw.map((r: any) => ({ id: r._id ?? r.id, name: r.name, data: r.data, versions: [], savedAt: r.updatedAt ?? r.createdAt })))
+      }
+    } else {
+      setLetters(getCoverLetters())
+      setSavedResumes(getSavedResumes())
+    }
   }
 
-  useEffect(() => { loadAll() }, [])
+  useEffect(() => { loadAll() }, [session])
 
   const activeLetter = letters.find((l) => l.id === activeId)
 
@@ -112,29 +129,41 @@ export default function CoverLetterPage() {
     setShowList(false)
   }
 
-  function handleSave() {
+  async function handleSave() {
     setSaving(true)
-    setTimeout(() => {
+    if (session) {
+      const payload = { name: draft.name, resumeId: draft.linkedResumeId || null, recipientName: draft.recipientName, companyName: draft.companyName, jobTitle: draft.jobTitle, body: draft.body }
+      if (activeId) {
+        await fetch(`/api/cover-letters/${activeId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+      } else {
+        const res = await fetch('/api/cover-letters', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+        if (res.ok) { const { letter } = await res.json(); setActiveId(letter._id ?? letter.id) }
+      }
+    } else {
       if (activeId) {
         updateCoverLetter(activeId, draft)
       } else {
         const saved = saveCoverLetter(draft)
         setActiveId(saved.id)
       }
-      loadAll()
-      setSaving(false)
-      setSavedFeedback(true)
-      setTimeout(() => setSavedFeedback(false), 2000)
-    }, 300)
+    }
+    await loadAll()
+    setSaving(false)
+    setSavedFeedback(true)
+    setTimeout(() => setSavedFeedback(false), 2000)
   }
 
-  function handleDelete() {
+  async function handleDelete() {
     if (!activeId) return
     if (confirmDelete) {
-      deleteCoverLetter(activeId)
+      if (session) {
+        await fetch(`/api/cover-letters/${activeId}`, { method: 'DELETE' })
+      } else {
+        deleteCoverLetter(activeId)
+      }
       setActiveId(null)
       setDraft(emptyLetter())
-      loadAll()
+      await loadAll()
       setConfirmDelete(false)
     } else {
       setConfirmDelete(true)
@@ -164,12 +193,27 @@ export default function CoverLetterPage() {
       const resumeData = linkedResume?.data
       const skills = (resumeData?.skills ?? []).flatMap((c) => c.skills).slice(0, 15).join(', ')
       const summary = resumeData?.personal.summary || personal.summary || ''
+      const experience = (resumeData?.experience ?? [])
+        .slice(0, 3)
+        .map((e) => `${e.role} at ${e.company}: ${(e.bullets ?? []).slice(0, 2).join('; ')}`)
+        .join(' | ')
+      const education = (resumeData?.education ?? [])
+        .slice(0, 2)
+        .map((e) => `${e.degree} from ${e.school}`)
+        .join(', ')
+      const projects = (resumeData?.projects ?? [])
+        .slice(0, 2)
+        .map((p) => p.name)
+        .join(', ')
       const result = await callAI('cover-letter', {
         company: draft.companyName,
         role: draft.jobTitle,
         senderName,
         skills,
         summary,
+        experience,
+        education,
+        projects,
       })
       setDraft((d) => ({ ...d, body: result }))
     } catch {

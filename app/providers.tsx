@@ -1,23 +1,24 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef } from 'react'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
+import { SessionProvider } from 'next-auth/react'
 import { store, persistor } from '@/store'
-import { seedInitialResumes } from '@/lib/resumeStorage'
+import { FeatureFlagsProvider } from '@/contexts/FeatureFlagsContext'
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({ children }: Readonly<{ children: React.ReactNode }>) {
   const storeRef = useRef(store)
 
-  useEffect(() => {
-    seedInitialResumes()
-  }, [])
-
   return (
-    <Provider store={storeRef.current}>
-      <PersistGate loading={null} persistor={persistor}>
-        {children}
-      </PersistGate>
-    </Provider>
+    <SessionProvider>
+      <FeatureFlagsProvider>
+        <Provider store={storeRef.current}>
+          <PersistGate loading={null} persistor={persistor}>
+            {children}
+          </PersistGate>
+        </Provider>
+      </FeatureFlagsProvider>
+    </SessionProvider>
   )
 }

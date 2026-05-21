@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { FileText, Download, Trash2, Sparkles, Check, Loader2, Undo2, Redo2, Moon, Sun, Zap, FolderOpen } from 'lucide-react'
+import { useSession } from 'next-auth/react'
+import { FileText, Download, Trash2, Sparkles, Check, Loader2, Undo2, Redo2, Moon, Sun, Zap, FolderOpen, Save } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { clsx } from 'clsx'
 import { Button } from '@/components/ui/Button'
@@ -9,6 +10,7 @@ import { IconButton } from '@/components/ui/IconButton'
 import { ThemeCustomizer } from '@/components/editor/ThemeCustomizer'
 import { ATSChecker } from '@/components/features/ATSChecker'
 import { ResumeManager } from '@/components/features/ResumeManager'
+import { AuthToSaveModal } from '@/components/shared/AuthToSaveModal'
 import { useResumeActions } from '@/hooks/useResumeActions'
 import { useAutoSave } from '@/hooks/useAutoSave'
 import { usePDFExport } from '@/hooks/usePDFExport'
@@ -18,15 +20,18 @@ import type { RootState } from '@/store'
 
 export function AppHeader() {
   const { loadSampleData, clearResume, toggleDarkEditor } = useResumeActions()
-  const { status } = useAutoSave()
+  const { status, saveToCloud } = useAutoSave()
   const { exportPDF, exporting } = usePDFExport()
   const { canUndo, canRedo, undo, redo } = useUndoRedo()
-  const personal = usePersonal()
+  const personal  = usePersonal()
   const darkEditor = useSelector((state: RootState) => state.ui.darkEditor)
+  const { data: session } = useSession()
 
-  const [confirmClear, setConfirmClear] = useState(false)
-  const [showATS, setShowATS] = useState(false)
-  const [showManager, setShowManager] = useState(false)
+  const [confirmClear,   setConfirmClear]   = useState(false)
+  const [showATS,        setShowATS]        = useState(false)
+  const [showManager,    setShowManager]    = useState(false)
+  const [showSignInModal, setShowSignInModal] = useState(false)
+  const [saving, setSaving] = useState(false)
 
   function handleClear() {
     if (confirmClear) {
@@ -38,6 +43,16 @@ export function AppHeader() {
     }
   }
 
+  async function handleSave() {
+    if (!session) {
+      setShowSignInModal(true)
+      return
+    }
+    setSaving(true)
+    await saveToCloud()
+    setSaving(false)
+  }
+
   const filename = personal.fullName
     ? `${personal.fullName.replaceAll(/\s+/g, '_')}_Resume.pdf`
     : 'resume.pdf'
@@ -47,14 +62,12 @@ export function AppHeader() {
       <header className="sticky top-0 z-50 flex h-14 items-center justify-between border-b border-gray-200 dark:border-white/[0.07] bg-white dark:bg-[#0d1424] px-3 shadow-sm gap-2">
         {/* Logo */}
         <div className="flex items-center shrink-0">
-          {/* Desktop: stacked wordmark */}
           <div className="hidden md:flex flex-col leading-none gap-0.5">
             <span className="text-[9px] font-medium tracking-[0.18em] text-sky-500 dark:text-sky-400 uppercase">Maria</span>
             <span className="text-sm font-extrabold tracking-tight text-gray-900 dark:text-white leading-none">
               Resume<span className="text-sky-500 dark:text-sky-400">Builder</span>
             </span>
           </div>
-          {/* Mobile: icon only */}
           <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#0f2044] text-white md:hidden">
             <FileText size={14} />
           </span>
@@ -77,10 +90,8 @@ export function AppHeader() {
 
         {/* Right actions */}
         <div className="flex items-center gap-1 ml-auto">
-          {/* Theme customizer */}
           <ThemeCustomizer />
 
-          {/* Dark mode toggle */}
           <IconButton
             tooltip={darkEditor ? 'Light editor' : 'Dark editor'}
             onClick={toggleDarkEditor}
@@ -90,24 +101,20 @@ export function AppHeader() {
             {darkEditor ? <Sun size={15} /> : <Moon size={15} />}
           </IconButton>
 
-          {/* ATS checker */}
           <IconButton tooltip="ATS Keyword Checker" onClick={() => setShowATS(true)} size="sm" className="hidden sm:flex">
             <Zap size={15} />
           </IconButton>
 
-          {/* Resume manager */}
           <IconButton tooltip="My Resumes" onClick={() => setShowManager(true)} size="sm" className="hidden sm:flex">
             <FolderOpen size={15} />
           </IconButton>
 
           <div className="w-px h-5 bg-gray-200 dark:bg-gray-700 hidden sm:block mx-1" />
 
-          {/* Sample data */}
           <Button variant="ghost" size="sm" onClick={loadSampleData} className="hidden md:inline-flex">
             <Sparkles size={13} /> Sample
           </Button>
 
-          {/* Clear */}
           <Button
             variant={confirmClear ? 'danger' : 'ghost'}
             size="sm"
@@ -118,6 +125,19 @@ export function AppHeader() {
             <span>{confirmClear ? 'Confirm?' : 'Clear'}</span>
           </Button>
 
+          {/* Save to cloud */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleSave}
+            disabled={saving}
+            title={session ? 'Save to cloud' : 'Sign in to save'}
+            className="hidden sm:inline-flex"
+          >
+            {saving ? <Loader2 size={13} className="animate-spin" /> : <Save size={13} />}
+            <span className="hidden md:block">{saving ? 'Saving…' : 'Save'}</span>
+          </Button>
+
           {/* PDF download */}
           <Button variant="primary" size="sm" onClick={() => exportPDF(filename)} disabled={exporting}>
             {exporting ? <Loader2 size={13} className="animate-spin" /> : <Download size={13} />}
@@ -126,8 +146,14 @@ export function AppHeader() {
         </div>
       </header>
 
-      {showATS && <ATSChecker onClose={() => setShowATS(false)} />}
-      {showManager && <ResumeManager onClose={() => setShowManager(false)} />}
+      {showATS        && <ATSChecker onClose={() => setShowATS(false)} />}
+      {showManager    && <ResumeManager onClose={() => setShowManager(false)} />}
+      {showSignInModal && (
+        <AuthToSaveModal
+          onClose={() => setShowSignInModal(false)}
+          onSuccess={saveToCloud}
+        />
+      )}
     </>
   )
 }

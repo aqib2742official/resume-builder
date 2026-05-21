@@ -1,4 +1,11 @@
 export type JobStatus = 'wishlist' | 'applied' | 'phone-screen' | 'interview' | 'offer' | 'rejected'
+export type InterviewType = 'phone' | 'video' | 'onsite' | ''
+
+export interface JobNote {
+  id: string
+  text: string
+  createdAt: string
+}
 
 export interface JobApplication {
   id: string
@@ -10,7 +17,11 @@ export interface JobApplication {
   resumeId?: string
   coverLetterId?: string
   notes: string
+  notesHistory: JobNote[]
   url: string
+  deadline: string
+  interviewDate: string
+  interviewType: InterviewType
 }
 
 const STORAGE_KEY = 'resume-builder-jobs-v1'
@@ -24,7 +35,14 @@ export function getJobs(): JobApplication[] {
 
 export function addJob(data: Omit<JobApplication, 'id'>): JobApplication {
   const jobs = getJobs()
-  const job: JobApplication = { ...data, id: crypto.randomUUID() }
+  const job: JobApplication = {
+    notesHistory: [],
+    deadline: '',
+    interviewDate: '',
+    interviewType: '',
+    ...data,
+    id: crypto.randomUUID(),
+  }
   jobs.push(job)
   localStorage.setItem(STORAGE_KEY, JSON.stringify(jobs))
   return job

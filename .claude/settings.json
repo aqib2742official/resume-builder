@@ -4,7 +4,8 @@
       "Read(//c/Development/Other Data/Resume-Builder/resume-builder/**)",
       "Bash(npx next *)",
       "Bash(Get-ChildItem -Path \"public\" -Recurse)",
-      "Bash(Format-Table -AutoSize)"
+      "Bash(Format-Table -AutoSize)",
+      "Bash(Get-ChildItem -Path \"c:\\\\Development\\\\Other Data\\\\Resume-Builder\\\\maria-resume-builder\" -Force)"
     ]
   }
 }

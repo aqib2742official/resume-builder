@@ -143,9 +143,9 @@ function hasStrongVerb(t: string) {
 }
 function wordCount(text: string) { return text.trim().split(/\s+/).filter(Boolean).length }
 function catStatus(s: number): CategoryScore['status'] {
-  if (s >= 80) return 'excellent'
-  if (s >= 60) return 'good'
-  if (s >= 35) return 'weak'
+  if (s >= 72) return 'excellent'
+  if (s >= 50) return 'good'
+  if (s >= 28) return 'weak'
   return 'poor'
 }
 
@@ -184,9 +184,9 @@ function cat1_RoleMarketFit(data: ResumeData): { score: number; tips: string[] }
   else tips.push('Add a clear, globally recognized job title to every version of your resume')
 
   const wc = wordCount(data.personal.summary ?? '')
-  if (wc >= 80)      s += 35
-  else if (wc >= 50) { s += 22; tips.push('Expand your summary to 80+ words — target your exact role, industry, and unique value') }
-  else if (wc >= 20) { s += 10; tips.push('Summary is too short for international standards — aim for 80–120 words') }
+  if (wc >= 60)      s += 35
+  else if (wc >= 35) { s += 22; tips.push('Expand your summary to 60+ words — target your exact role, industry, and unique value') }
+  else if (wc >= 15) { s += 10; tips.push('Summary is too short for international standards — aim for 60–100 words') }
   else               { tips.push('Missing professional summary — critical for global role positioning') }
 
   if (data.personal.linkedin) s += 20
@@ -217,9 +217,9 @@ function cat2_RelevantExperience(data: ResumeData): { score: number; tips: strin
   else                  { s += 8;  tips.push('Many experience entries are incomplete — each needs company, role, dates, and 3+ bullets') }
 
   const avgBullets = exp.reduce((sum, e) => sum + e.bullets.filter(Boolean).length, 0) / exp.length
-  if      (avgBullets >= 5)  s += 25
-  else if (avgBullets >= 3) { s += 15; tips.push('Aim for 5–6 bullet points per role to demonstrate full scope') }
-  else if (avgBullets >= 1) { s += 6;  tips.push('Too few bullets per role — each position needs 4–6 achievement-focused points') }
+  if      (avgBullets >= 4)  s += 25
+  else if (avgBullets >= 2) { s += 15; tips.push('Aim for 4–5 bullet points per role to demonstrate full scope') }
+  else if (avgBullets >= 1) { s += 6;  tips.push('Too few bullets per role — each position needs 3–5 achievement-focused points') }
   else                      { tips.push('Roles have no bullet points — add measurable achievements to every position') }
 
   const allHaveDates = exp.every((e) => e.startDate)
@@ -240,11 +240,11 @@ function cat3_MeasurableAchievements(data: ResumeData): { score: number; tips: s
   const weakCount = bullets.filter(hasWeakVerb).length
 
   let s = 0
-  if      (rate >= 0.6)  s = 100
-  else if (rate >= 0.45) { s = 80; tips.push('Good metric coverage — push above 60% for a globally competitive resume') }
-  else if (rate >= 0.30) { s = 58; tips.push('Add more quantified results — target 50%+ of bullets with numbers, %, $, or scale') }
-  else if (rate >= 0.15) { s = 32; tips.push('Critical gap: only ~15% of bullets have metrics. Every major achievement needs a number') }
-  else                   { s = 10; tips.push('CRITICAL: Near-zero metrics detected. Quantify every contribution with data') }
+  if      (rate >= 0.45) s = 100
+  else if (rate >= 0.30) { s = 80; tips.push('Good metric coverage — push above 45% for a globally competitive resume') }
+  else if (rate >= 0.18) { s = 60; tips.push('Add more quantified results — target 30%+ of bullets with numbers, %, $, or scale') }
+  else if (rate >= 0.1)  { s = 38; tips.push('Low metric density — add numbers or outcomes to your strongest achievements') }
+  else                   { s = 15; tips.push('Very few metrics detected — quantify at least a few contributions with data') }
 
   if (weakCount > 0) {
     const deduct = Math.min(25, weakCount * 6)
@@ -260,9 +260,9 @@ function cat4_SkillsDepth(data: ResumeData): { score: number; tips: string[] } {
   let s = 0
 
   const total = data.skills.reduce((sum, c) => sum + c.skills.length, 0)
-  if      (total >= 22) s += 28
-  else if (total >= 15) { s += 20; tips.push(`${total} skills is decent — push to 22+ with specific tools, frameworks, and methodologies`) }
-  else if (total >= 8)  { s += 12; tips.push(`Only ${total} skills listed — international JDs expect 18–25+ specific, named skills`) }
+  if      (total >= 18) s += 28
+  else if (total >= 12) { s += 20; tips.push(`${total} skills is decent — push to 18+ with specific tools, frameworks, and methodologies`) }
+  else if (total >= 6)  { s += 12; tips.push(`Only ${total} skills listed — aim for 15–20 specific, named skills`) }
   else                  { s += 4;  tips.push('Skills section is critically thin — expand with technologies, tools, and methods') }
 
   if      (data.skills.length >= 4) s += 12
@@ -318,9 +318,9 @@ function cat6_InternationalCommunication(data: ResumeData): { score: number; tip
   let s = 0
 
   const wc = wordCount(data.personal.summary ?? '')
-  if      (wc >= 80) s += 30
-  else if (wc >= 50) { s += 18; tips.push('Expand summary to 80+ words with a clear global value proposition') }
-  else if (wc >= 20) { s += 8;  tips.push('Summary is too brief — international recruiters read this in the first 10 seconds') }
+  if      (wc >= 60) s += 30
+  else if (wc >= 35) { s += 18; tips.push('Expand summary to 60+ words with a clear global value proposition') }
+  else if (wc >= 15) { s += 8;  tips.push('Summary is too brief — international recruiters read this in the first 10 seconds') }
   else               { tips.push('Missing summary — international applications without one are rarely shortlisted') }
 
   if      (data.languages.length >= 3) s += 25
@@ -405,58 +405,58 @@ function detectRedFlags(data: ResumeData, ba: BulletAnalysis): RedFlag[] {
   const flags: RedFlag[] = []
 
   if (ba.total === 0) {
-    flags.push({ issue: 'No bullet points anywhere — resume has no evidence of accomplishments', penalty: 20, severity: 'critical' })
+    flags.push({ issue: 'No bullet points anywhere — resume has no evidence of accomplishments', penalty: 14, severity: 'critical' })
   } else if (ba.metricsRate === 0) {
-    flags.push({ issue: 'Zero measurable achievements — no numbers, %, $, or quantified outcomes anywhere', penalty: 18, severity: 'critical' })
-  } else if (ba.metricsRate < 20) {
-    flags.push({ issue: `Only ${ba.metricsRate}% of bullets contain metrics — global standard is 50%+`, penalty: 12, severity: 'major' })
+    flags.push({ issue: 'Zero measurable achievements — no numbers, %, $, or quantified outcomes anywhere', penalty: 12, severity: 'critical' })
+  } else if (ba.metricsRate < 15) {
+    flags.push({ issue: `Only ${ba.metricsRate}% of bullets contain metrics — aim for 30%+`, penalty: 8, severity: 'major' })
   }
 
   if (ba.weakRate > 40) {
-    flags.push({ issue: `${ba.withWeakVerbs} bullets use weak phrasing ("responsible for", "helped", "assisted")`, penalty: 10, severity: 'major' })
+    flags.push({ issue: `${ba.withWeakVerbs} bullets use weak phrasing ("responsible for", "helped", "assisted")`, penalty: 7, severity: 'major' })
   } else if (ba.weakRate > 0) {
-    flags.push({ issue: `${ba.withWeakVerbs} bullet${ba.withWeakVerbs > 1 ? 's' : ''} use weak verbs — rewrite as outcome-led statements`, penalty: 5, severity: 'minor' })
+    flags.push({ issue: `${ba.withWeakVerbs} bullet${ba.withWeakVerbs > 1 ? 's' : ''} use weak verbs — rewrite as outcome-led statements`, penalty: 3, severity: 'minor' })
   }
 
   if (!data.personal.summary) {
-    flags.push({ issue: 'No professional summary — eliminates immediate role clarity for every recruiter', penalty: 10, severity: 'critical' })
-  } else if (wordCount(data.personal.summary) < 30) {
-    flags.push({ issue: 'Summary is under 30 words — insufficient to communicate your value internationally', penalty: 5, severity: 'major' })
+    flags.push({ issue: 'No professional summary — eliminates immediate role clarity for every recruiter', penalty: 7, severity: 'critical' })
+  } else if (wordCount(data.personal.summary) < 20) {
+    flags.push({ issue: 'Summary is very short — aim for 40+ words to communicate your value', penalty: 3, severity: 'major' })
   }
 
   if (!data.personal.linkedin) {
-    flags.push({ issue: 'LinkedIn URL missing — critical for international hiring pipelines and background checks', penalty: 7, severity: 'major' })
+    flags.push({ issue: 'LinkedIn URL missing — critical for international hiring pipelines and background checks', penalty: 5, severity: 'major' })
   }
 
   if (!data.personal.github && !data.personal.portfolio) {
-    flags.push({ issue: 'No portfolio or GitHub link — skills lack verifiable, external proof', penalty: 6, severity: 'major' })
+    flags.push({ issue: 'No portfolio or GitHub link — skills lack verifiable, external proof', penalty: 4, severity: 'major' })
   }
 
   if (!data.personal.email) {
-    flags.push({ issue: 'No email address — applications cannot proceed without contact information', penalty: 15, severity: 'critical' })
+    flags.push({ issue: 'No email address — applications cannot proceed without contact information', penalty: 10, severity: 'critical' })
   }
 
   const totalSkills = data.skills.reduce((sum, c) => sum + c.skills.length, 0)
-  if (totalSkills < 8) {
-    flags.push({ issue: `Only ${totalSkills} skills listed — international minimum is 15–20 named, specific skills`, penalty: 8, severity: 'major' })
+  if (totalSkills < 6) {
+    flags.push({ issue: `Only ${totalSkills} skills listed — aim for 12–18 named, specific skills`, penalty: 6, severity: 'major' })
   }
 
   if (data.certifications.length === 0) {
-    flags.push({ issue: 'No certifications — a significant disadvantage vs. globally competitive candidates', penalty: 5, severity: 'minor' })
+    flags.push({ issue: 'No certifications — credentials boost credibility with global employers', penalty: 3, severity: 'minor' })
   }
 
   if (data.experience.length > 0) {
     const noBullets = data.experience.filter((e) => e.bullets.filter(Boolean).length === 0)
     if (noBullets.length > 0) {
-      flags.push({ issue: `${noBullets.length} role${noBullets.length > 1 ? 's' : ''} have zero bullet points — unacceptable gap in evidence`, penalty: 10, severity: 'critical' })
+      flags.push({ issue: `${noBullets.length} role${noBullets.length > 1 ? 's' : ''} have zero bullet points — add achievements to every position`, penalty: 7, severity: 'critical' })
     }
 
     const missingDates = data.experience.filter((e) => !e.startDate)
     if (missingDates.length > 0) {
-      flags.push({ issue: `${missingDates.length} experience entr${missingDates.length > 1 ? 'ies' : 'y'} missing dates — unexplained gaps are automatic rejections`, penalty: 8, severity: 'major' })
+      flags.push({ issue: `${missingDates.length} experience entr${missingDates.length > 1 ? 'ies' : 'y'} missing dates — unexplained gaps are red flags`, penalty: 5, severity: 'major' })
     }
   } else {
-    flags.push({ issue: 'No work experience — resume cannot be considered for professional roles', penalty: 20, severity: 'critical' })
+    flags.push({ issue: 'No work experience — resume cannot be considered for professional roles', penalty: 14, severity: 'critical' })
   }
 
   return flags.sort((a, b) => b.penalty - a.penalty)
@@ -505,7 +505,7 @@ export function calculateInternationalScore(data: ResumeData): InternationalScor
   const rawScore = categories.reduce((sum, c) => sum + c.earned, 0)
 
   const redFlags = detectRedFlags(data, bulletAnalysis)
-  const totalPenalty = Math.min(45, redFlags.reduce((sum, f) => sum + f.penalty, 0))
+  const totalPenalty = Math.min(30, redFlags.reduce((sum, f) => sum + f.penalty, 0))
   const finalScore   = Math.max(0, Math.round(rawScore - totalPenalty))
 
   const hasAtsRisk = (categories.find((c) => c.key === 'ats')?.score ?? 100) < 50

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter, Roboto, Playfair_Display } from 'next/font/go
 import { Providers } from './providers'
 import { Navbar } from '@/components/shared/Navbar'
 import { DarkModeApplier } from '@/components/shared/DarkModeApplier'
+import { AnnouncementBanner } from '@/components/shared/AnnouncementBanner'
 import './globals.css'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Providers>
           <DarkModeApplier />
           <div className="flex flex-col h-full bg-gray-50 dark:bg-gray-950">
+            <AnnouncementBanner />
             <Navbar />
             <main className="flex-1 overflow-hidden min-w-0">
               {children}

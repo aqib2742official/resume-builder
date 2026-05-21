@@ -49,8 +49,18 @@ Requirements:
 - Professional but warm tone
 
 Return ONLY the letter body paragraphs. No salutation, no sign-off, no subject line.`,
-    user: (p) =>
-      `Applicant: ${p.senderName || 'Applicant'}\nApplying for: ${p.role || 'the position'} at ${p.company || 'the company'}\nSkills: ${p.skills || 'various technical skills'}\nResume summary: ${p.summary || 'experienced professional'}`,
+    user: (p) => {
+      const lines = [
+        `Applicant: ${p.senderName || 'Applicant'}`,
+        `Applying for: ${p.role || 'the position'} at ${p.company || 'the company'}`,
+        `Skills: ${p.skills || 'various technical skills'}`,
+        `Resume summary: ${p.summary || 'experienced professional'}`,
+      ]
+      if (p.experience) lines.push(`Work experience: ${p.experience}`)
+      if (p.education) lines.push(`Education: ${p.education}`)
+      if (p.projects) lines.push(`Notable projects: ${p.projects}`)
+      return lines.join('\n')
+    },
   },
 
   'ats-gap': {

@@ -11,7 +11,7 @@ import type { SavedResume } from '@/lib/resumeStorage'
 import { deleteResume, renameResume, duplicateResume } from '@/lib/resumeStorage'
 import { calculateCompleteness } from '@/lib/completenessScore'
 import { VersionHistoryDrawer } from '@/components/features/VersionHistoryDrawer'
-import { format } from 'date-fns'
+import { format, formatDistanceToNow } from 'date-fns'
 
 interface ResumeCardProps {
   resume: SavedResume
@@ -19,6 +19,10 @@ interface ResumeCardProps {
   onCompareSelect?: (id: string) => void
   compareSelected?: boolean
   compareMode?: boolean
+  // Optional overrides for DB-backed operations
+  onDelete?: (id: string) => Promise<void>
+  onRename?: (id: string, name: string) => Promise<void>
+  onDuplicate?: (id: string) => Promise<void>
 }
 
 function scoreColor(total: number): string {
@@ -81,7 +85,7 @@ function DeleteModal({ resume, onConfirm, onClose }: {
   )
 }
 
-export function ResumeCard({ resume, onUpdate, onCompareSelect, compareSelected, compareMode }: Readonly<ResumeCardProps>) {
+export function ResumeCard({ resume, onUpdate, onCompareSelect, compareSelected, compareMode, onDelete, onRename, onDuplicate }: Readonly<ResumeCardProps>) {
   const router = useRouter()
   const dispatch = useDispatch<AppDispatch>()
   const [editing, setEditing] = useState(false)
@@ -110,9 +114,13 @@ export function ResumeCard({ resume, onUpdate, onCompareSelect, compareSelected,
     router.push('/editor')
   }
 
-  function handleRename() {
+  async function handleRename() {
     if (editName.trim() && editName.trim() !== resume.name) {
-      renameResume(resume.id, editName.trim())
+      if (onRename) {
+        await onRename(resume.id, editName.trim())
+      } else {
+        renameResume(resume.id, editName.trim())
+      }
       onUpdate()
     }
     setEditing(false)
@@ -123,8 +131,12 @@ export function ResumeCard({ resume, onUpdate, onCompareSelect, compareSelected,
     if (e.key === 'Escape') { setEditing(false) }
   }
 
-  function handleDuplicate() {
-    duplicateResume(resume.id)
+  async function handleDuplicate() {
+    if (onDuplicate) {
+      await onDuplicate(resume.id)
+    } else {
+      duplicateResume(resume.id)
+    }
     onUpdate()
   }
 
@@ -209,9 +221,12 @@ export function ResumeCard({ resume, onUpdate, onCompareSelect, compareSelected,
           )}
 
           <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
-            <span className="flex items-center gap-1">
+            <span
+              className="flex items-center gap-1"
+              title={format(new Date(resume.savedAt), 'MMM d, yyyy HH:mm')}
+            >
               <Calendar size={11} />
-              {format(new Date(resume.savedAt), 'MMM d, yyyy')}
+              {formatDistanceToNow(new Date(resume.savedAt), { addSuffix: true })}
             </span>
             <span className="flex items-center gap-1">
               <FileText size={11} />
@@ -281,7 +296,10 @@ export function ResumeCard({ resume, onUpdate, onCompareSelect, compareSelected,
       {showDeleteModal && (
         <DeleteModal
           resume={resume}
-          onConfirm={() => { deleteResume(resume.id); onUpdate() }}
+          onConfirm={async () => {
+          if (onDelete) { await onDelete(resume.id) } else { deleteResume(resume.id) }
+          onUpdate()
+        }}
           onClose={() => setShowDeleteModal(false)}
         />
       )}
