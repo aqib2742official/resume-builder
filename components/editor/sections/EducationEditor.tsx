@@ -66,8 +66,8 @@ export function EducationEditor() {
                 onDelete={() => removeEducation(edu.id)}
               >
                 <div className="flex flex-col gap-2">
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="col-span-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div className="col-span-1 sm:col-span-2">
                       <Input
                         label="Institution"
                         placeholder="University or School name"
@@ -93,7 +93,7 @@ export function EducationEditor() {
                       value={edu.location}
                       onChange={(e) => updateEducation(edu.id, { location: e.target.value })}
                     />
-                    <div className="col-span-2 grid grid-cols-2 gap-2">
+                    <div className="col-span-1 sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <Input
                         label="Start Date"
                         type="month"

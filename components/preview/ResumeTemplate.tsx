@@ -37,7 +37,7 @@ export function ResumeTemplate({ noPdfId }: Readonly<{ noPdfId?: boolean }> = {}
 
   const fontOption = FONT_OPTIONS.find((f) => f.value === theme.fontFamily)
   const fontCss = fontOption?.css ?? 'system-ui, sans-serif'
-  const { accentColor, density, photoShape, nameSize, columnRatio } = theme
+  const { accentColor, density, photoShape, nameSize, columnRatio, pdfBg } = theme
   const hidden = new Set(data.hiddenSections)
   const gap = getSectionGap(density)
   const pad = getColPadding(density)
@@ -94,7 +94,7 @@ export function ResumeTemplate({ noPdfId }: Readonly<{ noPdfId?: boolean }> = {}
   }
 
   return (
-    <div ref={templateRef} id={noPdfId ? undefined : 'resume-template'} className="a4-page bg-white" style={{ fontFamily: fontCss }}>
+    <div ref={templateRef} id={noPdfId ? undefined : 'resume-template'} className={`a4-page ${pdfBg === 'dark' ? 'a4-page-dark' : 'bg-white'}`} style={{ fontFamily: fontCss }}>
       <HeaderSection
         personal={data.personal}
         summary={hidden.has('summary') ? undefined : data.personal.summary}

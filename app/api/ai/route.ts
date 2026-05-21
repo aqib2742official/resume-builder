@@ -74,6 +74,28 @@ Return valid JSON only. No explanation.`,
     user: (p) =>
       `Resume skills: ${p.resumeSkills}\nResume text: ${p.resumeText}\n\nJob description:\n${p.jobDescription}`,
   },
+
+  'interview-questions': {
+    system: `You are an expert interview coach. Generate exactly 20 interview questions for the given role and candidate background.
+
+For each question:
+- Vary the types: mix behavioral, technical, and situational questions
+- Provide a model answer using the STAR method where applicable (Situation, Task, Action, Result)
+- Keep answers concise but complete (80-120 words each)
+
+Return ONLY a valid JSON array with this exact shape:
+[{ "question": "...", "answer": "...", "type": "behavioral" | "technical" | "situational" }]
+
+No explanation outside the JSON. No markdown fences.`,
+    user: (p) => {
+      const lines = [`Job Title: ${p.jobTitle || 'Software Engineer'}`]
+      if (p.jobDescription) lines.push(`Job Description:\n${p.jobDescription}`)
+      if (p.experience)     lines.push(`Candidate Experience: ${p.experience}`)
+      if (p.skills)         lines.push(`Candidate Skills: ${p.skills}`)
+      if (p.projects)       lines.push(`Notable Projects: ${p.projects}`)
+      return lines.join('\n\n')
+    },
+  },
 }
 
 export async function POST(req: NextRequest) {
@@ -95,9 +117,10 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    const isLarge = action === 'interview-questions'
     const response = await groq.chat.completions.create({
       model: 'llama-3.1-8b-instant',
-      max_tokens: 600,
+      max_tokens: isLarge ? 2000 : 600,
       messages: [
         { role: 'system', content: prompt.system },
         { role: 'user', content: prompt.user(payload) },

@@ -1,4 +1,4 @@
-export type AIAction = 'improve-bullet' | 'generate-summary' | 'cover-letter' | 'ats-gap'
+export type AIAction = 'improve-bullet' | 'generate-summary' | 'cover-letter' | 'ats-gap' | 'interview-questions'
 
 export async function callAI(action: AIAction, payload: Record<string, string>): Promise<string> {
   const res = await fetch('/api/ai', {

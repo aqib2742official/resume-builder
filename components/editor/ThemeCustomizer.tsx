@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Palette, RotateCcw, Columns2, AlignJustify, Circle, Square, ImageOff, GraduationCap, FileText, LayoutPanelLeft, Zap } from 'lucide-react'
+import { Palette, RotateCcw, Columns2, AlignJustify, Circle, Square, ImageOff, GraduationCap, FileText, LayoutPanelLeft, Zap, Sun, Moon } from 'lucide-react'
 import { clsx } from 'clsx'
 import { ACCENT_PRESETS, FONT_OPTIONS } from '@/store/themeSlice'
 import type { Density, PhotoShape, TemplateId, HeadingStyle, NameSize } from '@/store/themeSlice'
@@ -80,7 +80,7 @@ export function ThemeCustomizer() {
     setAccentColor, setHeaderBg, applyPreset,
     setFontFamily, setTemplateId, setDensity,
     setPhotoShape, setHeadingStyle, setNameSize, setColumnRatio,
-    resetTheme,
+    setPdfBg, resetTheme,
   } = useTheme()
 
   return (
@@ -297,6 +297,31 @@ export function ThemeCustomizer() {
                       )}
                     >
                       {d.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* PDF Background */}
+              <div>
+                <p className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-2">PDF Style</p>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {([
+                    { value: 'light' as const, icon: <Sun size={13} />,  label: 'Light' },
+                    { value: 'dark'  as const, icon: <Moon size={13} />, label: 'Dark'  },
+                  ]).map((opt) => (
+                    <button
+                      key={opt.value}
+                      type="button"
+                      onClick={() => setPdfBg(opt.value)}
+                      className={clsx(
+                        'flex items-center justify-center gap-1.5 rounded-md py-2 text-xs font-medium border transition-all',
+                        theme.pdfBg === opt.value
+                          ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-400'
+                          : 'border-gray-200 dark:border-slate-700 text-gray-600 dark:text-slate-300 hover:border-gray-300'
+                      )}
+                    >
+                      {opt.icon} {opt.label}
                     </button>
                   ))}
                 </div>

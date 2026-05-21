@@ -59,7 +59,7 @@ export function CertificationsEditor() {
                     value={cert.title}
                     onChange={(e) => updateCertification(cert.id, { title: e.target.value })}
                   />
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <Input
                       label="Issuer"
                       placeholder="e.g. Amazon Web Services"

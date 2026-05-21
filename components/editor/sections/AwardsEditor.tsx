@@ -57,8 +57,8 @@ export function AwardsEditor() {
                 onDelete={() => removeAward(award.id)}
               >
                 <div className="flex flex-col gap-2">
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="col-span-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div className="col-span-1 sm:col-span-2">
                       <Input
                         label="Award Title"
                         placeholder="e.g. Employee of the Year"

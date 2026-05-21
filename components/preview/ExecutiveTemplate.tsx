@@ -35,7 +35,7 @@ export function ExecutiveTemplate({ noPdfId }: Readonly<{ noPdfId?: boolean }> =
 
   const fontOption = FONT_OPTIONS.find((f) => f.value === theme.fontFamily)
   const fontCss    = fontOption?.css ?? 'system-ui, sans-serif'
-  const { accentColor, headerBg, density, photoShape, nameSize } = theme
+  const { accentColor, headerBg, density, photoShape, nameSize, pdfBg } = theme
   const hidden = new Set(data.hiddenSections)
   const gap    = DENSITY_GAP[density] ?? 16
 
@@ -70,7 +70,7 @@ export function ExecutiveTemplate({ noPdfId }: Readonly<{ noPdfId?: boolean }> =
   const dot = { marginTop: 4, width: 3, height: 3, borderRadius: '50%', backgroundColor: accentColor, flexShrink: 0 }
 
   return (
-    <div id={noPdfId ? undefined : 'resume-template'} className="a4-page bg-white" style={{ fontFamily: fontCss, display: 'flex', flexDirection: 'row' }}>
+    <div id={noPdfId ? undefined : 'resume-template'} className={`a4-page ${pdfBg === 'dark' ? 'a4-page-dark' : 'bg-white'}`} style={{ fontFamily: fontCss, display: 'flex', flexDirection: 'row' }}>
 
       {/* Left Sidebar */}
       <div style={{ width: 210, minHeight: '100%', backgroundColor: headerBg, padding: '32px 20px', display: 'flex', flexDirection: 'column', gap: 20, flexShrink: 0 }}>

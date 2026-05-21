@@ -30,7 +30,7 @@ export function MinimalTemplate({ noPdfId }: Readonly<{ noPdfId?: boolean }> = {
 
   const fontOption = FONT_OPTIONS.find((f) => f.value === theme.fontFamily)
   const fontCss = fontOption?.css ?? 'system-ui, sans-serif'
-  const { accentColor, headerBg, density, photoShape, sectionOrder } = theme
+  const { accentColor, headerBg, density, photoShape, sectionOrder, pdfBg } = theme
   const hidden = new Set(data.hiddenSections)
   const gap = DENSITY_GAP[density] ?? 18
   const pad = DENSITY_PAD[density] ?? '26px 36px'
@@ -262,7 +262,7 @@ export function MinimalTemplate({ noPdfId }: Readonly<{ noPdfId?: boolean }> = {
   ]
 
   return (
-    <div id={noPdfId ? undefined : 'resume-template'} className="a4-page bg-white" style={{ fontFamily: fontCss }}>
+    <div id={noPdfId ? undefined : 'resume-template'} className={`a4-page ${pdfBg === 'dark' ? 'a4-page-dark' : 'bg-white'}`} style={{ fontFamily: fontCss }}>
       {/* Header */}
       <div style={{ backgroundColor: headerBg, padding: '28px 36px 22px', color: '#fff' }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 18 }}>

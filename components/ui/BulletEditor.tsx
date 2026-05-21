@@ -75,7 +75,7 @@ export function BulletEditor({ bullets, onChange, placeholder = 'Add a bullet po
   return (
     <div className="flex flex-col gap-1.5">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium text-gray-600">Bullet Points</span>
+        <span className="text-xs font-medium text-gray-600 dark:text-slate-300">Bullet Points</span>
         <button
           type="button"
           onClick={() => addBullet()}
@@ -92,7 +92,7 @@ export function BulletEditor({ bullets, onChange, placeholder = 'Add a bullet po
           const hasError = errorIndex === index
           return (
             <div key={index} className="flex items-start gap-1.5 group">
-              <span className="mt-2 w-1.5 h-1.5 rounded-full bg-gray-300 shrink-0" />
+              <span className="mt-2 w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-slate-500 shrink-0" />
               <input
                 ref={(el) => { inputRefs.current[index] = el }}
                 type="text"
@@ -103,8 +103,9 @@ export function BulletEditor({ bullets, onChange, placeholder = 'Add a bullet po
                 disabled={isImproving}
                 className={clsx(
                   'flex-1 rounded border border-transparent bg-gray-50 px-2 py-1 text-xs text-gray-800 placeholder:text-gray-400',
-                  'focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 focus:bg-white',
-                  'hover:bg-gray-100 transition-colors disabled:opacity-60'
+                  'dark:bg-slate-700/50 dark:text-slate-100 dark:placeholder:text-slate-500',
+                  'focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 focus:bg-white dark:focus:bg-slate-700 dark:focus:ring-sky-500',
+                  'hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors disabled:opacity-60'
                 )}
               />
 
@@ -117,8 +118,8 @@ export function BulletEditor({ bullets, onChange, placeholder = 'Add a bullet po
                 className={clsx(
                   'mt-1 transition-all',
                   isImproving
-                    ? 'opacity-100 text-[#0f2044]'
-                    : 'opacity-0 group-hover:opacity-100 text-[#0f2044] hover:text-sky-600 disabled:opacity-20 disabled:cursor-not-allowed'
+                    ? 'opacity-100 text-[#0f2044] dark:text-sky-400'
+                    : 'opacity-0 group-hover:opacity-100 text-[#0f2044] dark:text-sky-400 hover:text-sky-600 dark:hover:text-sky-300 disabled:opacity-20 disabled:cursor-not-allowed'
                 )}
               >
                 {isImproving

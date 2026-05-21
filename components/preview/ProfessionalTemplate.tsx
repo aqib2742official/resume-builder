@@ -29,7 +29,7 @@ export function ProfessionalTemplate({ noPdfId }: Readonly<{ noPdfId?: boolean }
 
   const fontOption = FONT_OPTIONS.find((f) => f.value === theme.fontFamily)
   const fontCss    = fontOption?.css ?? 'system-ui, sans-serif'
-  const { accentColor, density, photoShape, sectionOrder, nameSize } = theme
+  const { accentColor, density, photoShape, sectionOrder, nameSize, pdfBg } = theme
   const hidden = new Set(data.hiddenSections)
   const gap    = DENSITY_GAP[density] ?? 16
   const pad    = DENSITY_PAD[density] ?? '32px 52px'
@@ -270,7 +270,7 @@ export function ProfessionalTemplate({ noPdfId }: Readonly<{ noPdfId?: boolean }
   ]
 
   return (
-    <div id={noPdfId ? undefined : 'resume-template'} className="a4-page bg-white" style={{ fontFamily: fontCss }}>
+    <div id={noPdfId ? undefined : 'resume-template'} className={`a4-page ${pdfBg === 'dark' ? 'a4-page-dark' : 'bg-white'}`} style={{ fontFamily: fontCss }}>
       {/* Header */}
       <div style={{ padding: pad, paddingBottom: 20, borderBottom: `2px solid ${accentColor}` }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 20 }}>

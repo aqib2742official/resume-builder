@@ -26,7 +26,7 @@ export function AcademicTemplate({ noPdfId }: Readonly<{ noPdfId?: boolean }> = 
 
   const fontOption = FONT_OPTIONS.find((f) => f.value === theme.fontFamily)
   const fontCss = fontOption?.css ?? 'Georgia, Times New Roman, serif'
-  const { accentColor, sectionOrder } = theme
+  const { accentColor, sectionOrder, pdfBg } = theme
   const hidden = new Set(data.hiddenSections)
   const p = data.personal
 
@@ -48,7 +48,7 @@ export function AcademicTemplate({ noPdfId }: Readonly<{ noPdfId?: boolean }> = 
   return (
     <div
       id={noPdfId ? undefined : 'resume-template'}
-      className="a4-page bg-white"
+      className={`a4-page ${pdfBg === 'dark' ? 'a4-page-dark' : 'bg-white'}`}
       style={{ fontFamily: fontCss, padding: '32px 44px', fontSize: 10, color: '#1a1a1a', lineHeight: 1.5 }}
     >
       {/* Header — name, contact, horizontal rule */}

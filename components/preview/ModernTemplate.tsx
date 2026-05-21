@@ -30,7 +30,7 @@ export function ModernTemplate({ noPdfId }: Readonly<{ noPdfId?: boolean }> = {}
 
   const fontOption = FONT_OPTIONS.find((f) => f.value === theme.fontFamily)
   const fontCss    = fontOption?.css ?? 'system-ui, sans-serif'
-  const { accentColor, headerBg, density, photoShape, sectionOrder, nameSize } = theme
+  const { accentColor, headerBg, density, photoShape, sectionOrder, nameSize, pdfBg } = theme
   const hidden = new Set(data.hiddenSections)
   const gap    = DENSITY_GAP[density] ?? 18
   const pad    = DENSITY_PAD[density] ?? '0 40px 30px'
@@ -299,7 +299,7 @@ export function ModernTemplate({ noPdfId }: Readonly<{ noPdfId?: boolean }> = {}
   ]
 
   return (
-    <div id={noPdfId ? undefined : 'resume-template'} className="a4-page bg-white" style={{ fontFamily: fontCss }}>
+    <div id={noPdfId ? undefined : 'resume-template'} className={`a4-page ${pdfBg === 'dark' ? 'a4-page-dark' : 'bg-white'}`} style={{ fontFamily: fontCss }}>
       {/* Colored Header Band */}
       <div style={{ backgroundColor: headerBg, padding: '28px 40px 24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>

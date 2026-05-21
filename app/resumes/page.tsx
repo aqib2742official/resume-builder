@@ -31,6 +31,7 @@ function normalizeDbResume(r: any): SavedResume {
       savedAt: v.savedAt,
     })),
     savedAt: r.updatedAt ?? r.savedAt ?? r.createdAt ?? new Date().toISOString(),
+    isFavorite: r.isFavorite ?? false,
   }
 }
 
@@ -86,6 +87,16 @@ export default function ResumesPage() {
       }),
     })
     await load()
+  }
+
+  async function handleDbFavorite(id: string, current: boolean) {
+    if (current) {
+      await fetch(`/api/resumes/${id}/favorite`, { method: 'DELETE' })
+      setResumes(prev => prev.map(r => r.id === id ? { ...r, isFavorite: false } : r))
+    } else {
+      await fetch(`/api/resumes/${id}/favorite`, { method: 'POST' })
+      setResumes(prev => prev.map(r => ({ ...r, isFavorite: r.id === id })))
+    }
   }
 
   const filtered = useMemo(() => {
@@ -279,6 +290,7 @@ export default function ResumesPage() {
                   onDelete: handleDbDelete,
                   onRename: handleDbRename,
                   onDuplicate: handleDbDuplicate,
+                  onFavorite: handleDbFavorite,
                 } : {})}
               />
             ))}

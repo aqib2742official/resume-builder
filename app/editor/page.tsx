@@ -12,6 +12,7 @@ import { EditorPanel } from '@/components/editor/EditorPanel'
 import { ResumePreview } from '@/components/preview/ResumePreview'
 import { UnsavedChangesModal } from '@/components/shared/UnsavedChangesModal'
 import { useAutoSave } from '@/hooks/useAutoSave'
+import { usePDFExport } from '@/hooks/usePDFExport'
 import type { RootState } from '@/store'
 import type { AppDispatch } from '@/store'
 import type { TemplateId } from '@/store/themeSlice'
@@ -27,6 +28,7 @@ function EditorPageInner() {
   const templateParam  = searchParams.get('template') as TemplateId | null
 
   const { status, isDirty, saveToCloud, initResumeId } = useAutoSave()
+  const { exportPDF } = usePDFExport()
 
   // Tracks when the DB resume data has been dispatched to Redux
   const [loadedId, setLoadedId]           = useState<string | null>(null)
@@ -63,6 +65,18 @@ function EditorPageInner() {
       router.replace(`/editor?id=${id}`)
     }
   }
+
+  // ── Global keyboard shortcuts ────────────────────────────────────────────
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      const ctrl = e.ctrlKey || e.metaKey
+      if (!ctrl) return
+      if (e.key === 's') { e.preventDefault(); saveToCloud() }
+      if (e.key === 'p') { e.preventDefault(); exportPDF() }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [saveToCloud, exportPDF]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // ── Browser close / refresh guard ─────────────────────────────────────────
   useEffect(() => {

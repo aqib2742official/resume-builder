@@ -3,11 +3,11 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-import { X, Save, FolderOpen, Trash2, Check, FileText, Copy, LayoutTemplate, ChevronDown, Loader2, LogIn } from 'lucide-react'
+import { X, Save, FolderOpen, Trash2, Check, FileText, Copy, LayoutTemplate, ChevronDown, Loader2, LogIn, Star, MessageSquare } from 'lucide-react'
 import { ConfirmModal } from '@/components/shared/ConfirmModal'
 import { AuthToSaveModal } from '@/components/shared/AuthToSaveModal'
 import { useResumeData } from '@/hooks/useResumeData'
-import { setTemplateId, type TemplateId } from '@/store/themeSlice'
+import { type TemplateId } from '@/store/themeSlice'
 import { Button } from '@/components/ui/Button'
 import { useSelector } from 'react-redux'
 import type { RootState } from '@/store'
@@ -27,6 +27,7 @@ interface DBResume {
   template: string
   data: Record<string, unknown>
   theme: Record<string, unknown>
+  isFavorite: boolean
   updatedAt: string
 }
 
@@ -181,6 +182,18 @@ const router   = useRouter()
     }
   }
 
+  async function handleSetFavorite(id: string, current: boolean) {
+    if (current) {
+      await fetch(`/api/resumes/${id}/favorite`, { method: 'DELETE' })
+      setResumes((prev) => prev.map((r) => r._id === id ? { ...r, isFavorite: false } : r))
+      localStorage.removeItem('fav-resume-id')
+    } else {
+      await fetch(`/api/resumes/${id}/favorite`, { method: 'POST' })
+      setResumes((prev) => prev.map((r) => ({ ...r, isFavorite: r._id === id })))
+      localStorage.setItem('fav-resume-id', id)
+    }
+  }
+
   const formattedDate = (iso: string) =>
     new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 
@@ -253,9 +266,14 @@ const router   = useRouter()
                   ) : (
                     <div className="flex flex-col gap-2" ref={menuRef}>
                       {resumes.map((r) => (
-                        <div key={r._id} className="rounded-lg border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 overflow-visible">
+                        <div key={r._id} className={`rounded-lg border overflow-visible ${r.isFavorite ? 'border-yellow-300 dark:border-yellow-600 bg-yellow-50/60 dark:bg-yellow-900/10' : 'border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50'}`}>
                           <div className="flex items-center gap-3 px-4 py-3">
-                            <FileText size={16} className="text-blue-400 shrink-0" />
+                            <div className="relative shrink-0">
+                              <FileText size={16} className="text-blue-400" />
+                              {r.isFavorite && (
+                                <Star size={8} className="absolute -top-1 -right-1 fill-yellow-400 text-yellow-400" />
+                              )}
+                            </div>
                             <div className="flex-1 min-w-0">
                               {editingId === r._id ? (
                                 <input
@@ -281,6 +299,24 @@ const router   = useRouter()
                             </div>
 
                             <div className="flex gap-1 shrink-0 items-center">
+                              {/* Favorite button */}
+                              <button
+                                onClick={() => handleSetFavorite(r._id, r.isFavorite)}
+                                title={r.isFavorite ? 'Remove favourite' : 'Set as favourite resume'}
+                                className={`rounded-md border p-1 transition-colors ${r.isFavorite ? 'border-yellow-300 bg-yellow-50 dark:bg-yellow-900/20 text-yellow-500' : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-300 hover:text-yellow-400 hover:border-yellow-300'}`}
+                              >
+                                <Star size={12} className={r.isFavorite ? 'fill-yellow-400' : ''} />
+                              </button>
+
+                              {/* Interview Prep button */}
+                              <button
+                                onClick={() => { onClose(); router.push(`/interview-prep?resumeId=${r._id}&resumeName=${encodeURIComponent(r.name)}`) }}
+                                title="Interview Prep for this resume"
+                                className="rounded-md border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 p-1 text-gray-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:text-purple-500 hover:border-purple-200 transition-colors"
+                              >
+                                <MessageSquare size={12} />
+                              </button>
+
                               {/* Load button */}
                               <button
                                 onClick={() => handleLoad(r)}

@@ -31,16 +31,17 @@ interface Props {
 
 function buildPreviewStore(data: ResumeData, theme: Partial<ResumeTheme>) {
   const fullTheme: ResumeTheme = {
-    accentColor: '#1e3a5f',
-    headerBg:    '#1e3a5f',
-    fontFamily:  'geist',
-    templateId:  'two-column',
-    density:     'standard',
-    photoShape:  'circle',
-    headingStyle:'underline',
-    nameSize:    'normal',
-    columnRatio: 60,
+    accentColor:  '#1e3a5f',
+    headerBg:     '#1e3a5f',
+    fontFamily:   'geist',
+    templateId:   'two-column',
+    density:      'standard',
+    photoShape:   'circle',
+    headingStyle: 'underline',
+    nameSize:     'normal',
+    columnRatio:  60,
     sectionOrder: DEFAULT_SECTION_ORDER,
+    pdfBg:        'light',
     ...theme,
   }
   return configureStore({

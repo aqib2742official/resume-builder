@@ -23,6 +23,7 @@ export interface ResumeTheme {
   nameSize: NameSize
   columnRatio: number   // left column %, range 30–70
   sectionOrder: string[]
+  pdfBg: 'light' | 'dark'
 }
 
 const initialState: ResumeTheme = {
@@ -36,6 +37,7 @@ const initialState: ResumeTheme = {
   nameSize: 'normal',
   columnRatio: 60,
   sectionOrder: DEFAULT_SECTION_ORDER,
+  pdfBg: 'light',
 }
 
 export const ACCENT_PRESETS = [
@@ -77,6 +79,7 @@ export const themeSlice = createSlice({
       state.headerBg = action.payload.header
     },
     setSectionOrder(state, action: PayloadAction<string[]>) { state.sectionOrder = action.payload },
+    setPdfBg(state, action: PayloadAction<'light' | 'dark'>) { state.pdfBg = action.payload },
     resetTheme() { return initialState },
   },
 })
@@ -85,7 +88,7 @@ export const {
   setAccentColor, setHeaderBg, setFontFamily,
   setTemplateId, setDensity, setPhotoShape,
   setHeadingStyle, setNameSize, setColumnRatio,
-  applyPreset, setSectionOrder, resetTheme,
+  applyPreset, setSectionOrder, setPdfBg, resetTheme,
 } = themeSlice.actions
 
 export default themeSlice.reducer

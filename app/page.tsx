@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import {
   PenSquare, FileText, Briefcase, BarChart3, Plus, ArrowRight,
@@ -163,6 +164,7 @@ function getJobCount(): number {
 export default function HomePage() {
   const router   = useRouter()
   const dispatch = useDispatch<AppDispatch>()
+  const { data: session } = useSession()
   const accentColor = useSelector((state: RootState) => state.theme.accentColor)
   const activeTemplateId = useSelector((state: RootState) => state.theme.templateId)
   const [resumes, setResumes] = useState<SavedResume[]>([])
@@ -180,6 +182,11 @@ export default function HomePage() {
   const bestScore = resumes.length ? Math.max(...resumes.map((r) => calculateCompleteness(r.data).total)) : 0
 
   function createNew() {
+    // First-time users (no existing resumes and no session) go through the onboarding wizard
+    if (!session && resumes.length === 0) {
+      router.push('/onboarding')
+      return
+    }
     dispatch(loadResumeData(defaultResume))
     router.push('/editor')
   }

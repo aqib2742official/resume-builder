@@ -1,11 +1,13 @@
 'use client'
 
-import { useEffect, useState, useCallback, useMemo } from 'react'
+import { useEffect, useRef, useState, useCallback, useMemo, Suspense } from 'react'
 import { useSelector } from 'react-redux'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import {
   Globe, Search, RefreshCw, ExternalLink, MapPin, Briefcase,
-  Loader2, AlertCircle, BookmarkPlus, Check, ArrowUpRight, FileText,
+  Loader2, AlertCircle, BookmarkPlus, Check, ArrowUpRight, FileText, MessageSquare,
 } from 'lucide-react'
 import { clsx } from 'clsx'
 import { addJob } from '@/lib/jobTrackerStorage'
@@ -69,13 +71,14 @@ const REGION_ORDER: Region[] = ['pakistan', 'americas', 'europe', 'other']
 // ── Job Card ─────────────────────────────────────────────────────────────────
 
 function JobCard({
-  job, score, allSkills, saved, onTrack,
+  job, score, allSkills, saved, onTrack, onInterviewPrep,
 }: {
   job: RemotiveJob
   score: number
   allSkills: string[]
   saved: boolean
   onTrack: () => void
+  onInterviewPrep: () => void
 }) {
   const initials = job.company_name.slice(0, 2).toUpperCase()
   const typeLabel = JOB_TYPES.find((t) => t.value === job.job_type)?.label ?? job.job_type
@@ -164,6 +167,14 @@ function JobCard({
           <ExternalLink size={12} /> Apply Now
         </a>
         <button
+          onClick={onInterviewPrep}
+          title="Prepare for this interview"
+          className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border border-purple-200 dark:border-purple-800 text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 text-xs font-medium transition-colors"
+        >
+          <MessageSquare size={13} />
+          Prep
+        </button>
+        <button
           onClick={onTrack}
           disabled={saved}
           title={saved ? 'Added to Job Tracker' : 'Save to Job Tracker'}
@@ -243,15 +254,39 @@ function Skeletons() {
 
 // ── Main Page ────────────────────────────────────────────────────────────────
 
-export default function JobsPage() {
+function JobsPageInner() {
   const activeResumeData = useSelector((state: RootState) => state.resume.data)
+  const { data: session } = useSession()
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const qParam = searchParams.get('q') ?? ''
 
   const [savedResumes, setSavedResumes] = useState<SavedResume[]>([])
   const [selectedResumeId, setSelectedResumeId] = useState<string>('')  // '' = active resume
+  const [favResumeId, setFavResumeId] = useState<string>('')
 
   useEffect(() => {
     setSavedResumes(getSavedResumes())
+    // Default to fav resume if one is set
+    const stored = localStorage.getItem('fav-resume-id')
+    if (stored) { setSelectedResumeId(stored); setFavResumeId(stored) }
   }, [])
+
+  // When user signs in, fetch DB resumes to find the favorite
+  useEffect(() => {
+    if (!session) return
+    fetch('/api/resumes')
+      .then((r) => r.json())
+      .then(({ resumes }: { resumes: { _id: string; isFavorite: boolean }[] }) => {
+        const fav = resumes?.find((r) => r.isFavorite)
+        if (fav) {
+          setFavResumeId(fav._id)
+          localStorage.setItem('fav-resume-id', fav._id)
+          setSelectedResumeId((prev) => prev || fav._id)
+        }
+      })
+      .catch(() => {/* ignore */})
+  }, [session])
 
   // Resolved resume data — selected saved resume or the active (Redux) one
   const resumeData = useMemo(() => {
@@ -265,7 +300,7 @@ export default function JobsPage() {
   const allSkills = resumeData.skills.flatMap((cat) => cat.skills)
   const jobTitle = resumeData.personal.jobTitle
 
-  const initialQuery = [jobTitle, ...allSkills.slice(0, 3)].filter(Boolean).join(' ')
+  const initialQuery = qParam || [jobTitle, ...allSkills.slice(0, 3)].filter(Boolean).join(' ')
 
   const [query, setQuery] = useState(initialQuery)
   const [jobs, setJobs] = useState<RemotiveJob[]>([])
@@ -297,13 +332,11 @@ export default function JobsPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // Re-fetch when a different saved resume is selected
+  // Re-fetch when resume selection changes — update query to match the selected resume
+  const isFirstRender = useRef(true)
   useEffect(() => {
-    if (!savedResumes.length) return
-    const data = selectedResumeId
-      ? savedResumes.find((r) => r.id === selectedResumeId)?.data ?? activeResumeData
-      : activeResumeData
-    const q = [data.personal.jobTitle, ...data.skills.flatMap((c) => c.skills).slice(0, 3)].filter(Boolean).join(' ')
+    if (isFirstRender.current) { isFirstRender.current = false; return }
+    const q = [resumeData.personal.jobTitle, ...resumeData.skills.flatMap((c) => c.skills).slice(0, 3)].filter(Boolean).join(' ')
     if (q) { setQuery(q); fetchJobs(q) }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedResumeId])
@@ -353,7 +386,7 @@ export default function JobsPage() {
 
       {/* Header */}
       <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 px-6 py-5">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-2 mb-1">
             <Globe size={20} className="text-[#0f2044] dark:text-blue-400" />
             <h1 className="text-xl font-bold text-gray-900 dark:text-white">Find Jobs</h1>
@@ -363,23 +396,29 @@ export default function JobsPage() {
           </p>
 
           {/* Resume selector */}
-          {savedResumes.length > 0 && (
-            <div className="flex items-center gap-2 mb-3">
-              <FileText size={14} className="text-gray-400 shrink-0" />
-              <label htmlFor="resume-select" className="text-xs text-gray-500 dark:text-gray-400 shrink-0">Match jobs for:</label>
-              <select
-                id="resume-select"
-                value={selectedResumeId}
-                onChange={(e) => setSelectedResumeId(e.target.value)}
-                className="flex-1 text-xs rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#0f2044]/20"
+          <div className="flex items-center gap-2 mb-3">
+            <FileText size={14} className="text-gray-400 shrink-0" />
+            <label htmlFor="resume-select" className="text-xs text-gray-500 dark:text-gray-400 shrink-0">Resume:</label>
+            <select
+              id="resume-select"
+              value={selectedResumeId}
+              onChange={(e) => setSelectedResumeId(e.target.value)}
+              className="flex-1 text-xs rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#0f2044]/20"
+            >
+              <option value="">Active Resume ({activeResumeData.personal.fullName || activeResumeData.personal.jobTitle || 'Untitled'})</option>
+              {savedResumes.map((r) => (
+                <option key={r.id} value={r.id}>{r.id === favResumeId ? `⭐ ${r.name}` : r.name}</option>
+              ))}
+            </select>
+            {favResumeId && selectedResumeId !== favResumeId && (
+              <button
+                onClick={() => setSelectedResumeId(favResumeId)}
+                className="text-xs text-yellow-600 dark:text-yellow-400 hover:underline shrink-0 whitespace-nowrap"
               >
-                <option value="">Active Resume ({activeResumeData.personal.fullName || activeResumeData.personal.jobTitle || 'Untitled'})</option>
-                {savedResumes.map((r) => (
-                  <option key={r.id} value={r.id}>{r.name}</option>
-                ))}
-              </select>
-            </div>
-          )}
+                ⭐ Use fav
+              </button>
+            )}
+          </div>
 
           {/* Search bar */}
           <form onSubmit={handleSearch} className="flex gap-2">
@@ -414,7 +453,7 @@ export default function JobsPage() {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto w-full px-6 py-5">
+      <div className="max-w-7xl mx-auto w-full px-6 py-5">
 
         {/* Filters + skill chips */}
         <div className="flex flex-wrap items-center gap-2 mb-4">
@@ -557,6 +596,11 @@ export default function JobsPage() {
                       allSkills={allSkills}
                       saved={savedIds.has(job.id)}
                       onTrack={() => saveToTracker(job)}
+                      onInterviewPrep={() => {
+                        const params = new URLSearchParams({ jobTitle: job.title, company: job.company_name })
+                        if (selectedResumeId) params.set('resumeId', selectedResumeId)
+                        router.push(`/interview-prep?${params.toString()}`)
+                      }}
                     />
                   ))}
                 </div>
@@ -581,5 +625,13 @@ export default function JobsPage() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function JobsPage() {
+  return (
+    <Suspense fallback={<div className="flex h-full items-center justify-center text-gray-400 text-sm">Loading…</div>}>
+      <JobsPageInner />
+    </Suspense>
   )
 }

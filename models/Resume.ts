@@ -16,6 +16,7 @@ export interface IResume extends Document {
   theme: Record<string, unknown>
   versions: IResumeVersion[]
   completenessScore: number
+  isFavorite: boolean
   createdAt: Date
   updatedAt: Date
 }
@@ -40,6 +41,7 @@ const ResumeSchema = new Schema<IResume>(
     theme:            { type: Schema.Types.Mixed, default: {} },
     versions:         { type: [VersionSchema], default: [] },
     completenessScore:{ type: Number, default: 0 },
+    isFavorite:       { type: Boolean, default: false },
   },
   { timestamps: true }
 )

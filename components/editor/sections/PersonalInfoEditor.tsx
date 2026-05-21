@@ -75,7 +75,7 @@ export function PersonalInfoEditor() {
       </div>
 
       {/* Fields */}
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         <div className="col-span-2">
           <Input label="Full Name" placeholder="e.g. John Smith" {...field('fullName')} />
         </div>

@@ -26,7 +26,7 @@ export function usePDFExport() {
   ${stylesHtml}
   <style>
     * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-    html, body { margin: 0; padding: 0; background: #fff; }
+    html, body { margin: 0; padding: 0; background: transparent; }
     .a4-page { width: 210mm; min-height: 297mm; box-shadow: none !important; }
     .page-break-avoid { break-inside: avoid; page-break-inside: avoid; }
 

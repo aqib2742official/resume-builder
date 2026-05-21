@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
-import { Edit2, Trash2, Copy, ExternalLink, Check, X, FileText, Calendar, History, Loader2 } from 'lucide-react'
+import { Edit2, Trash2, Copy, ExternalLink, Check, X, FileText, Calendar, History, Loader2, Star, MessageSquare, Briefcase } from 'lucide-react'
 import { clsx } from 'clsx'
 import { loadResumeData } from '@/store/resumeSlice'
 import type { AppDispatch } from '@/store'
@@ -23,6 +23,7 @@ interface ResumeCardProps {
   onDelete?: (id: string) => Promise<void>
   onRename?: (id: string, name: string) => Promise<void>
   onDuplicate?: (id: string) => Promise<void>
+  onFavorite?: (id: string, current: boolean) => Promise<void>
 }
 
 function scoreColor(total: number): string {
@@ -85,7 +86,7 @@ function DeleteModal({ resume, onConfirm, onClose }: {
   )
 }
 
-export function ResumeCard({ resume, onUpdate, onCompareSelect, compareSelected, compareMode, onDelete, onRename, onDuplicate }: Readonly<ResumeCardProps>) {
+export function ResumeCard({ resume, onUpdate, onCompareSelect, compareSelected, compareMode, onDelete, onRename, onDuplicate, onFavorite }: Readonly<ResumeCardProps>) {
   const router = useRouter()
   const dispatch = useDispatch<AppDispatch>()
   const [editing, setEditing] = useState(false)
@@ -178,6 +179,21 @@ export function ResumeCard({ resume, onUpdate, onCompareSelect, compareSelected,
           <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 text-white text-xl font-bold shadow-lg">
             {initials}
           </div>
+          {/* Favorite star badge */}
+          {onFavorite && (
+            <button
+              onClick={(e) => { e.stopPropagation(); onFavorite(resume.id, resume.isFavorite ?? false) }}
+              title={resume.isFavorite ? 'Remove from favourites' : 'Mark as favourite'}
+              className={clsx(
+                'absolute top-2 left-2 z-10 flex h-6 w-6 items-center justify-center rounded-full border transition-colors',
+                resume.isFavorite
+                  ? 'bg-yellow-400 border-yellow-400 text-white'
+                  : 'bg-white/80 border-gray-300 text-gray-400 hover:bg-yellow-50 hover:border-yellow-300 hover:text-yellow-500'
+              )}
+            >
+              <Star size={12} className={resume.isFavorite ? 'fill-white' : ''} />
+            </button>
+          )}
           {compareMode && (
             <div className={clsx(
               'absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full border-2 transition-colors',
@@ -251,35 +267,57 @@ export function ResumeCard({ resume, onUpdate, onCompareSelect, compareSelected,
 
         {/* Action footer */}
         {!compareMode && (
-          <div className="flex items-center gap-1 border-t border-gray-100 dark:border-gray-700 px-3 py-2">
-            <button
-              onClick={openInEditor}
-              className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 transition-colors"
-            >
-              <ExternalLink size={12} />
-              Open in Editor
-            </button>
-            <button
-              onClick={() => setShowVersions(true)}
-              title="Version history"
-              className="rounded-lg p-1.5 text-gray-500 hover:bg-gray-100 hover:text-purple-500 transition-colors"
-            >
-              <History size={14} />
-            </button>
-            <button
-              onClick={handleDuplicate}
-              title="Duplicate"
-              className="rounded-lg p-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors"
-            >
-              <Copy size={14} />
-            </button>
-            <button
-              onClick={() => setShowDeleteModal(true)}
-              title="Delete"
-              className="rounded-lg p-1.5 text-gray-500 hover:bg-gray-100 hover:text-red-500 transition-colors"
-            >
-              <Trash2 size={14} />
-            </button>
+          <div className="flex flex-col border-t border-gray-100 dark:border-gray-700">
+            {/* Primary row */}
+            <div className="flex items-center gap-1 px-3 pt-2 pb-1">
+              <button
+                onClick={openInEditor}
+                className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 transition-colors"
+              >
+                <ExternalLink size={12} />
+                Open in Editor
+              </button>
+              <button
+                onClick={() => setShowVersions(true)}
+                title="Version history"
+                className="rounded-lg p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-purple-500 transition-colors"
+              >
+                <History size={14} />
+              </button>
+              <button
+                onClick={handleDuplicate}
+                title="Duplicate"
+                className="rounded-lg p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-700 transition-colors"
+              >
+                <Copy size={14} />
+              </button>
+              <button
+                onClick={() => setShowDeleteModal(true)}
+                title="Delete"
+                className="rounded-lg p-1.5 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-red-500 transition-colors"
+              >
+                <Trash2 size={14} />
+              </button>
+            </div>
+            {/* Secondary row — Interview Prep + Find Jobs */}
+            <div className="flex items-center gap-1 px-3 pb-2">
+              <button
+                onClick={() => router.push(`/interview-prep?resumeId=${resume.id}&resumeName=${encodeURIComponent(resume.name)}`)}
+                title="Interview Prep for this resume"
+                className="flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-purple-200 dark:border-purple-700 bg-purple-50 dark:bg-purple-900/20 px-3 py-1.5 text-xs font-medium text-purple-700 dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-900/40 transition-colors"
+              >
+                <MessageSquare size={12} />
+                Interview Prep
+              </button>
+              <button
+                onClick={() => router.push(`/jobs?q=${encodeURIComponent(resume.data.personal.jobTitle || resume.name)}`)}
+                title="Find jobs matching this resume"
+                className="flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-sky-200 dark:border-sky-700 bg-sky-50 dark:bg-sky-900/20 px-3 py-1.5 text-xs font-medium text-sky-700 dark:text-sky-300 hover:bg-sky-100 dark:hover:bg-sky-900/40 transition-colors"
+              >
+                <Briefcase size={12} />
+                Find Jobs
+              </button>
+            </div>
           </div>
         )}
       </div>

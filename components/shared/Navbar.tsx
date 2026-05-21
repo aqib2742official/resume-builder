@@ -32,7 +32,6 @@ import { useFeatureFlags } from "@/contexts/FeatureFlagsContext";
 const ALL_NAV_ITEMS = [
   { href: "/resumes",      icon: FileText,       label: "My Resumes",  flag: null },
   { href: "/templates",    icon: LayoutTemplate, label: "Templates",   flag: "templates" },
-  { href: "/editor",       icon: PenSquare,      label: "Editor",      flag: null },
   { href: "/cover-letter", icon: Mail,           label: "Cover Letter",flag: "coverLetter" },
   { href: "/job-tracker",  icon: Briefcase,      label: "Job Tracker", flag: "jobTracker" },
   { href: "/analytics",    icon: BarChart3,      label: "Analytics",   flag: "analytics" },

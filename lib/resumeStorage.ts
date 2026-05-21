@@ -17,6 +17,7 @@ export interface SavedResume {
   data: ResumeData
   versions: ResumeVersion[]
   savedAt: string
+  isFavorite?: boolean
 }
 
 export function getSavedResumes(): SavedResume[] {
