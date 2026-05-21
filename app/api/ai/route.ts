@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Groq from 'groq-sdk'
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
+let groq: Groq | null = null
+function getGroq(): Groq {
+  if (!groq) groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
+  return groq
+}
 
 type Payload = Record<string, string>
 
@@ -118,7 +122,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const isLarge = action === 'interview-questions'
-    const response = await groq.chat.completions.create({
+    const response = await getGroq().chat.completions.create({
       model: 'llama-3.1-8b-instant',
       max_tokens: isLarge ? 2000 : 600,
       messages: [
