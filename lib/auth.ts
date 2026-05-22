@@ -5,6 +5,7 @@ import { connectDB } from '@/lib/mongodb'
 import User from '@/models/User'
 
 export const authConfig: NextAuthConfig = {
+  trustHost: true,
   session: { strategy: 'jwt' },
   pages: {
     signIn: '/sign-in',
